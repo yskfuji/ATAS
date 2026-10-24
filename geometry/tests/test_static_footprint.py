@@ -1,3 +1,4 @@
+from accelerator import explicit_test_gpu
 import os
 from types import SimpleNamespace
 
@@ -35,7 +36,7 @@ def render(points, colors, *, footprint=.6, radius=2, dynamic=None, mode="bounde
         rgb=np.asarray(colors,dtype=np.uint8).reshape(-1,3))
     before = memory.xyz.copy()
     images, stats = render_l1_gpu(memory,[camera],width=32,height=32,
-        device=torch.device("cuda:"+os.environ["ATAS_TEST_GPU"]),splat_mode=mode,
+        device=explicit_test_gpu(),splat_mode=mode,
         point_footprint=footprint,max_point_radius=radius,dynamic_frames=dynamic)
     np.testing.assert_array_equal(memory.xyz,before)
     np.testing.assert_array_equal(camera.world_to_camera,np.eye(4))

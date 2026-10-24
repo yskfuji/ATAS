@@ -2,27 +2,30 @@
 import numpy as np
 import torch
 
+from atas_geometry import device as accel
+
 
 class Projection:
     def __init__(self, views, device):
         self.device = device
-        self.views = [tuple(torch.as_tensor(x, device=device, dtype=torch.float64)
+        self.dtype = accel.float_dtype(device)
+        self.views = [tuple(torch.as_tensor(x, device=device, dtype=self.dtype)
                             for x in view) for view in views]
 
     def lift(self, depth, pose, k, valid):
         # Only lift selected pixels; do not allocate a full H x W x 3 CPU grid.
         y, x = np.nonzero(valid)
-        d = torch.as_tensor(depth[y,x], device=self.device, dtype=torch.float64)
+        d = torch.as_tensor(depth[y,x], device=self.device, dtype=self.dtype)
         xx = torch.as_tensor(x, device=self.device)
         yy = torch.as_tensor(y, device=self.device)
         local = torch.stack(((xx+.5-k[2])/k[0]*d, (yy+.5-k[3])/k[1]*d, d), -1)
-        p = torch.as_tensor(pose, device=self.device, dtype=torch.float64)
+        p = torch.as_tensor(pose, device=self.device, dtype=self.dtype)
         return (local @ p[:3,:3].T + p[:3,3]).float().cpu().numpy()
 
     def visibility(self, points, tolerance, chunk_size=250000):
         surfaces, conflicts = [], []
         for start in range(0,len(points),chunk_size):
-            xyz = torch.as_tensor(points[start:start+chunk_size], device=self.device, dtype=torch.float64)
+            xyz = torch.as_tensor(points[start:start+chunk_size], device=self.device, dtype=self.dtype)
             surface = torch.zeros(len(xyz),device=self.device,dtype=torch.bool)
             conflict = torch.zeros(len(xyz),device=self.device,dtype=torch.int16)
             for depth, pose, k in self.views:

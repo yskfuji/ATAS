@@ -6,7 +6,7 @@ import json
 import imageio.v2 as imageio
 import numpy as np
 import torch
-from atas_geometry.service.device_mapping import device_index
+from atas_geometry import device as accel
 from atas_geometry.memory.fusion import FusedSceneMemory
 from atas_geometry.memory.observation import CameraCalibration
 from atas_geometry.memory.vista4d_layers import ReconStore, _reference_camera_at
@@ -148,14 +148,14 @@ def render_semantic_camera(root, payload, out_mp4, width, height, gpu_index):
     with imageio.get_writer(str(temporary), fps=fps, codec="libx264", macro_block_size=1, quality=None,
                             output_params=["-crf", "18", "-maxrate", "25M", "-bufsize", "25M"]) as writer:
         _, stats = render_l1_gpu(memory, list(query.cameras), width=width, height=height,
-            device=torch.device(f"cuda:{device_index(gpu_index)}"), dynamic_frames=dynamic_frames() if event else None,
+            device=accel.torch_device(gpu_index), dynamic_frames=dynamic_frames() if event else None,
             frame_sink=writer.append_data, **point_options, **dynamic_render_options(payload))
     if event and not any(counts):
         raise ValueError("event contains no reconstructed dynamic points")
     query.save(out_mp4.with_name("camera_query.json"))
     write_camera_query_npz(query, out_mp4.with_name("target_camera.npz"))
     report = {"geometry_layers": expected_layers, "camera_contract": "semantic-camera-v1",
-        "gpu_reserved_peak_mib": round(torch.cuda.max_memory_reserved(device_index(gpu_index)) / 2**20),
+        "gpu_reserved_peak_mib": round((accel.peak_memory_bytes(accel.torch_device(gpu_index)) or 0) / 2**20),
         "camera_runtime_revision": "film-first-framing-v1",
         "continuous_pose_basis": pose_basis,
         "framing_policy": framing_policy, "requested_framing_policy": payload.get("framing_policy", "strict"),

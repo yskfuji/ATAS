@@ -1,3 +1,4 @@
+from accelerator import explicit_test_gpu
 import os
 from types import SimpleNamespace
 import numpy as np
@@ -42,7 +43,7 @@ def render(dynamic,static_z=None,cap=2,mode="source_pixel"):
         rgb=np.array([[0,0,255]],np.uint8) if static_z else np.empty((0,3),np.uint8))
     camera=CameraCalibration("fixed",np.eye(4),np.array([[10,0,16],[0,10,16],[0,0,1.]]),(32,32))
     return render_l1_gpu(memory,[camera]*len(dynamic),width=32,height=32,
-        device=torch.device("cuda:"+os.environ["ATAS_TEST_GPU"]),splat_mode="bounded_square",
+        device=explicit_test_gpu(),splat_mode="bounded_square",
         point_footprint=1.5,max_point_radius=2,dynamic_frames=dynamic,
         dynamic_splat_mode=mode,max_dynamic_radius=cap)
 

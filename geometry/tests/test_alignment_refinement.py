@@ -88,10 +88,11 @@ def test_correction_preserves_dense_time_and_transforms_depth_once(tmp_path, mon
     assert (root/'video.mp4').read_bytes() == b'immutable source'
 
 
-@pytest.mark.parametrize('device', ['cpu','cuda'])
+@pytest.mark.parametrize('device', ['cpu','cuda','mps'])
 def test_gpu_projection_matches_cpu_geometry(device):
     import torch
-    if device == 'cuda' and not torch.cuda.is_available(): pytest.skip('CUDA unavailable')
+    from accelerator import available
+    if not available(device): pytest.skip(f'{device} unavailable')
     rng = np.random.default_rng(1)
     depth = rng.uniform(1,3,(25,40)).astype(np.float32)
     pose = np.eye(4); pose[:3,3] = [.1,.2,.3]

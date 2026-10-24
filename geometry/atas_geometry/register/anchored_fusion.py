@@ -275,7 +275,8 @@ def reconstruct_conditioned(reference, new, output, *, model_id, vista_repo,
     # Pi3X's output heads explicitly disable autocast and consume float32.
     # Keep master weights float32; mixed precision belongs to the forward pass.
     needs_model=baseline is None or any(not c['accepted_geometry'] for c in baseline['chunks'])
-    model = init_pi3(model_id, device="cuda") if needs_model else None
+    from atas_geometry import device as accel
+    model = init_pi3(model_id, device=accel.backend()) if needs_model else None
     poses_out = np.zeros((new.count, 4, 4), np.float32)
     k_out = np.zeros((new.count, 4), np.float32)
     owner = np.full(new.count, -1, int)
@@ -305,7 +306,7 @@ def reconstruct_conditioned(reference, new, output, *, model_id, vista_repo,
     for chunk_index, (start, end) in enumerate(windows):
         tick = time.perf_counter()
         rgb, _ = preprocess_frames_pi3(np.stack(new.frames[start:end]), pixel_limit)
-        images = torch.cat((anchor_rgb, rgb), 0)[None].to("cuda", dtype=torch.bfloat16)
+        images = torch.cat((anchor_rgb, rgb), 0)[None].to(accel.backend(), dtype=accel.compute_dtype())
         n = images.shape[1]
         depths = np.zeros((n, ph, pw), np.float32)
         depths[:n_anchor] = history_depth
@@ -328,14 +329,14 @@ def reconstruct_conditioned(reference, new, output, *, model_id, vista_repo,
             fx, fy, cx, cy = tail['intrinsic']
             intrinsics[j] = [[fx, 0, cx], [0, fy, cy], [0, 0, 1]]
             mask[0, j] = True
-        with torch.inference_mode(), torch.autocast("cuda", dtype=torch.bfloat16):
+        with torch.inference_mode(), accel.autocast():
             prediction = model(images,
-                depths=torch.from_numpy(depths[None]).to("cuda"),
-                poses=torch.from_numpy(poses[None]).to("cuda"),
-                intrinsics=torch.from_numpy(intrinsics[None]).to("cuda"),
-                mask_add_depth=torch.from_numpy(mask.copy()).to("cuda"),
-                mask_add_pose=torch.from_numpy(mask.copy()).to("cuda"),
-                mask_add_ray=torch.from_numpy(mask.copy()).to("cuda"), with_prior=True)
+                depths=torch.from_numpy(depths[None]).to(accel.backend()),
+                poses=torch.from_numpy(poses[None]).to(accel.backend()),
+                intrinsics=torch.from_numpy(intrinsics[None]).to(accel.backend()),
+                mask_add_depth=torch.from_numpy(mask.copy()).to(accel.backend()),
+                mask_add_pose=torch.from_numpy(mask.copy()).to(accel.backend()),
+                mask_add_ray=torch.from_numpy(mask.copy()).to(accel.backend()), with_prior=True)
         local = prediction["local_points"][0].float().cpu().numpy()
         world = prediction["points"][0].float().cpu().numpy()
         c2w = prediction["camera_poses"][0].float().cpu().numpy()
@@ -453,7 +454,7 @@ def reconstruct_conditioned(reference, new, output, *, model_id, vista_repo,
               "l2_policy": "all original frames and masks, depth scaled with camera translations exactly once"}
     write_json(output / "anchored_reconstruction.json", report)
     del model
-    torch.cuda.empty_cache()
+    accel.empty_cache()
     return report
 
 
@@ -666,9 +667,8 @@ def append_static(memory, added):
 def main():
     from threadpoolctl import threadpool_limits
     threadpool_limits(limits=4)
-    import torch
-    if torch.cuda.is_available():
-        torch.cuda.reset_peak_memory_stats()   # resident servers reuse the process
+    from atas_geometry import device as accel
+    accel.reset_peak_memory()   # resident servers reuse the process
     p = argparse.ArgumentParser()
     p.add_argument("--reference-l0", type=Path, required=True)
     p.add_argument("--new-l0", type=Path, required=True)
@@ -782,9 +782,10 @@ def main():
                   reference_l0=str(a.reference_l0), original_l1=str(a.l1),
                   original_l1_sha256=before_hash, original_l1_unchanged=sha256(a.l1) == before_hash,
                   conditioned_l0=str(output_l0), reconstruction=report, cross_shot_validation=cross)
-    import torch
-    if torch.cuda.is_available():
-        fusion["gpu_reserved_peak_mib"] = round(torch.cuda.max_memory_reserved() / 2**20)
+    from atas_geometry import device as accel
+    peak = accel.peak_memory_bytes()
+    if peak is not None:
+        fusion["gpu_reserved_peak_mib"] = round(peak / 2**20)
     write_json(a.output / "fusion_report.json", fusion)
     if not cross['accepted'] or not report['geometry_accepted']:
         write_json(a.output/'pending_submap.json', dict(status='pending_alignment',

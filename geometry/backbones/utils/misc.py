@@ -4,4 +4,7 @@ import torch
 
 def cleanup():
     gc.collect()
-    torch.cuda.empty_cache()
+    if torch.backends.mps.is_available():
+        torch.mps.empty_cache()
+    else:
+        torch.cuda.empty_cache()

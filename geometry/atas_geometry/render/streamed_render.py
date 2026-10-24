@@ -10,7 +10,8 @@ def render_streamed(memory,cameras,*,width,height,device,splat_mode='pixel',poin
     from atas_geometry.render.render import _project_entity_exclusion_mask, _coverage_outside_mask
     from atas_geometry.render.dynamic_footprint import dynamic_render_options
     dynamic_render_options({'dynamic_splat_mode':dynamic_splat_mode,'max_dynamic_radius':max_dynamic_radius})
-    device=torch.device(device);torch.cuda.set_device(device);t=time.perf_counter()
+    from atas_geometry import device as accel
+    device=torch.device(device);accel.set_device(device);t=time.perf_counter()
     dynamic=iter(dynamic_frames) if dynamic_frames is not None else None
     frames=[];coverages=[];centers=[];center_counts=[];dynamic_counts=[];dynamic_bounds=[]
     condition=[];condition_center=[];excluded_fractions=[]
@@ -53,7 +54,7 @@ def render_streamed(memory,cameras,*,width,height,device,splat_mode='pixel',poin
                 if is_dynamic and bool(inside.any()):dyn_uv.append(torch.stack((u[inside]/width,v[inside]/height),1).cpu())
                 if is_dynamic:
                     if dynamic_splat_mode=='source_pixel':
-                        edge=torch.as_tensor(support[start:end],device=device)*(fx+fy)*.5/depth.clamp(min=1e-6)
+                        edge=accel.as_device_tensor(support[start:end],device)*(fx+fy)*.5/depth.clamp(min=1e-6)
                         radii=torch.ceil((edge-1)*.5).clamp(0,max_dynamic_radius).long()
                         radii=torch.minimum(radii,torch.as_tensor(limits[start:end],device=device,dtype=torch.int64))
                     else:radii=torch.zeros(len(xyz),dtype=torch.int64,device=device)
@@ -94,7 +95,7 @@ def render_streamed(memory,cameras,*,width,height,device,splat_mode='pixel',poin
         image=color.reshape(height,width,3).cpu().numpy()
         if frame_sink is None:frames.append(image)
         else:frame_sink(image)
-    torch.cuda.synchronize(device)
+    accel.synchronize(device)
     stats={'gpu_splat_ms':(time.perf_counter()-t)*1000,'mean_coverage':float(np.mean(coverages)) if coverages else 0.,
         'min_coverage':min(coverages,default=0.),'coverages':coverages,'mean_center_coverage':float(np.mean(centers)) if centers else 0.,
         'min_center_coverage':min(centers,default=0.),'mean_point_center_coverage':float(np.mean(center_counts)) if center_counts else 0.,

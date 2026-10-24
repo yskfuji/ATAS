@@ -470,9 +470,9 @@ def _fuse_home_scene(
 ) -> dict[str, Any]:
     """One GPU pass at HOME_K on keyframes. No k=1.0 numpy sweep of every frame."""
     skipped = {int(index) for index in report.get("excluded_frame_indices") or ()}
-    from atas_geometry.service.device_mapping import device_index
-    device = torch.device(f"cuda:{device_index(gpu_index)}")
-    torch.cuda.set_device(device)
+    from atas_geometry import device as accel
+    device = accel.torch_device(gpu_index)
+    accel.set_device(device)
     chosen_k = HOME_K
     voxel = float(pixel_footprint_voxel_size(recon, k=chosen_k))
     frames = [index for index in _select_keyframes(recon.cam_c2w, voxel) if index not in skipped]
@@ -609,9 +609,9 @@ def fuse_l0_to_l1(
             }
     frames = _select_keyframes(recon.cam_c2w, voxel_size)
     skipped = set(int(index) for index in report.get("excluded_frame_indices") or [])
-    from atas_geometry.service.device_mapping import device_index
-    device = torch.device(f"cuda:{device_index(gpu_index)}")
-    torch.cuda.set_device(device)
+    from atas_geometry import device as accel
+    device = accel.torch_device(gpu_index)
+    accel.set_device(device)
     acc_xyz: list[np.ndarray] = []
     acc_rgb: list[np.ndarray] = []
     acc_keys: set[int] = set(existing_keys)

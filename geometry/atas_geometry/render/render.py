@@ -94,7 +94,8 @@ def render_point_budget(device) -> tuple[int, int]:
     resident = os.environ.get('GEOMETRY_RENDER_RESIDENT_POINTS')
     batch = os.environ.get('GEOMETRY_RENDER_POINT_BATCH')
     if resident is None:
-        free, _ = torch.cuda.mem_get_info(device)
+        from atas_geometry import device as accel
+        free = accel.free_memory_bytes(device)
         resident_points = max(1_000_000, int(0.4 * free / BYTES_PER_RESIDENT_POINT))
     else:
         resident_points = int(resident)
@@ -142,7 +143,8 @@ def render_l1_gpu(
             entity_exclusion_points=entity_exclusion_points,dynamic_frames=dynamic_frames,
             dynamic_splat_mode=dynamic_splat_mode,max_dynamic_radius=max_dynamic_radius,
             frame_sink=frame_sink,point_batch_size=point_batch)
-    torch.cuda.set_device(device)
+    from atas_geometry import device as accel
+    accel.set_device(device)
     xyz = torch.from_numpy(np.asarray(memory.xyz, dtype=np.float32)).to(device)
     rgb = torch.from_numpy(np.asarray(memory.rgb, dtype=np.uint8)).to(device)
     static_xyz, static_rgb = xyz, rgb
@@ -161,9 +163,7 @@ def render_l1_gpu(
     splat_fragments = 0
     visible_points = 0
     splat_ms = 0.0
-    start_all = torch.cuda.Event(enable_timing=True)
-    end_all = torch.cuda.Event(enable_timing=True)
-    start_all.record()
+    timer = accel.Timer(device).start()
     n_pixels = width * height
     for camera in cameras:
         if dynamic_iterator is not None:
@@ -244,7 +244,7 @@ def render_l1_gpu(
             ).to(torch.int64)
             if dynamic_iterator is not None:
                 if dynamic_splat_mode=="source_pixel":
-                    dynamic_edge=torch.as_tensor(support,device=device)*focal/depth[len(static_xyz):].clamp(min=1e-6)
+                    dynamic_edge=accel.as_device_tensor(support,device)*focal/depth[len(static_xyz):].clamp(min=1e-6)
                     dynamic_radii=torch.ceil((dynamic_edge-1.)*.5).clamp(0,max_dynamic_radius).to(torch.int64)
                     radii[len(static_xyz):]=torch.minimum(dynamic_radii,torch.as_tensor(limits,device=device,dtype=torch.int64))
                 else: radii[len(static_xyz):]=0
@@ -325,9 +325,7 @@ def render_l1_gpu(
             frames.append(image)
         else:
             frame_sink(image)
-    end_all.record()
-    torch.cuda.synchronize()
-    splat_ms = float(start_all.elapsed_time(end_all))
+    splat_ms = timer.stop_ms()
     stats = {
         "gpu_splat_ms": splat_ms,
         "mean_coverage": float(np.mean(coverages) if coverages else 0.0),

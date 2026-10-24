@@ -277,7 +277,7 @@ class Pi3X(nn.Module, PyTorchModelHubMixin):
         hidden = self.encoder(imgs, is_training=True)["x_norm_patchtokens"]
 
         if self.use_multimodal:
-            with torch.amp.autocast(device_type='cuda', enabled=False):
+            with torch.amp.autocast(device_type=imgs.device.type, enabled=False):
                 if with_prior is True:
                     p_depth = p_ray = p_pose = 1.0
                 else:
@@ -294,7 +294,7 @@ class Pi3X(nn.Module, PyTorchModelHubMixin):
                         p_ray = 0.0
                         rays = torch.zeros((B, N, H, W, 2), device=imgs.device)
                     else:
-                        pix = torch.from_numpy(get_pixel(H, W).T.reshape(H, W, 3)).to(device).float()[None].repeat(B, 1, 1, 1)
+                        pix = torch.from_numpy(get_pixel(H, W).T.reshape(H, W, 3)).float().to(device)[None].repeat(B, 1, 1, 1)  # cast before transfer: MPS has no float64
                         rays = torch.einsum('bnij, bhwj -> bnhwi', torch.inverse(intrinsics), pix)[..., :2]
                         # rays = F.normalize(rays, dim=-1).reshape(B, N, H, W, 3)                   # don't normalize, so the pred['xy'] is the same as input rays
 
@@ -385,7 +385,7 @@ class Pi3X(nn.Module, PyTorchModelHubMixin):
         # decode conf
         ret_conf = self.conf_decoder(hidden, xpos=pos)
 
-        with torch.amp.autocast(device_type='cuda', enabled=False):
+        with torch.amp.autocast(device_type=ret_point.device.type, enabled=False):
             xy, z = self.point_head(ret_point[:, self.patch_start_idx:].float(), patch_h=patch_h, patch_w=patch_w)
             xy = xy.permute(0, 2, 3, 1).reshape(B, N, H, W, -1)
             z = z.permute(0, 2, 3, 1).reshape(B, N, H, W, -1)

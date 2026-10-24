@@ -2,12 +2,13 @@ import sys
 from pathlib import Path
 sys.path.insert(0,str(__import__('pathlib').Path(__file__).resolve().parents[1]/'backbones'))
 import numpy as np,pytest,torch
+from accelerator import render_device, available
 from atas_geometry.memory.gpu_voxel_index import IncrementalKeys, TemporalSupport, unique_first
 from utils.recon_and_seg.pi3_geometry import native_rgbd
 
-@pytest.mark.parametrize('device',['cpu','cuda'])
+@pytest.mark.parametrize('device',['cpu','cuda','mps'])
 def test_incremental_membership_exact_with_duplicates_and_high_keys(device):
-    if device=='cuda' and not torch.cuda.is_available():pytest.skip('CUDA required')
+    if not available(device):pytest.skip(f'{device} required')
     base=[0,0,5,2**62+7];index=IncrementalKeys(base,device=device);truth=set(base)
     rng=np.random.default_rng(7)
     for _ in range(20):
@@ -72,7 +73,7 @@ def test_vo_injects_overlap_geometry_by_default_but_allows_explicit_control(inje
                 assert call[key].sum()==2
             assert torch.allclose(torch.det(call['poses'][...,:3,:3]),torch.ones_like(call['mask_add_pose'],dtype=torch.float32),atol=1e-4)
 
-@pytest.mark.skipif(not torch.cuda.is_available(),reason='CUDA required')
+@pytest.mark.skipif(render_device() is None,reason='GPU renderer requires CUDA or MPS')
 def test_stream_dispatch_budget_changes_processing_not_world(monkeypatch):
     from atas_geometry.memory.fuse import _memory_from_voxels
     from atas_geometry.render.render import render_l1_gpu
@@ -82,11 +83,11 @@ def test_stream_dispatch_budget_changes_processing_not_world(monkeypatch):
     cam=CameraCalibration('test',np.eye(4),np.array([[15,0,16],[0,15,12],[0,0,1.]]),(32,24))
     monkeypatch.setenv('GEOMETRY_RENDER_RESIDENT_POINTS','1')
     monkeypatch.setenv('GEOMETRY_RENDER_POINT_BATCH','1')
-    _,stats=render_l1_gpu(mem,[cam],width=32,height=24,device=torch.device('cuda:0'))
+    _,stats=render_l1_gpu(mem,[cam],width=32,height=24,device=render_device())
     assert stats['streamed'] and stats['point_count']==2 and stats['max_gpu_point_batch']==1
     assert np.array_equal(xyz,mem.xyz)
 
-@pytest.mark.skipif(not torch.cuda.is_available(),reason='CUDA required')
+@pytest.mark.skipif(render_device() is None,reason='GPU renderer requires CUDA or MPS')
 @pytest.mark.parametrize('splat',['pixel','bounded_square'])
 def test_streamed_one_zbuffer_matches_resident_across_chunks(splat):
     from atas_geometry.memory.fuse import _memory_from_voxels
@@ -97,14 +98,14 @@ def test_streamed_one_zbuffer_matches_resident_across_chunks(splat):
     rgb=np.array([[255,0,0],[0,255,0],[0,0,255],[255,255,0]],np.uint8)
     mem=_memory_from_voxels(xyz,rgb,voxel_size=.3,origin=np.zeros(3),shot_id='test')
     cam=CameraCalibration('test',np.eye(4),np.array([[15,0,16],[0,15,12],[0,0,1.]]),(32,24))
-    args=dict(width=32,height=24,device=torch.device('cuda:0'),splat_mode=splat,point_footprint=.3,max_point_radius=2)
+    args=dict(width=32,height=24,device=render_device(),splat_mode=splat,point_footprint=.3,max_point_radius=2)
     expected,stats=render_l1_gpu(mem,[cam],**args)
     actual,stream=render_streamed(mem,[cam],point_batch_size=1,**args)
     assert np.array_equal(expected[0],actual[0])
     assert stream['max_gpu_point_batch']==1 and stream['points_discarded_for_budget']==0
     assert stats['mean_coverage']==stream['mean_coverage']
 
-@pytest.mark.skipif(not torch.cuda.is_available(),reason='CUDA required')
+@pytest.mark.skipif(render_device() is None,reason='GPU renderer requires CUDA or MPS')
 def test_streamed_dynamic_occlusion_and_source_support():
     from atas_geometry.memory.fuse import _memory_from_voxels
     from atas_geometry.render.render import render_l1_gpu
@@ -113,7 +114,7 @@ def test_streamed_dynamic_occlusion_and_source_support():
     mem=_memory_from_voxels(np.array([[0,0,3]],np.float32),np.array([[255,0,0]],np.uint8),voxel_size=.1,origin=np.zeros(3),shot_id='static')
     cam=CameraCalibration('test',np.eye(4),np.array([[15,0,16],[0,15,12],[0,0,1.]]),(32,24))
     dyn=(np.array([[0,0,2],[.4,0,4]],np.float32),np.array([[0,255,0],[0,0,255]],np.uint8),np.array([.3,.3]),np.array([1,1]))
-    args=dict(width=32,height=24,device=torch.device('cuda:0'),splat_mode='bounded_square',point_footprint=.1,max_point_radius=2,dynamic_splat_mode='source_pixel',max_dynamic_radius=2)
+    args=dict(width=32,height=24,device=render_device(),splat_mode='bounded_square',point_footprint=.1,max_point_radius=2,dynamic_splat_mode='source_pixel',max_dynamic_radius=2)
     expected,_=render_l1_gpu(mem,[cam],dynamic_frames=iter([dyn]),**args)
     actual,stats=render_streamed(mem,[cam],dynamic_frames=iter([dyn]),point_batch_size=1,**args)
     assert np.array_equal(expected[0],actual[0])

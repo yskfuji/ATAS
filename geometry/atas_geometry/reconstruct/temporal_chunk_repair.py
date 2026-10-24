@@ -151,7 +151,8 @@ def repair_conditioned_chunks(*, reference, new, output, reports, owner, poses_o
                      evidence_basis='accepted_frame_owner_only',thresholds_changed=False)
             # Full original history; held-out history and seam frames are RGB-only.
             rgb,_=preprocess(np.stack([new.frames[i] for i in ids]),pixel_limit)
-            images=torch.cat((anchor_rgb,rgb),0)[None].to('cuda',dtype=torch.bfloat16)
+            from atas_geometry import device as accel
+            images=torch.cat((anchor_rgb,rgb),0)[None].to(accel.backend(),dtype=accel.compute_dtype())
             n=nk+len(ids)
             depth_in=np.zeros((n,ph,pw),np.float32)
             pose_in=np.repeat(np.eye(4,dtype=np.float32)[None],n,axis=0)
@@ -164,12 +165,12 @@ def repair_conditioned_chunks(*, reference, new, output, reports, owner, poses_o
                 s=supports[frame];j=slots[frame]
                 depth_in[j]=np.where(s['valid'],s['depth'],0);pose_in[j]=s['pose']
                 fx,fy,cx,cy=s['k'];k_in[j]=[[fx,0,cx],[0,fy,cy],[0,0,1]];masks[0,j]=True
-            with torch.inference_mode(),torch.autocast('cuda',dtype=torch.bfloat16):
-                pred=model(images,depths=torch.from_numpy(depth_in[None]).to('cuda'),
-                    poses=torch.from_numpy(pose_in[None]).to('cuda'),intrinsics=torch.from_numpy(k_in[None]).to('cuda'),
-                    mask_add_depth=torch.from_numpy(masks.copy()).to('cuda'),
-                    mask_add_pose=torch.from_numpy(masks.copy()).to('cuda'),
-                    mask_add_ray=torch.from_numpy(masks.copy()).to('cuda'),with_prior=True)
+            with torch.inference_mode(),accel.autocast():
+                pred=model(images,depths=torch.from_numpy(depth_in[None]).to(accel.backend()),
+                    poses=torch.from_numpy(pose_in[None]).to(accel.backend()),intrinsics=torch.from_numpy(k_in[None]).to(accel.backend()),
+                    mask_add_depth=torch.from_numpy(masks.copy()).to(accel.backend()),
+                    mask_add_pose=torch.from_numpy(masks.copy()).to(accel.backend()),
+                    mask_add_ray=torch.from_numpy(masks.copy()).to(accel.backend()),with_prior=True)
             local=pred['local_points'][0].float().cpu().numpy()
             world=pred['points'][0].float().cpu().numpy()
             poses=pred['camera_poses'][0].float().cpu().numpy()

@@ -113,7 +113,7 @@ class Pi3XVO:
             with torch.amp.autocast(
                 compute_device.type,
                 dtype=dtype,
-                enabled=compute_device.type == "cuda",
+                enabled=compute_device.type == "cuda" or (compute_device.type == "mps" and dtype != torch.float32),
             ):
                 pred = self.model(chunk_imgs, **model_kwargs)
             require_finite_chunk(pred, stage='model_output', start=start_idx, end=end_idx)
@@ -198,7 +198,10 @@ class Pi3XVO:
             if 'poses' in model_kwargs: del model_kwargs['poses']
             if 'depths' in model_kwargs: del model_kwargs['depths']
             if 'rays' in model_kwargs: del model_kwargs['rays']
-            torch.cuda.empty_cache()
+            if compute_device.type == "mps":
+                torch.mps.empty_cache()
+            else:
+                torch.cuda.empty_cache()
 
             if end_idx == T:
                 break
@@ -231,7 +234,12 @@ class Pi3XVO:
         tgt_centered = (tgt - tgt_mean) * mask
         
         H = torch.bmm(src_centered.transpose(1, 2), tgt_centered)
-        U, S, V = torch.svd(H)
+        if H.device.type == "mps":
+            # MPS's SVD can fail to converge on large-magnitude 3x3 inputs (entries ~1e9 with well
+            # separated singular values); the 3x3 decomposition on the CPU is exact and cheap.
+            U, S, V = (x.to(H.device) for x in torch.svd(H.cpu()))
+        else:
+            U, S, V = torch.svd(H)
         
         R = torch.bmm(V, U.transpose(1, 2))
         

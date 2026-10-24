@@ -202,8 +202,8 @@ def run_initial_world(source,folder,*,settings,gpu_index):
     command=[str(settings.vista4d_python),'-m','atas_geometry.reconstruct.initial_world',str(source),str(folder),
         '--vista-repo',str(settings.vista4d_repo),'--model-id',settings.pi3_model_id,
         '--first-window',str(first_window),'--pixel-limit',str(pixel_limit)]
-    from atas_geometry.service.device_mapping import gpu_selector
-    env=os.environ.copy();env.update(CUDA_VISIBLE_DEVICES=gpu_selector(gpu_index),CUDA_DEVICE_ORDER='PCI_BUS_ID',
+    from atas_geometry import device as accel
+    env=os.environ.copy();env.update(**accel.worker_env(gpu_index),
         OPENBLAS_NUM_THREADS='4',OMP_NUM_THREADS='4',PYTHONUNBUFFERED='1',
         PYTHONPATH=str(root))
     with (folder/'initial_world.log').open('a') as log:

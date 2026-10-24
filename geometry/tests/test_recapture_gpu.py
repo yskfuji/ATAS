@@ -1,3 +1,4 @@
+from accelerator import explicit_test_gpu
 from dataclasses import dataclass
 import json
 import os
@@ -78,7 +79,7 @@ def test_time_local_dynamic_single_depth_buffer():
     dynamic = [(np.array([[0., 0, z]]), np.array([[0, 255, 0]], dtype=np.uint8)) for z in (1., 3.)]
     sink = []
     frames, report = render_l1_gpu(static, [camera, camera], width=16, height=16,
-        device=torch.device("cuda:" + os.environ["ATAS_TEST_GPU"]), dynamic_frames=dynamic, frame_sink=sink.append)
+        device=explicit_test_gpu(), dynamic_frames=dynamic, frame_sink=sink.append)
     assert frames == [] and len(sink) == 2
     np.testing.assert_array_equal(sink[0][8, 8], [0, 255, 0])
     np.testing.assert_array_equal(sink[1][8, 8], [255, 0, 0])
