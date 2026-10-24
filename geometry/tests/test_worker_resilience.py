@@ -275,11 +275,12 @@ def test_memory_manifest_exposes_time_local_dynamic_without_dense_transfer(tmp_p
     assert result["l2"]["registered"] and result["l2"]["time_end_exclusive"] == 2/30
 
 
-@pytest.mark.parametrize("device_name", ["cpu", "cuda"])
+@pytest.mark.parametrize("device_name", ["cpu", "cuda", "mps"])
 def test_home_incremental_index_is_exactly_equal_to_previous_set(tmp_path, monkeypatch, device_name):
     import torch
     import atas_geometry.memory.fuse as module
-    if device_name == "cuda" and not torch.cuda.is_available():
+    from accelerator import available
+    if not available(device_name):
         pytest.skip("GPU verification requires an explicitly assigned visible GPU")
     device = torch.device(device_name)
     rng = np.random.default_rng(41)

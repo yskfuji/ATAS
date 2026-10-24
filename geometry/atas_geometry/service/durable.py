@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 import re
+import sys
 import tempfile
 import threading
 import time
@@ -12,19 +13,35 @@ import uuid
 from pathlib import Path
 
 
-def atomic_json(path, value):
+def _sync(fd):
+    """fsync on macOS only reaches the drive's volatile cache; F_FULLFSYNC flushes it."""
+    if sys.platform == "darwin":
+        import fcntl
+        try:
+            fcntl.fcntl(fd, fcntl.F_FULLFSYNC)
+            return
+        except OSError:
+            pass  # e.g. ENOTSUP on some filesystems or directory descriptors
+    os.fsync(fd)
+
+
+def atomic_text(path, text):
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
     fd, name = tempfile.mkstemp(prefix="." + path.name, dir=path.parent)
     try:
         with os.fdopen(fd, "w") as f:
-            json.dump(value, f, indent=2, ensure_ascii=False)
-            f.flush(); os.fsync(f.fileno())
+            f.write(text)
+            f.flush(); _sync(f.fileno())
         os.replace(name, path)
         directory = os.open(path.parent, os.O_RDONLY)
-        try: os.fsync(directory)
+        try: _sync(directory)
         finally: os.close(directory)
     finally:
         if os.path.exists(name): os.unlink(name)
+
+
+def atomic_json(path, value):
+    atomic_text(path, json.dumps(value, indent=2, ensure_ascii=False))
 
 
 def file_hash(path):

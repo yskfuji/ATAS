@@ -118,8 +118,8 @@ def writeback_world(l0,scene,*,payload,job_id,settings,gpu_index,home_l0,home_fu
             from atas_geometry.service.resident_models import resident_command
             command=resident_command(command,repo=repo,vista_repo=settings.vista4d_repo,
                                      log_path=folder/"reconstruction.log")
-            from atas_geometry.service.device_mapping import gpu_selector
-            env=os.environ.copy(); env.update(CUDA_VISIBLE_DEVICES=gpu_selector(gpu_index),CUDA_DEVICE_ORDER="PCI_BUS_ID",
+            from atas_geometry import device as accel
+            env=os.environ.copy(); env.update(**accel.worker_env(gpu_index),
                 PYTHONUNBUFFERED="1",OPENBLAS_NUM_THREADS="4",PYTHONPATH=str(repo))
             with (folder/"reconstruction.log").open("a") as log:
                 offset = log.tell()

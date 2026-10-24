@@ -1,0 +1,24 @@
+# path::substring of the line (or * for the whole file) | reason
+geometry/atas_geometry/device.py::* | the single accelerator decision; its CUDA branch rebuilds the upstream objects (AC01 test_cuda_branch_identity)
+geometry/atas_geometry/service/device_mapping.py::* | upstream CUDA index mapping, reached only from device.py's CUDA branch
+geometry/atas_geometry/service/gpu_pool.py::* | upstream NVIDIA pool, AST-identical (AC23); used only when backend() == "cuda"
+geometry/atas_geometry/memory/gpu_voxel_index.py::'cuda' if torch.cuda.is_available() else 'cpu' | upstream default when a caller passes no device; every service caller passes accel.torch_device()
+geometry/atas_geometry/service/app.py::if accel.backend() == "cuda": | selects the upstream pool on CUDA
+geometry/atas_geometry/service/preflight.py::if accel.backend() == "cuda": | CUDA branch keeps the upstream readiness check
+geometry/atas_geometry/service/preflight.py::checks["nvidia_smi"] | upstream check, CUDA branch only
+geometry/atas_geometry/service/resident_models.py::torch.is_autocast_enabled('cuda') | process-wide precision flags kept exactly as upstream; inert on MPS (Pi3 uses scoped autocast)
+geometry/atas_geometry/service/resident_models.py::torch.set_autocast_enabled('cuda', enabled) | same precision-state restore as upstream
+geometry/atas_geometry/service/resident_models.py::torch.set_autocast_dtype('cuda', dtype) | same precision-state restore as upstream
+geometry/atas_geometry/service/resident_models.py::if accel.backend() == "cuda": | CUDA branch keeps the upstream one-card requirement
+geometry/atas_geometry/service/resident_models.py::card = os.environ.get("CUDA_VISIBLE_DEVICES", "") | CUDA branch only
+geometry/backbones/utils/recon_and_seg/recon_pi3.py::device: Union[torch.device, str] = "cuda", | upstream signature default; the recon script always passes DEVICE
+geometry/backbones/utils/recon_and_seg/seg_sam3_transformers.py::* | transformers SAM3 backend is never selected on macOS (cpp backend)
+geometry/backbones/scripts/preprocess/recon_and_seg_single.py::DEVICE = accel.backend() if accel else "cuda" | standalone (non-ATAS) use keeps the upstream CUDA default
+geometry/backbones/scripts/preprocess/recon_and_seg_single.py::torch.cuda | upstream CUDA telemetry, guarded by torch.cuda.is_available()
+geometry/backbones/scripts/preprocess/recon_and_seg_single.py::elif accel is not None and DEVICE != "cuda": | MPS/CPU telemetry branch
+geometry/backbones/scripts/preprocess/recon_and_seg_single.py::device = "cuda" | transformers SAM3 branch, never selected on macOS
+geometry/backbones/pi3/models/dinov2/utils/utils.py::torch.cuda.manual_seed_all(seed) | upstream seeding helper; a no-op without CUDA
+geometry/backbones/pi3/models/layers/attention.py::* | flash kernels forced only for CUDA bf16 (unchanged); MPS uses math/efficient, CPU its tiled exact kernel
+geometry/backbones/pi3/pipe/pi3x_vo_v2.py::enabled=compute_device.type == "cuda" | autocast enabled exactly as upstream on CUDA; on MPS only for reduced precision
+geometry/backbones/pi3/pipe/pi3x_vo_v2.py::torch.cuda.empty_cache() | CUDA branch; MPS branch calls torch.mps.empty_cache()
+geometry/backbones/utils/misc.py::torch.cuda.empty_cache() | CUDA branch; MPS branch calls torch.mps.empty_cache()

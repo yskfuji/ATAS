@@ -13,6 +13,9 @@ def native_resource_code(message):
         return "cuda_native_runtime_failed"
     if any(token in text for token in ("cuda out of memory", "torch.outofmemoryerror", "cuda error: out of memory")):
         return "cuda_out_of_memory"
+    if "mps backend out of memory" in text:
+        # Same retryable code as CUDA OOM: jobs.py and the client key on it.
+        return "cuda_out_of_memory"
     if "cusolver_status_internal_error" in text and "cusolverdncreate" in text:
         return "cuda_linalg_initialization_failed"
     return None

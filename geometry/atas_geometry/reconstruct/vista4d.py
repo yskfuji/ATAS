@@ -27,11 +27,10 @@ def effective_pi3_settings(pixel_limit: int, chunk_size: int, low_vram: bool,
 
 
 def probe_frame_count(python_bin: Path, video: Path) -> int:
+    # Exact packet count (CAP_PROP_FRAME_COUNT is only a container estimate).
     script = (
-        "import cv2,sys; "
-        "c=cv2.VideoCapture(sys.argv[1]); "
-        "n=int(c.get(cv2.CAP_PROP_FRAME_COUNT)); "
-        "c.release(); print(n)"
+        "import sys; from atas_geometry.memory.timebase import probe; "
+        "print(probe(sys.argv[1])['frames'])"
     )
     completed = subprocess.run(
         [str(python_bin), "-c", script, str(video)],
@@ -102,6 +101,12 @@ def run_recon_and_seg(
     ]
     if low_vram:
         command.append("--low_vram")
+    from atas_geometry import device as accel
+    if accel.sam3_backend() == "cpp":
+        command += ["--sam3_implementation", "cpp", "--sam3_cpp_binary", accel.sam3cpp_binary(),
+                    "--sam3_cpp_model", str(sam3_checkpoint)]
+        if os.getenv("GEOMETRY_SAM3CPP_NO_GPU", "0") == "1":
+            command.append("--sam3_cpp_no_gpu")
     from atas_geometry.service.resident_models import resident_command
     from atas_geometry import GEOMETRY_ROOT
     command = resident_command(command, repo=GEOMETRY_ROOT,
@@ -109,9 +114,8 @@ def run_recon_and_seg(
     env = os.environ.copy()
     env["PYTHONUNBUFFERED"] = "1"
     env["PYTHONPATH"] = str(repo_dir) + os.pathsep + env.get("PYTHONPATH", "")
-    env["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    from atas_geometry.service.device_mapping import gpu_selector
-    env["CUDA_VISIBLE_DEVICES"] = gpu_selector(gpu_index)
+    from atas_geometry import device as accel
+    env.update(accel.worker_env(gpu_index))
     env.setdefault("PYTORCH_ALLOC_CONF", "expandable_segments:True")
     log_path.parent.mkdir(parents=True, exist_ok=True)
     with log_path.open("w", encoding="utf-8") as log:

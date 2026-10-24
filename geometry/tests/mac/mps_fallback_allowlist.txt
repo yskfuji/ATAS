@@ -1,0 +1,1 @@
+# op name | reason  (preregistered empty: any MPS CPU-fallback op in the geometry path fails AC14)

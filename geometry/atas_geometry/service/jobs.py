@@ -306,6 +306,10 @@ class GeometryRuntime:
         video = Path(payload["video_path"])
         if not payload.get("video_sha256"):
             payload["video_sha256"] = file_hash(video)
+        # Recapture maps source time t to frame round(t * fps): reconstruct a CFR clip.
+        from atas_geometry.memory.timebase import ensure_cfr
+        video, payload["source_timebase"] = ensure_cfr(video, self.settings.hot_root / "jobs" / job["job_id"])
+        payload["video_path"] = str(video)
         keywords = [str(item) for item in payload.get("dynamic_keywords") or []]
         from atas_geometry.reconstruct.recon_revision import accepted_reconstruction, revision_l0
         trusted_l0 = accepted_reconstruction(self.settings.hot_root, payload)

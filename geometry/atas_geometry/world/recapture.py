@@ -62,11 +62,11 @@ def record_observation(l0, payload, fuse):
             for block in iter(lambda: handle.read(1024 * 1024), b""):
                 digest.update(block)
         metadata["original_video_sha256"] = digest.hexdigest()
+    if payload.get("source_timebase"):
+        metadata["source_timebase"] = payload["source_timebase"]
     metadata.update(schema_version=1, registered=transform is not None, raw_to_scene=transform)
-    path = l0 / "observation.json"
-    temporary = path.with_suffix(".tmp")
-    temporary.write_text(json.dumps(metadata, indent=2) + "\n")
-    temporary.replace(path)
+    from atas_geometry.service.durable import atomic_text
+    atomic_text(l0 / "observation.json", json.dumps(metadata, indent=2) + "\n")
 
 
 def load_source(root, payload):

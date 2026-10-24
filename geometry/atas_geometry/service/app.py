@@ -109,13 +109,19 @@ async def _create_job(
 def create_app(settings: Settings | None = None) -> FastAPI:
     settings = settings or Settings.from_env()
     settings.hot_root.mkdir(parents=True, exist_ok=True)
-    pool = GpuPool(
-        max_gpus=settings.max_gpus,
-        configured=settings.gpu_ids,
-        min_free_mib=settings.gpu_min_free_mib,
-        poll_seconds=settings.gpu_poll_seconds,
-        exclude_gpu0=settings.exclude_gpu0,
-    )
+    from atas_geometry import device as accel
+    if accel.backend() == "cuda":
+        pool = GpuPool(
+            max_gpus=settings.max_gpus,
+            configured=settings.gpu_ids,
+            min_free_mib=settings.gpu_min_free_mib,
+            poll_seconds=settings.gpu_poll_seconds,
+            exclude_gpu0=settings.exclude_gpu0,
+        )
+    else:
+        from atas_geometry.service.unified_pool import UnifiedMemoryPool
+        pool = UnifiedMemoryPool(kind=accel.backend(), python=str(settings.vista4d_python),
+                                 poll_seconds=settings.gpu_poll_seconds)
     runtime = GeometryRuntime(settings, pool)
     app = FastAPI(title="GPU geometry service", version="0.1.0")
     app.state.settings = settings
@@ -128,7 +134,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/readyz")
     def readyz() -> JSONResponse:
         from atas_geometry.service.preflight import dependency_report
-        report = dependency_report(settings)
+        report = dependency_report(settings, accelerator_probe=getattr(pool, "probe", None))
         snap = pool.snapshot()
         body = {"ready": report["ok"], "dependencies": report["checks"],
                 "render": True, "recapture": True, "semantic_camera": True,

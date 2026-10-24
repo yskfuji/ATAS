@@ -5,6 +5,7 @@ import json
 import os
 import signal
 import subprocess
+import sys
 import time
 from pathlib import Path
 
@@ -192,3 +193,38 @@ def run_isolated(command, *, folder, env, deadline_seconds, heartbeat_timeout=90
                     raise RuntimeError("owned worker group did not exit; GPU lease quarantined")
             atomic_json(folder / "worker_lease.json", {**lease, "active": False,
                                                        "finished_at": time.time()})
+
+
+if sys.platform == "darwin":
+    # macOS has no /proc. The darwin module implements the same ownership rules
+    # with libproc/sysctl; every caller above resolves these names at call time.
+    from atas_geometry.service import proc_darwin as _darwin
+    boot_id = _darwin.boot_id
+    process_start = _darwin.process_start
+    owned_group_members = _darwin.owned_group_members
+    lease_running = _darwin.lease_running
+
+    def stop_owned(lease):
+        """As above. macOS answers EPERM (not ESRCH) when a group holds only
+        zombies; that is success only when no live owned member remains."""
+        pid = int(lease.get("pid", 0))
+        members = owned_group_members(lease)
+        if members is None:
+            return False
+        if not members:
+            return True
+        try:
+            os.killpg(pid, signal.SIGTERM)
+            limit = time.monotonic() + 3
+            while lease_running(lease) and time.monotonic() < limit:
+                time.sleep(.05)
+            try:
+                os.killpg(pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            except PermissionError:
+                if owned_group_members(lease) != []:
+                    return False
+            return True
+        except (OSError, ValueError):
+            return False

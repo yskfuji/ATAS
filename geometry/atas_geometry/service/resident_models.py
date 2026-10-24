@@ -69,8 +69,8 @@ class ModelCache:
             if kind != except_kind:
                 self.weights(model).to("cpu")
         gc.collect()
-        import torch
-        torch.cuda.empty_cache()
+        from atas_geometry import device as accel
+        accel.empty_cache()
 
     def wrap(self, kind, loader):
         signature = inspect.signature(loader)
@@ -91,7 +91,7 @@ class ModelCache:
                 self.precisions[kind] = precision_state()
             else:
                 model = self.entries[kind][1]
-                self.weights(model).to(bound.arguments.get("device", "cuda"))
+                self.weights(model).to(bound.arguments.get("device", _default_device()))
                 restore_precision(self.precisions[kind])
             print("ATAS_MODEL_CACHE " + json.dumps({"kind": kind, "hit": hit}), flush=True)
             return model
@@ -100,21 +100,34 @@ class ModelCache:
 
 def install_cache():
     baseline = precision_state()
-    from utils.recon_and_seg import recon_pi3, seg_sam3_official
+    from utils.recon_and_seg import recon_pi3
+    from atas_geometry import device as accel
     cache = ModelCache()
     sam_state = precision_state()
     cache.sam_tf32 = sam_state[2:4]
     recon_pi3.init_pi3 = cache.wrap("pi3", recon_pi3.init_pi3)
-    seg_sam3_official.init_sam3_video = cache.wrap("sam3", seg_sam3_official.init_sam3_video)
+    if accel.sam3_backend() == "official":
+        # sam3.cpp runs as its own process; there are no SAM3 weights to keep resident here.
+        from utils.recon_and_seg import seg_sam3_official
+        seg_sam3_official.init_sam3_video = cache.wrap("sam3", seg_sam3_official.init_sam3_video)
     cache.baseline = baseline
     restore_precision(baseline)
     return cache
 
 
+def _default_device():
+    from atas_geometry import device as accel
+    return accel.backend()
+
+
 def location():
-    card = os.environ.get("CUDA_VISIBLE_DEVICES", "")
-    if not (card.isdigit() or (card.startswith("GPU-") and all(c.isalnum() or c == "-" for c in card))):
-        raise ValueError("resident worker requires one explicit physical GPU")
+    from atas_geometry import device as accel
+    if accel.backend() == "cuda":
+        card = os.environ.get("CUDA_VISIBLE_DEVICES", "")
+        if not (card.isdigit() or (card.startswith("GPU-") and all(c.isalnum() or c == "-" for c in card))):
+            raise ValueError("resident worker requires one explicit physical GPU")
+    else:
+        card = accel.backend()  # one unified-memory accelerator per host
     root = Path(f"/var/tmp/atas-resident-{os.getuid()}")
     root.mkdir(mode=0o700, exist_ok=True)
     if root.stat().st_uid != os.getuid() or root.stat().st_mode & 0o077:
