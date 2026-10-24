@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.14)
+project(atas_sam3_track CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# SAM3CPP_SOURCE_DIR: checkout of PABannier/sam3.cpp at the commit pinned in SAM3CPP_COMMIT.
+if(NOT SAM3CPP_SOURCE_DIR)
+  message(FATAL_ERROR "set -DSAM3CPP_SOURCE_DIR=<sam3.cpp checkout>")
+endif()
+set(SAM3_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+add_subdirectory(${SAM3CPP_SOURCE_DIR} sam3cpp EXCLUDE_FROM_ALL)
+add_executable(atas_sam3_track atas_sam3_track.cpp)
+target_link_libraries(atas_sam3_track PRIVATE sam3)

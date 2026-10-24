@@ -13,6 +13,12 @@ from utils.media import (
 )
 from utils.misc import cleanup
 
+try:  # inside the ATAS geometry service: one device decision for every backend
+    from atas_geometry import device as accel
+except ImportError:  # standalone Vista4D use keeps the original CUDA defaults
+    accel = None
+DEVICE = accel.backend() if accel else "cuda"
+
 
 @torch.no_grad()
 def main(args):
@@ -36,6 +42,10 @@ def main(args):
             # Peak memory this process reserved during the phase (not card-level usage).
             record['gpu_reserved_peak_mib'] = round(torch.cuda.max_memory_reserved() / 2**20)
             torch.cuda.reset_peak_memory_stats()
+        elif accel is not None and DEVICE != "cuda":
+            accel.synchronize()
+            # Lifetime peak physical footprint (includes Metal buffers); not reset per phase.
+            record['peak_footprint_mib'] = round((accel.peak_memory_bytes() or 0) / 2**20)
         now = time.perf_counter()
         phase_times[name] = now-phase_started
         record['seconds'] = phase_times[name]
@@ -84,12 +94,12 @@ def main(args):
         from utils.recon_and_seg.recon_pi3 import init_pi3, run_pi3
         # Keep the original FP32 checkpoint. Memory is controlled by VO
         # chunking, CPU accumulation, reduced input pixels, and autocast.
-        pi3_model = init_pi3(model_id=args.pi3_model_id, device="cuda")
+        pi3_model = init_pi3(model_id=args.pi3_model_id, device=DEVICE)
         phase('pi3_import_and_load')
         depths, cam_c2w, intrinsics = run_pi3(
             video, model=pi3_model, pixel_limit=args.pi3_pixel_limit, resize_output=True,
             vo_chunk_size=args.pi3_vo_chunk_size, vo_overlap=args.pi3_vo_overlap,
-            dtype=torch.bfloat16, device="cuda",
+            dtype=accel.compute_dtype() if accel else torch.bfloat16, device=DEVICE,
         )
         del pi3_model
         phase('pi3_inference_and_rgbd')
@@ -137,6 +147,20 @@ def main(args):
             )
             phase('sam3_sky')
         del sam3_video_predictor
+
+    elif args.sam3_implementation == "cpp":
+        from utils.recon_and_seg.seg_sam3_cpp import init_sam3_video, run_sam3_video
+        sam3_cpp = init_sam3_video(args.sam3_cpp_binary, args.sam3_cpp_model, use_gpu=not args.sam3_cpp_no_gpu)
+        phase('sam3_import_and_load')
+        sam3_report = {}
+        dynamic_mask, seg_frames = run_sam3_video(
+            video, sam3_cpp, args.seg_keywords,
+            collect_instances=(args.save_vis or args.save_entity_masks), report=sam3_report)
+        print('AVWM_SAM3_REPORT ' + json.dumps({'pass': 'dynamic', **sam3_report}), flush=True)
+        phase('sam3_dynamic')
+        sky_mask, _ = run_sam3_video(video, sam3_cpp, ["sky"], collect_instances=False, report=sam3_report)
+        print('AVWM_SAM3_REPORT ' + json.dumps({'pass': 'sky', **sam3_report}), flush=True)
+        phase('sam3_sky')
 
     elif args.sam3_implementation == "transformers":
         # Requires transformers >= 5.0.0, which xfuser==0.45.0 doesn't support
@@ -206,7 +230,10 @@ if __name__ == "__main__":
     parser.add_argument("--recon_method", default="pi3", type=str, choices=("pi3", "da3"))
     parser.add_argument("--pi3_model_id", default="yyfz233/Pi3X", type=str)
     parser.add_argument("--da3_model_id", default="depth-anything/DA3NESTED-GIANT-LARGE-1.1", type=str)
-    parser.add_argument("--sam3_implementation", default="official", choices=("official", "transformers"))
+    parser.add_argument("--sam3_implementation", default="official", choices=("official", "transformers", "cpp"))
+    parser.add_argument("--sam3_cpp_binary", default=None, type=str)
+    parser.add_argument("--sam3_cpp_model", default=None, type=str)
+    parser.add_argument("--sam3_cpp_no_gpu", action="store_true", default=False)
     parser.add_argument("--sam3_model_id", default="facebook/sam3", type=str)
     parser.add_argument("--sam3_checkpoint_path", default="checkpoints/sam3/sam3.pt", type=str)
     parser.add_argument("--sam3_offload_video_to_cpu", action="store_true", default=False)
