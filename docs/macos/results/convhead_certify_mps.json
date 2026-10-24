@@ -1,0 +1,211 @@
+{
+  "device": "mps",
+  "chunk": 2,
+  "seed": 20261022,
+  "clips": [
+    "sintel_ambush_2",
+    "sintel_bamboo_1",
+    "sintel_bandage_1",
+    "tum_freiburg1_floor",
+    "tum_freiburg1_teddy",
+    "tum_freiburg3_sitting_rpy",
+    "tum_freiburg3_structure_notexture_far",
+    "tum_freiburg3_walking_rpy"
+  ],
+  "rows": [
+    {
+      "clip": "sintel_ambush_2",
+      "frames": 21,
+      "wh": [
+        532,
+        294
+      ],
+      "single_vs_single_identical": true,
+      "chunked_identical": true,
+      "max_abs_diff": {
+        "points": 0.0,
+        "local_points": 0.0,
+        "conf": 0.0,
+        "camera_poses": 0.0
+      },
+      "finite": true,
+      "seconds_single": [
+        13.330698292003945,
+        15.28318020910956
+      ],
+      "seconds_chunked": [
+        14.164272957947105
+      ]
+    },
+    {
+      "clip": "sintel_bamboo_1",
+      "frames": 24,
+      "wh": [
+        532,
+        294
+      ],
+      "single_vs_single_identical": true,
+      "chunked_identical": true,
+      "max_abs_diff": {
+        "points": 0.0,
+        "local_points": 0.0,
+        "conf": 0.0,
+        "camera_poses": 0.0
+      },
+      "finite": true,
+      "seconds_single": [
+        18.01148408302106,
+        18.30412174994126
+      ],
+      "seconds_chunked": [
+        19.005305000115186
+      ]
+    },
+    {
+      "clip": "sintel_bandage_1",
+      "frames": 24,
+      "wh": [
+        532,
+        294
+      ],
+      "single_vs_single_identical": true,
+      "chunked_identical": true,
+      "max_abs_diff": {
+        "points": 0.0,
+        "local_points": 0.0,
+        "conf": 0.0,
+        "camera_poses": 0.0
+      },
+      "finite": true,
+      "seconds_single": [
+        19.34633579198271,
+        19.41834249999374
+      ],
+      "seconds_chunked": [
+        19.266754040960222
+      ]
+    },
+    {
+      "clip": "tum_freiburg1_floor",
+      "frames": 24,
+      "wh": [
+        532,
+        294
+      ],
+      "single_vs_single_identical": true,
+      "chunked_identical": true,
+      "max_abs_diff": {
+        "points": 0.0,
+        "local_points": 0.0,
+        "conf": 0.0,
+        "camera_poses": 0.0
+      },
+      "finite": true,
+      "seconds_single": [
+        19.402468000072986,
+        18.843453417066485
+      ],
+      "seconds_chunked": [
+        18.579911791021004
+      ]
+    },
+    {
+      "clip": "tum_freiburg1_teddy",
+      "frames": 24,
+      "wh": [
+        532,
+        294
+      ],
+      "single_vs_single_identical": true,
+      "chunked_identical": true,
+      "max_abs_diff": {
+        "points": 0.0,
+        "local_points": 0.0,
+        "conf": 0.0,
+        "camera_poses": 0.0
+      },
+      "finite": true,
+      "seconds_single": [
+        19.493871791055426,
+        18.762603959068656
+      ],
+      "seconds_chunked": [
+        19.718638791004196
+      ]
+    },
+    {
+      "clip": "tum_freiburg3_sitting_rpy",
+      "frames": 24,
+      "wh": [
+        532,
+        294
+      ],
+      "single_vs_single_identical": true,
+      "chunked_identical": true,
+      "max_abs_diff": {
+        "points": 0.0,
+        "local_points": 0.0,
+        "conf": 0.0,
+        "camera_poses": 0.0
+      },
+      "finite": true,
+      "seconds_single": [
+        18.668134999927133,
+        19.156584499869496
+      ],
+      "seconds_chunked": [
+        19.33616495807655
+      ]
+    },
+    {
+      "clip": "tum_freiburg3_structure_notexture_far",
+      "frames": 24,
+      "wh": [
+        532,
+        294
+      ],
+      "single_vs_single_identical": true,
+      "chunked_identical": true,
+      "max_abs_diff": {
+        "points": 0.0,
+        "local_points": 0.0,
+        "conf": 0.0,
+        "camera_poses": 0.0
+      },
+      "finite": true,
+      "seconds_single": [
+        18.639898458030075,
+        18.8670462500304
+      ],
+      "seconds_chunked": [
+        18.829791250173002
+      ]
+    },
+    {
+      "clip": "tum_freiburg3_walking_rpy",
+      "frames": 24,
+      "wh": [
+        532,
+        294
+      ],
+      "single_vs_single_identical": true,
+      "chunked_identical": true,
+      "max_abs_diff": {
+        "points": 0.0,
+        "local_points": 0.0,
+        "conf": 0.0,
+        "camera_poses": 0.0
+      },
+      "finite": true,
+      "seconds_single": [
+        19.067911041900516,
+        18.68880566698499
+      ],
+      "seconds_chunked": [
+        18.942699833074585
+      ]
+    }
+  ],
+  "all_identical": true,
+  "single_pass_reproducible": true
+}

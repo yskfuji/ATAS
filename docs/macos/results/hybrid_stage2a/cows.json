@@ -1,0 +1,9 @@
+{
+  "sequence": "cows",
+  "frames": 104,
+  "hybrid": {
+    "JF": 0.9800823908360025,
+    "wall_s": 248.972229457926,
+    "peak_footprint_bytes": 3236613000
+  }
+}

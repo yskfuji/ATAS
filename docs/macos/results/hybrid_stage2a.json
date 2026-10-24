@@ -1,0 +1,24 @@
+{
+  "rule_sha256": "8d35f1b4442b6c82657d84b08058197fbad99607579a48f60cbe36ae71cd6660",
+  "n": 30,
+  "mean_diff": -0.005058234866813028,
+  "sd_diff": 0.030494351167133105,
+  "t": 2.683756662844285,
+  "p_one_sided": 0.005951431374598304,
+  "t_noninferior": true,
+  "bca_ci90": [
+    -0.012902370541138129,
+    0.005325009144914089
+  ],
+  "bca_noninferior": true,
+  "hybrid_scored_zero": [],
+  "jf_sam3_mean": 0.882229004544983,
+  "jf_hybrid_mean": 0.8771707696781699,
+  "descriptive_vs_simulation": {
+    "mean_real_minus_sim": 0.0042570850032182025,
+    "sd": 0.01377866104806707,
+    "min": -0.022542344713843754,
+    "max": 0.041151343811912655
+  },
+  "PASS": true
+}

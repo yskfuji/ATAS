@@ -1,0 +1,9 @@
+{
+  "sequence": "car-roundabout",
+  "frames": 75,
+  "hybrid": {
+    "JF": 0.978633138436924,
+    "wall_s": 180.9842175419908,
+    "peak_footprint_bytes": 3231091640
+  }
+}

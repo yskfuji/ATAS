@@ -1,0 +1,33 @@
+{
+  "captured_at": 1792405215.4884129,
+  "cpu_brand": "Apple M4 Pro",
+  "hw_model": "Mac16,11",
+  "memsize_bytes": 51539607552,
+  "physical_cpus": 14,
+  "os": {
+    "productName": "macOS",
+    "productVersion": "26.5.2",
+    "buildVersion": "25F84"
+  },
+  "machine": "arm64",
+  "gpus": [
+    {
+      "model": "Apple M4 Pro",
+      "cores": "20",
+      "metal": "spdisplays_metal4"
+    }
+  ],
+  "python": "3.12.4",
+  "mps": {
+    "ok": true,
+    "torch": "2.14.1",
+    "recommended_max_memory": 40200896512,
+    "matmul_max_rel_err": 0.0,
+    "matmul_ms": 68.509167060256,
+    "env_before_import": {
+      "PYTORCH_ENABLE_MPS_FALLBACK": "1",
+      "PYTORCH_MPS_HIGH_WATERMARK_RATIO": "1.0",
+      "PYTORCH_MPS_LOW_WATERMARK_RATIO": "0.8235"
+    }
+  }
+}

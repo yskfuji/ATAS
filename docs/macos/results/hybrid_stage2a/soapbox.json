@@ -1,0 +1,9 @@
+{
+  "sequence": "soapbox",
+  "frames": 99,
+  "hybrid": {
+    "JF": 0.9155348166929564,
+    "wall_s": 315.7617342919111,
+    "peak_footprint_bytes": 3307293648
+  }
+}

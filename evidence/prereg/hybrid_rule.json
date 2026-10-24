@@ -1,0 +1,151 @@
+{
+  "status": "locked",
+  "id": "A11 stage 1",
+  "question": "Is the SIMULATED hybrid (SAM3 mask on every 4th frame, EdgeTAM between, re-initialised from SAM3's mask) non-inferior to SAM3 f16 on DAVIS-2017 val under the AC15 protocol? The simulation takes keyframe masks from SAM3's full-sequence tracker, so it is an UPPER BOUND for a real hybrid that runs SAM3 on keyframes only.",
+  "data": "DAVIS-2017 val, 30 sequences, 480p; first-frame GT box + one interior point per object (AC15 protocol)",
+  "sequences": [
+    "bike-packing",
+    "blackswan",
+    "bmx-trees",
+    "breakdance",
+    "camel",
+    "car-roundabout",
+    "car-shadow",
+    "cows",
+    "dance-twirl",
+    "dog",
+    "dogs-jump",
+    "drift-chicane",
+    "drift-straight",
+    "goat",
+    "gold-fish",
+    "horsejump-high",
+    "india",
+    "judo",
+    "kite-surf",
+    "lab-coat",
+    "libby",
+    "loading",
+    "mbike-trick",
+    "motocross-jump",
+    "paragliding-launch",
+    "parkour",
+    "pigs",
+    "scooter-black",
+    "shooting",
+    "soapbox"
+  ],
+  "unit": "sequence: J&F averaged over frames 1..T-1, then over objects (as AC15; this differs from the official DAVIS per-object pooling)",
+  "primary_k": 4,
+  "keyframe_intervals_run": [
+    4,
+    8
+  ],
+  "primary_contrast": "d_i = JF_hybrid_k4,i - JF_sam3_f16,i, paired by sequence",
+  "margin": 0.02,
+  "margin_provenance": "equals AC15's jf_margin (A8), fixed before this analysis and not tuned to the hybrid",
+  "alpha": 0.05,
+  "test": "intersection-union: one-sided paired t non-inferiority (H0: mean(d) <= -margin, df = n-1) AND lower end of the BCa 90% two-sided CI (= 95% one-sided; 10000 resamples, seed 20261019) of mean(d) > -margin. Both required; disagreement = not non-inferior. If sd(d) = 0 the t statistic is +/-inf by the sign of mean+margin.",
+  "type_I_check": {
+    "method": "simulation, normal d with sd 0.032, n 30, 400 replicates, BCa 1500 resamples",
+    "size_at_boundary_both_required": 0.043,
+    "size_t_only": 0.045,
+    "size_bca_only": 0.058,
+    "power_at_train_estimate_both_required": 0.767
+  },
+  "baseline": "SAM3 f16 JF per sequence from evidence/<baseline_run>/sam3 (AC15). Hash recipe: sha256 of json.dumps({sequence: JF}, sort_keys=True). The SAM3 rerun that produces the keyframe masks must reproduce each value within baseline_tolerance; this also proves the metric code is unchanged since AC15 (sam3_eval.py was edited after AC15 for per-frame output and mask saving).",
+  "baseline_run": "mac-20261019",
+  "baseline_tolerance": 1e-06,
+  "baseline_values_sha256": "27f343e7575a681732c854800aaa58010d993965b0566b0424cc66065e18c701",
+  "run_validity": {
+    "invalid_run": "a SAM3 baseline failure after retries, or a baseline that is not reproduced, aborts the run (nothing is scored; it is not a fail of the hybrid). After an abort a rerun is allowed only with the cause documented in attempts.jsonl and the same frozen files; the abort stays in the log.",
+    "infrastructure_failure": "non-zero exit or timeout (900 s per EdgeTAM segment) of a binary: identical retry up to 2 times, every attempt logged; then the hybrid is scored JF=0 for that sequence (conservative). Any other Python exception aborts the run. If the machine sleeps or a process is killed the run is resumed with the same command; sequences already written are kept and the log shows it.",
+    "reuse": "run refuses to start if the output directory holds results without an attempts.jsonl; deleting a result to re-roll it is a deviation and is recorded as one"
+  },
+  "no_peeking": "run prints progress only; analyse runs once after all 30 sequences are written (it refuses to run twice); n is fixed at 30, no early stopping and no stopping rule; no change to K, prompts, models, binaries, code or environment after the lock",
+  "deviation_protocol": "any deviation from this rule is reported with the original verdict; the original rule's verdict is the one that stands; exclusions: none",
+  "run_conditions": "quiet machine (no other heavy jobs), CLI threads 8, no fixed random seeds are used by the pipeline (it is deterministic); hardware and OS build are recorded in env.json",
+  "if_pass": "licenses stage 2 only: implement the hybrid in the pipeline, then (a) re-test the REAL implementation's J&F against the same margin on data chosen and registered beforehand, (b) measure end-to-end speed (>= 1.25x, quiet machine) and memory, (c) measure the downstream effect on the static map. It does not adopt the hybrid by itself.",
+  "if_fail": "a fail of the simulated upper bound is evidence against the hybrid on DAVIS; K and the method are not retuned on val; a retry needs data not used for selection. (A pass of the upper bound does not show the real hybrid passes; a fail of the real hybrid in stage 2 would be a separate finding.)",
+  "not_claimed": "DAVIS J&F non-inferiority says nothing about the downstream static-map effect or about ATAS-domain footage",
+  "descriptive_only": [
+    "EdgeTAM alone vs SAM3 (val)",
+    "hybrid K=8 vs SAM3 (val)",
+    "worst sequence"
+  ],
+  "power": {
+    "n": 30,
+    "method": "noncentral t, one-sided alpha 0.05 (t test alone; the both-required test is 1-2 points lower)",
+    "values": {
+      "train estimate: mean -0.0062, sd 0.032": 0.746,
+      "mean -0.010, sd 0.032": 0.511,
+      "mean -0.0062, sd 0.045": 0.498,
+      "mean -0.012, sd 0.045": 0.244,
+      "true mean 0, sd 0.032": 0.955
+    },
+    "note": "point estimates from the selection data (20 DAVIS train sequences; the sd rests on n=20)."
+  },
+  "selection_data": {
+    "set": "DAVIS-2017 train, 20 sequences, seed 20261019 (A8)",
+    "K4": {
+      "mean_diff": -0.0062,
+      "sd": 0.032,
+      "t_lower90": -0.0186,
+      "bca_lower90": -0.0141
+    },
+    "K8": {
+      "mean_diff": -0.017,
+      "sd": 0.048,
+      "t_lower90": -0.0356,
+      "bca_lower90": -0.0301
+    },
+    "outlier_dependence": "drift-turn (+0.116 over SAM3) lifts K=4's mean from -0.0127 to -0.0062; without it the sd is 0.014; the headroom to -0.02 rests on one recovered SAM3 failure; the estimate is subject to a winner's curse"
+  },
+  "order_of_events": "SAM3 f16 and f32 per-sequence J&F on val (mean 0.882; AC15 floor 0.892 not met) were produced and seen before this rule (AC15). EdgeTAM and the hybrid have never been run on val. K, hand-off vs box re-prompt and the margin were fixed on train.",
+  "limits_stated_in_advance": [
+    "simulation: keyframe masks come from SAM3's full-sequence tracker, so the result is an upper bound for a hybrid that runs SAM3 on keyframes only",
+    "contamination: EdgeTAM trained on DAVIS (arXiv 2501.07256 Sec 4.1); SAM3's media pool lists DAVIS2017 (arXiv 2511.16719 Table 25, column inferred); which DAVIS split each saw is not stated, so val is not known to be clean for either model",
+    "SAM3 weights are a third-party ggml conversion; identity with facebook/sam3 is unverified",
+    "mask hand-off: logits +-6, obj_score 10, zero object pointer, frame index clamp; not verified against EdgeTAM's reference mask-prompt path (SAM2 uses +-10 and a decoder-derived pointer); likely a small effect",
+    "val is consumed by this test whether it passes or fails",
+    "speed is not measured here"
+  ],
+  "frozen_files": {
+    "cache/weights/sam3cpp/sam3-f16.ggml": "1c8cef822a6f0f0908c8e7c51139c1061a842ebfbc88e8b0bb1d8e342ec50f8e",
+    "cache/weights/sam3cpp/edgetam_f16.ggml": "d2cdcef76c4d9aab704e25b11475326b41573732c568c348213d70a159409ce6",
+    "cache/sam3.cpp/atas-build/atas_sam3_track": "5827daad6078ef9155b0f1384647b5875998d4478b5145904db8cc37325eeda5",
+    "cache/sam3.cpp/atas-build-visual/atas_sam3_track": "9e890edb23557a3c09fc1b3d3cefb052c4c15b8407e87d56661b4a26adb96cf6",
+    "cache/sam3.cpp/atas-build-handoff/atas_sam3_track": "16b5b2c018eb3c7e70e24ffd63b910357ab820f9bf0a6b4b444ee4009e9e19c7",
+    "geometry/native/sam3cpp/patches/mask_handoff.patch": "6eac0a1f72a5a138854cf0d3a4196d7fd0694f8d6d19e0ac3cd37a8c6cef7b46",
+    "geometry/native/sam3cpp/atas_sam3_track.cpp": "1ca31c27404aca54a988de86232479a37d7b3756135ca79558498d0e672d799a",
+    "tools/hybrid_val.py": "7a21b7dbb0280e33f4274790894c15807e2aac65595137e0f5d3b48819c9e190",
+    "tools/edgetam_reinit_sim.py": "e1200d276c468c93e742f3830d73475177d89ae1b602d694236bcb3bfa02ebeb",
+    "tools/sam3_eval.py": "e22ce68fde12cd812a02d17d869ea68e672575e2cd6d98c92d796943d6ce9976",
+    "tools/stats_tost.py": "ea28e1149d612323dc73847d233cf5a9cc46c5d89a31996b268350123ba9c5c4"
+  },
+  "frozen_dylibs": {
+    "cache/sam3.cpp/atas-build/sam3cpp/ggml/src/ggml-blas/libggml-blas.0.9.9.dylib": "5b56c9359e989969241e1191e6c6b6f0c206a71d68116612009aaa3e4a3df6fc",
+    "cache/sam3.cpp/atas-build/sam3cpp/ggml/src/ggml-metal/libggml-metal.0.9.9.dylib": "75586dd36daad8325865ab9a138b7cfd94b1c89c8166c5dc66888f592d3600fb",
+    "cache/sam3.cpp/atas-build/sam3cpp/ggml/src/libggml-base.0.9.9.dylib": "e79b9538d489bd21c7da657bb405b6c2fea3a26e8c4fa0b85cce9826a1664b33",
+    "cache/sam3.cpp/atas-build/sam3cpp/ggml/src/libggml-cpu.0.9.9.dylib": "8580f05245e3d939589a039b8a37c041bc62c60c1b455fc6c0eb1dd10267ba8f",
+    "cache/sam3.cpp/atas-build/sam3cpp/ggml/src/libggml.0.9.9.dylib": "b4abc81f35ace2b1e51d16dfe583cf0ce01a39f24a5875e3b8328a12c64afa26",
+    "cache/sam3.cpp/atas-build-visual/sam3cpp/ggml/src/ggml-blas/libggml-blas.0.9.9.dylib": "fc9d13246a8620cb7b32f1b6d17517b1f1bd2b0f494c467d2316a3da606ccc72",
+    "cache/sam3.cpp/atas-build-visual/sam3cpp/ggml/src/ggml-metal/libggml-metal.0.9.9.dylib": "02594da6bab62166956af934f67a1d9d73dd434384d1b58da54ba242fc061d18",
+    "cache/sam3.cpp/atas-build-visual/sam3cpp/ggml/src/libggml-base.0.9.9.dylib": "e79b9538d489bd21c7da657bb405b6c2fea3a26e8c4fa0b85cce9826a1664b33",
+    "cache/sam3.cpp/atas-build-visual/sam3cpp/ggml/src/libggml-cpu.0.9.9.dylib": "fffc988827e78c05bfda973f0d9eb4d833802acbec08fea1bbb71e9fa2ea6c9c",
+    "cache/sam3.cpp/atas-build-visual/sam3cpp/ggml/src/libggml.0.9.9.dylib": "9a50371e8c9f999507824f42eafff120ea960f9c6e5477c45b282e51bac4be0c",
+    "cache/sam3.cpp/atas-build-handoff/sam3cpp/ggml/src/ggml-blas/libggml-blas.0.9.9.dylib": "666d78e4236ab20759816931c47dcd729b4b4262594143ca2a3451466aaf9ea9",
+    "cache/sam3.cpp/atas-build-handoff/sam3cpp/ggml/src/ggml-metal/libggml-metal.0.9.9.dylib": "c94f13e54604bc354fff56a0bc48b8163fb5738054e1308a976a7ccb304240ef",
+    "cache/sam3.cpp/atas-build-handoff/sam3cpp/ggml/src/libggml-base.0.9.9.dylib": "fb7ebec1ac00d76c65b33c235e9443d434322d22dab21096d04d2d3c544e3343",
+    "cache/sam3.cpp/atas-build-handoff/sam3cpp/ggml/src/libggml-cpu.0.9.9.dylib": "0dceba0ba18943dd068776db4c64b5ab87e1a176d1d455d864034d8a5bcd3a56",
+    "cache/sam3.cpp/atas-build-handoff/sam3cpp/ggml/src/libggml.0.9.9.dylib": "d99de52cdcd2471005f052411d1ed27ae00e0ba781e69b8ad6dd18170ede5da9"
+  },
+  "davis_archive_sha256": "e3d0b5b77c3d031b000a19e0e25e3e2cac65d183755601bc2cf066df1a2aa492",
+  "environment": {
+    "python": "3.12.4",
+    "pip_freeze_sha256": "f7036bb7190b054084c1f0c52c0043431048c2dcabfa21f73d1e7c6e6b981e5c",
+    "os_build": "25F84",
+    "model": "Mac16,11",
+    "cli_threads": 8
+  }
+}

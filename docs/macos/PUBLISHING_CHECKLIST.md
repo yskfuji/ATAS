@@ -1,7 +1,7 @@
 # Publishing checklist for the macOS (Apple Silicon) port
 
-Status: prepared locally on branch `macos-geometry`. Nothing has been pushed; the `origin` remote still points at the upstream
-`ziplab/ATAS`. Publishing is the owner's decision (target repository, account, timing).
+Status: published as a fork (account `yskfuji`) with a stacked set of branches (`macos/01-…` to `macos/05-…`, tip `macos-geometry`); the history was
+rebuilt on top of the upstream initial commit and no raw evidence, data or weights are included (see below). Licences kept as upstream.
 
 ## What may be published
 * Code and tests: `geometry/`, `client/`, `tools/`, `examples/`, `docs/`, the preregistrations (`evidence/prereg/`), the
@@ -28,15 +28,13 @@ Status: prepared locally on branch `macos-geometry`. Nothing has been pushed; th
 | EdgeTAM code and checkpoints | Apache-2.0 (README of `facebookresearch/EdgeTAM`) | |
 | DAVIS-2017 | non-commercial research | evaluation scripts only; no data |
 
-## Personal data and local paths
-* Commit author identity is a GitHub no-reply address (26 commits) plus the upstream author; no personal e-mail is recorded.
-* Tracked file with a local absolute path: `evidence/baseline/geometry-junit.xml` (`/Users/<name>/...`). Replace the prefix by `<repo>`
-  before publishing. Untracked evidence JSON (`hw.json`, run metadata, logs) contains local paths too: scrub or leave out.
-* `hw.json` does not record serial numbers (by design, AC20).
+## Personal data and local paths (checked before publication)
+* Commit author identity is a GitHub no-reply address; no personal e-mail is recorded.
+* The pre-port test baselines under `evidence/baseline/` had a local path prefix, the machine's host name and the user name in a temp path;
+  all three were replaced. The published results summary (`docs/macos/results`) has local paths and the lists of running processes removed.
+* `hw.json` does not record serial numbers (by design, AC20). A tree-wide search for the user name, home paths, e-mail addresses and
+  key/token patterns found nothing else.
 
-## Before pushing (owner steps)
-1. Choose the target: a new repository under the owner's account (recommended), or a pull request to upstream (needs the upstream's agreement; the patch touches `geometry/` widely).
-2. Decide the branch history: keep `macos-geometry` as is, or squash into a few commits with a clean message.
-3. Run `git grep -I "/Users/"` and the secret scan of the owner's choice on the final tree; check `git status` for untracked large files.
-4. Add a short `docs/macos/README.md` (setup, supported devices, environment variables, what is BLOCKED) and link the report.
-5. Publish only after the owner has read the final report (honest status: AC12 FAIL, AC15 below its floor, AC23/AC24 BLOCKED).
+## After publication
+* Before any further release re-run a tree-wide search for local paths, host names and tokens, and check the model-weight licences again.
+* Upstream (`ziplab/ATAS`) was asked first, through an issue, whether it wants the work; the stacked branches `macos/01-…` to `macos/05-…` can become pull requests.

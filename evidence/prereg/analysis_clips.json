@@ -1,0 +1,269 @@
+{
+  "rule": "seeded permutation (seed 20261019) of all sequence clips; first 6 calibration, next 5 pilot, rest analysis",
+  "clips": [
+    {
+      "clip": "sintel_alley_1",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "alley_1",
+      "frames": 48,
+      "clip_sha256": "8a6d2a9e3d363685e4704395eed87fbbd765d6370d95bfe8bdbde8d983a408c5",
+      "gt_sha256": "0cdeab15675c5fcf6455da91e61ba2771d284fb8d8e0c3e1bf0c367d571cb90c"
+    },
+    {
+      "clip": "sintel_ambush_2",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "ambush_2",
+      "frames": 21,
+      "clip_sha256": "6e9344a54ef9bf5b7cf1c4854a504c1b8a2ff61300cf95efa0ba31bd2310e847",
+      "gt_sha256": "95940a1ecec38415fed6b8788a75e07d6854f37430baa842d13a5661680f63b5"
+    },
+    {
+      "clip": "sintel_ambush_5",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "ambush_5",
+      "frames": 48,
+      "clip_sha256": "da7bed54c925462ba9d3b88f6f91a66890450b8265aac21aa7fdcfa22c733641",
+      "gt_sha256": "d128a08630f36c4fa2fca4f8ed24ebe1717bf3c9ff33738154020472b2209157"
+    },
+    {
+      "clip": "sintel_ambush_6",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "ambush_6",
+      "frames": 20,
+      "clip_sha256": "1fc8c0821afdeef914717918f8f0d6dfcad169d116608149b6e86ba66b0fe3af",
+      "gt_sha256": "6564e42d7e1aa94a38edcc0456c6fbf1ff7b369a68cbfc2457df2c675308a6f6"
+    },
+    {
+      "clip": "sintel_ambush_7",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "ambush_7",
+      "frames": 48,
+      "clip_sha256": "c880127462c653489918e8df179cfcb9ef1508776360554d8c076363a006c1f0",
+      "gt_sha256": "93b84caff27fd614c5278963635eb02f60622e1f1e16d20df4913c06f852fa5f"
+    },
+    {
+      "clip": "sintel_bamboo_1",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "bamboo_1",
+      "frames": 48,
+      "clip_sha256": "906556f0cd30df812bb526607bb76ac8d4e9e37f10efaebfa35cd48d49f324fe",
+      "gt_sha256": "63287e81f52e3b383dc4958cf333a99653afcc8def93f07e02d1e7d5437082e3"
+    },
+    {
+      "clip": "sintel_bamboo_2",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "bamboo_2",
+      "frames": 48,
+      "clip_sha256": "6ac61c405a164e649c92e21858e687af01fbe7fd2ad430da00fbea459d8ef9d9",
+      "gt_sha256": "bf578c85b8b35453a8fc2e57c9d3d145b8172bd8877966064901c6190ea0868e"
+    },
+    {
+      "clip": "sintel_bandage_1",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "bandage_1",
+      "frames": 48,
+      "clip_sha256": "b36aafb785e69fa6f72e2d42724583d737bc0259c44e3065b214256ded98771f",
+      "gt_sha256": "453551d402848fd091b29db0951df71fc7a86faab5d4a604f20e6e6f828d5599"
+    },
+    {
+      "clip": "sintel_bandage_2",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "bandage_2",
+      "frames": 48,
+      "clip_sha256": "ffb5119cce065dc4189479774c603f0c592812fe8c2741450d16ddd1d85d771b",
+      "gt_sha256": "214be9f0408bc8e1e694001fef5a173c3ecfd37ef24596073318bf173e40249c"
+    },
+    {
+      "clip": "sintel_cave_2",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "cave_2",
+      "frames": 48,
+      "clip_sha256": "9d83f0e30be37a6d496fdae081a00477b1c9adf138c1623e9f36e738fbe80bda",
+      "gt_sha256": "60b7d169b82948f5b68c1e374e0948b88ad425348452bfeb5d4d9d5c085a76c2"
+    },
+    {
+      "clip": "sintel_cave_4",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "cave_4",
+      "frames": 48,
+      "clip_sha256": "9438ed26135b7b1fe7059c4e1987fe90dcc8477e6d34830fe3ba30835c2cdd50",
+      "gt_sha256": "556ec6db127be0fdc42fc80fdd976301e9835bb3eb4fa19dc1182da348015e2a"
+    },
+    {
+      "clip": "sintel_market_2",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "market_2",
+      "frames": 48,
+      "clip_sha256": "0c816a310a00546a91f6ff84d868c83f05e8d4c90d50b1f577fcc5b965d1153f",
+      "gt_sha256": "0001ac6f6104f0eb8bdf875ca327a7c01ef1c8d6a589ab271c789b744586998d"
+    },
+    {
+      "clip": "sintel_market_5",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "market_5",
+      "frames": 48,
+      "clip_sha256": "5c248b107fc1617145c1f8ae0965c31b5eeb4a33a6965169f435eabf483e0474",
+      "gt_sha256": "9f21e3717899eb23586f68ed703025463f8014f4b90915c250cc1da62909a12d"
+    },
+    {
+      "clip": "sintel_market_6",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "market_6",
+      "frames": 40,
+      "clip_sha256": "a6ffe5643b17c1236b9b4955332c9d263ce029da04e323f91fdfaa85d48cb6b0",
+      "gt_sha256": "d9adbd54a79984bd456326b648cff1ae14e115a8c0146719dc22d0fca1fc802b"
+    },
+    {
+      "clip": "sintel_shaman_2",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "shaman_2",
+      "frames": 48,
+      "clip_sha256": "b749e572b3e65386b8aa1caab775b380b73e8e8f902aa67cb274972cd852cb06",
+      "gt_sha256": "aa1a3dbc3da0a074740920ba966c1880b4cffc06ddaab1baf974a35065dd346f"
+    },
+    {
+      "clip": "sintel_shaman_3",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "shaman_3",
+      "frames": 48,
+      "clip_sha256": "2ddd16f89e2e3e42ba5c4360dd9afccc6388eaa3e039d0636c773b178ee35531",
+      "gt_sha256": "c4e2a92bea03ee9cb78a6af9d5bd6532c0bc1b59a0bdac1f4d8a9a94c638430b"
+    },
+    {
+      "clip": "sintel_sleeping_1",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "sleeping_1",
+      "frames": 48,
+      "clip_sha256": "4e4d3415aab64a78eb828cb146853ced79626a5a95ed0ae1646745b3218dd373",
+      "gt_sha256": "d0b98a95294fbde3d6e95282e6b3b16130cf1774a4a0b69cb87a1af3d9365ee4"
+    },
+    {
+      "clip": "sintel_temple_2",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "temple_2",
+      "frames": 48,
+      "clip_sha256": "0e2305c3a79740b098f159f35a31fd86a42cb12406e3db548ae592be5b06a113",
+      "gt_sha256": "b8d63582fa491d09375f8831cafdb4669eb4df6d6a1c7595b9c2af4109798b58"
+    },
+    {
+      "clip": "tum_freiburg1_floor",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg1_floor",
+      "frames": 48,
+      "clip_sha256": "22e692a0a864707d70fd6c542fbbe081ac50d6823ff8ac5b850d00cc87e90187",
+      "gt_sha256": "1454e500794f6f98b2f07ad80499615dfe921d6d8444c64dc9dd800183b62279"
+    },
+    {
+      "clip": "tum_freiburg1_plant",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg1_plant",
+      "frames": 48,
+      "clip_sha256": "e74f2425a25ddd186018a7e5b7e29626bd667bd0b108700f0c2ff2fada276370",
+      "gt_sha256": "8dabc5d697739186ac5d72f162bb340b01b8285ca6b70029a5000734e23b8362"
+    },
+    {
+      "clip": "tum_freiburg1_room",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg1_room",
+      "frames": 48,
+      "clip_sha256": "117afe98e104cd89c67cd5ddedee6c520e8f863618c15e308c571e0947d058e9",
+      "gt_sha256": "594e78ebf203bc730dac729610c0689e8c224c209028d82335d9e99ee9295104"
+    },
+    {
+      "clip": "tum_freiburg1_rpy",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg1_rpy",
+      "frames": 48,
+      "clip_sha256": "3e3aa5413840a1329cd195fc9a65fb258996745ac253567daa894886a55f8351",
+      "gt_sha256": "3a7ebbdb8f6ab09115c7afe251c438252f7ecaaab6b6cbe99f1d0b66db8e9980"
+    },
+    {
+      "clip": "tum_freiburg1_teddy",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg1_teddy",
+      "frames": 48,
+      "clip_sha256": "b1f5939e228b3a28365c1e81a0ca4ac5762a8a480c2bdaeb158473e9aa01105c",
+      "gt_sha256": "253ceeb40d537d84f63bd3551e79f4aa9bc1681489f297dfb07d070dee669cc7"
+    },
+    {
+      "clip": "tum_freiburg1_xyz",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg1_xyz",
+      "frames": 48,
+      "clip_sha256": "83b222a2854d8b2f44e39a9badb04085f6267c1dc38510eb37362db99d35306b",
+      "gt_sha256": "f3b17e3ccdcd594de6757ca2a79d1a17ae65d0ded8c9e95ebce022ce52efa81b"
+    },
+    {
+      "clip": "tum_freiburg3_long_office_household",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg3_long_office_household",
+      "frames": 48,
+      "clip_sha256": "d49310877c7157412dc8d6b30bcb972d9340222007573f810426a32bacb07b4f",
+      "gt_sha256": "8dd312c663ab3be70d179a1f0ae15d6d623361aba2d78a2238e95bc99e424e50"
+    },
+    {
+      "clip": "tum_freiburg3_sitting_halfsphere",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg3_sitting_halfsphere",
+      "frames": 48,
+      "clip_sha256": "c4e787f6339a1540404142da8541aabbe9b1aa5494cc072d0ae698d6d8001472",
+      "gt_sha256": "7e7c694362554b188eb99052c63ce7d152a96ee7210021c862c5eb1b91518593"
+    },
+    {
+      "clip": "tum_freiburg3_sitting_rpy",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg3_sitting_rpy",
+      "frames": 48,
+      "clip_sha256": "1a6696b0e719e501babb281b38fe351ba41715b75a08829d9316b3db5eafbca1",
+      "gt_sha256": "16c95532471f124c3fc79c2025abad983cf58ce3c87efd39a8ef47d3a306a64c"
+    },
+    {
+      "clip": "tum_freiburg3_structure_notexture_far",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg3_structure_notexture_far",
+      "frames": 48,
+      "clip_sha256": "6c6df582566172aa2394765253b215b61d646e50411e93eec56f56e631c34da4",
+      "gt_sha256": "acbf2c99175aa9cb6219b413c3133bcd2bc19c5dcd7389457356af391b72aed3"
+    },
+    {
+      "clip": "tum_freiburg3_structure_texture_far",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg3_structure_texture_far",
+      "frames": 48,
+      "clip_sha256": "972dde5eb890826c36b53a23318bf34509354b58924ad49a974105361c50746c",
+      "gt_sha256": "03889626f58f7b9293bb388d4e506a71896a1f690a1bbb96936af8dafd3c54e5"
+    },
+    {
+      "clip": "tum_freiburg3_walking_halfsphere",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg3_walking_halfsphere",
+      "frames": 48,
+      "clip_sha256": "d02497d925ae5ac6f02ff5dec11c7a5d16f1aa25b78acbaf2a1bc085c3517677",
+      "gt_sha256": "7e22db562fbef7a1ec6e4505f2808297f4d5d2410231c9c1650e1ae2b2630822"
+    },
+    {
+      "clip": "tum_freiburg3_walking_rpy",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg3_walking_rpy",
+      "frames": 48,
+      "clip_sha256": "e07a561f69f8bcf583249b86519841564f2c30d86b64c81097b8bab2b6613666",
+      "gt_sha256": "b31c9be0b63b4becf9272a48c7ff36d734e04a6899163b81f7e84e7ab67298e4"
+    },
+    {
+      "clip": "tum_freiburg3_walking_static",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg3_walking_static",
+      "frames": 48,
+      "clip_sha256": "63d6461a5006a10697ff617504dae682bce69f5b7d3c8914b18d276fa25cf289",
+      "gt_sha256": "4507d75249d240ee723eae162dba827a6a26c941474c364604a163b60c400e04"
+    },
+    {
+      "clip": "tum_freiburg3_walking_xyz",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg3_walking_xyz",
+      "frames": 48,
+      "clip_sha256": "9f465881cf940cfb450dd38cafdc69ac8db5d7d3e5f57ba5be156f154ff7630d",
+      "gt_sha256": "772e3feb98e41a765ec748d9d3a9bf53ebb9dd45dc171535e5ac55512d1a4eef"
+    }
+  ]
+}

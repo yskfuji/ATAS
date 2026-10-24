@@ -1,0 +1,9 @@
+{
+  "sequence": "pigs",
+  "frames": 79,
+  "hybrid": {
+    "JF": 0.9280698602772883,
+    "wall_s": 251.1704092498403,
+    "peak_footprint_bytes": 3307211728
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "sequence": "dogs-jump",
+  "frames": 66,
+  "hybrid": {
+    "JF": 0.9485732258092723,
+    "wall_s": 211.50742258294486,
+    "peak_footprint_bytes": 3307277240
+  }
+}

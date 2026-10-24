@@ -1,0 +1,85 @@
+{
+  "rule_sha256": "8d35f1b4442b6c82657d84b08058197fbad99607579a48f60cbe36ae71cd6660",
+  "n_runs_per_variant": 6,
+  "wall_s_median_steady": {
+    "sam3": 1456.0242465839256,
+    "hybrid": 199.2608542921953
+  },
+  "first_run_wall_s": {
+    "sam3": 1444.6743703328539,
+    "hybrid": 197.39699849998578
+  },
+  "speedup_median_steady": 7.307126388451681,
+  "speedup_worst_case": 7.23202252492151,
+  "peak_footprint_bytes_median_steady": {
+    "sam3": 6218536072.0,
+    "hybrid": 3459599504.0
+  },
+  "peak_footprint_bytes_max_all_runs": {
+    "sam3": 6262346864,
+    "hybrid": 3486239888
+  },
+  "peak_ratio_median_steady": 0.5563366464299252,
+  "peak_ratio_max_all_runs": 0.5566986249262478,
+  "output_valid": true,
+  "frames_with_detection_median": {
+    "sam3": 48.0,
+    "hybrid": 48.0
+  },
+  "handoff": {
+    "handoff_instances": [
+      51,
+      51,
+      51,
+      51,
+      51,
+      51
+    ],
+    "handoff_failed": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "empty_keyframes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "keyframes": [
+      12,
+      12,
+      12,
+      12,
+      12,
+      12
+    ]
+  },
+  "detections": {
+    "sam3": [
+      673,
+      673,
+      673,
+      673,
+      673,
+      673
+    ],
+    "hybrid": [
+      204,
+      204,
+      204,
+      204,
+      204,
+      204
+    ]
+  },
+  "speedup_threshold": 1.25,
+  "peak_ratio_max": 1.1,
+  "PASS": true,
+  "not_demonstrated": false
+}

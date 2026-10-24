@@ -1,0 +1,53 @@
+{
+  "rule": "seeded permutation (seed 20261019) of all sequence clips; first 6 calibration, next 5 pilot, rest analysis",
+  "clips": [
+    {
+      "clip": "tum_freiburg3_nostructure_texture_far",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg3_nostructure_texture_far",
+      "frames": 48,
+      "clip_sha256": "e24acb6cedb75be13c176e9c3ac3ab73cc359d7e097b1206cf3c77bc98a51f28",
+      "gt_sha256": "f749b855d3da1acd6bd03d62cebc99c5806815369c3b48ee1406c7991bcdfc1a"
+    },
+    {
+      "clip": "tum_freiburg1_360",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg1_360",
+      "frames": 48,
+      "clip_sha256": "5e3930b7e79323354675c7c847362ea54fe87409d356e08f25792611680a861c",
+      "gt_sha256": "3fbae88e6d797cb55ff3136487792c5cebfceaaeaec58e391740fd92c2acf6f0"
+    },
+    {
+      "clip": "tum_freiburg3_sitting_static",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg3_sitting_static",
+      "frames": 48,
+      "clip_sha256": "e1d00fc89be0d7f2d59e822d4cf9d4d0f731905fb5bc48d04eeefe8ff4797513",
+      "gt_sha256": "528d4063de2f19b57b73aefa0db3eba109f95ae828fbd931a3383df952557851"
+    },
+    {
+      "clip": "sintel_alley_2",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "alley_2",
+      "frames": 48,
+      "clip_sha256": "7939099fd587699901552ed942a7a48d0c7fd3192e2761949a36f0722e354e29",
+      "gt_sha256": "cbca5598f5b4d806cf238f1085b539bb193e4835563abe58b9530aff6bd47bff"
+    },
+    {
+      "clip": "sintel_temple_3",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "temple_3",
+      "frames": 48,
+      "clip_sha256": "9536c833828ddba9721c9bd34d655aac0db7269222fe5c3fbde465df24f50ba3",
+      "gt_sha256": "9f02d1cbe992af5589d10e294897ed823c3b20f34d07e94de6932db097a629ab"
+    },
+    {
+      "clip": "tum_freiburg1_desk2",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg1_desk2",
+      "frames": 48,
+      "clip_sha256": "9d988b6a701d4dd79637d74f99c3f0e304e7fb884ee474395e2a3f8fd5cb5bbb",
+      "gt_sha256": "347fee021911d11de295427ec9f568011605ade3ce76d6d00263e3b82809772f"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "rule": "A8",
+  "selection_set": "davis2017_train_20_seed20261019",
+  "margin": 0.02,
+  "required_speedup": 1.25,
+  "jf_floor": 0.892,
+  "speed_statistic": "worst steady-state run (runs 2-6)",
+  "candidates": {
+    "q8_0": {
+      "n_sequences": 20,
+      "mean_jf": 0.9007587144092024,
+      "tost": {
+        "n": 20,
+        "mean_diff": 0.0005565087485338627,
+        "sd_diff": 0.0030470553957155566,
+        "margin": 0.02,
+        "t_lower": 30.170604056902267,
+        "t_upper": -28.537038229979938,
+        "p_lower": 0.0,
+        "p_upper": 2.2939538262803313e-17,
+        "t_tost_equivalent": true,
+        "bca_ci90": [
+          -0.00028987562892769924,
+          0.0020757626939283793
+        ],
+        "bca_bootstrap_equivalent": true
+      },
+      "speedup_vs_f16": 1.1228019393588538,
+      "peak_footprint_bytes": 3755969896,
+      "checks": {
+        "all_selection_sequences": true,
+        "equivalent": true,
+        "floor": true,
+        "speedup": false,
+        "memory": true
+      }
+    },
+    "q4_0": {
+      "n_sequences": 20,
+      "mean_jf": 0.9024703384635562,
+      "tost": {
+        "n": 20,
+        "mean_diff": 0.002268132802887657,
+        "sd_diff": 0.013731494252568404,
+        "margin": 0.02,
+        "t_lower": 7.252387506179264,
+        "t_upper": -5.774995742116792,
+        "p_lower": 3.4852841690469205e-07,
+        "p_upper": 7.2610719678690375e-06,
+        "t_tost_equivalent": true,
+        "bca_ci90": [
+          -0.0019611701906362264,
+          0.008146206099919307
+        ],
+        "bca_bootstrap_equivalent": true
+      },
+      "speedup_vs_f16": 0.9384648310644197,
+      "peak_footprint_bytes": 3436022952,
+      "checks": {
+        "all_selection_sequences": true,
+        "equivalent": true,
+        "floor": true,
+        "speedup": false,
+        "memory": true
+      }
+    }
+  },
+  "eligible": [],
+  "selected": "f16",
+  "f16": {
+    "worst_sec_per_frame": 21.01125,
+    "peak_footprint_bytes": 4457484176,
+    "mean_jf_selection_set": 0.9002022056606686
+  },
+  "timing_frames": 48,
+  "power_source": "AC Power"
+}

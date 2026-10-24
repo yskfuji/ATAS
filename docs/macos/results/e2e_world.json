@@ -1,0 +1,196 @@
+{
+  "device": "mps",
+  "via_http": true,
+  "job_ids": {
+    "recon_shot_a": "recon_037450bd9ade",
+    "render": "render_a7c4c7631c74",
+    "recon_shot_b": "recon_f04f24a43e98",
+    "recapture": "render_a6867a59a2ae"
+  },
+  "timings_s": {
+    "recon_shot_a": 1502.6040336249862,
+    "render": 6.388331040972844,
+    "recon_shot_b": 1637.9162152919453,
+    "recapture": 6.3936646659858525
+  },
+  "scene_source": "preregistered TUM pair",
+  "history": "tum_freiburg3_sitting_halfsphere_history",
+  "new": "tum_freiburg3_sitting_halfsphere",
+  "history_sha256": "47b48634b63083a74169f79c3f6c8fd3d5b03a97b0400020246e087593387bdb",
+  "new_sha256": "c4e787f6339a1540404142da8541aabbe9b1aa5494cc072d0ae698d6d8001472",
+  "sam3_model": "sam3-f16.ggml",
+  "render": {
+    "status": "succeeded",
+    "coverage": 0.6542843580245972
+  },
+  "clip_a": {
+    "initial_world_status": "repaired",
+    "reason": "verified_by_anchored_reconstruction",
+    "frames": 48,
+    "first_window": 24,
+    "fuse": {
+      "registered": true,
+      "candidate_job_id": "recon_037450bd9ade",
+      "publication_status": "pending_review",
+      "home": null
+    },
+    "publication": {
+      "publication_status": "committed",
+      "world_version": "recon_037450bd9ade",
+      "commit_published": true
+    },
+    "initial_world": {
+      "input": {
+        "policy": "initial-world-fixed-anchor-v3",
+        "source": "<workspace>/cache/hot/mac-20261019/mps/e2e/synthetic/shots/shot_a/recon_versions/049979ad03c6cdba3485226a09a857cf7d4dcf79b40fa4e05014ddc30e30fd5f/l0",
+        "video": "170e80a50bebab0f32cf496586e1a5c00439a7dee105806dcb3c3d47276c86df",
+        "cameras": "3fff73955236166a7103f32fef5f656f6da32897f5b62e2cee196a691773193e",
+        "frames": 48,
+        "first_window": 24,
+        "pixel_limit": 160000,
+        "model_id": "<workspace>/cache/weights/pi3x",
+        "dense_manifest": "a9b2485a7e9152be94e9d140cb05e872152aeab9a796344f2032c7915e14e776"
+      },
+      "tolerance": 0.08453125,
+      "source": "<workspace>/cache/hot/mac-20261019/mps/e2e/synthetic/shots/shot_a/recon_versions/049979ad03c6cdba3485226a09a857cf7d4dcf79b40fa4e05014ddc30e30fd5f/l0",
+      "l0": "<workspace>/cache/hot/mac-20261019/mps/e2e/synthetic/scenes/room/.world_versions/recon_037450bd9ade/initial_world/conditioned_l0",
+      "before": [
+        {
+          "frames": [
+            0,
+            4
+          ],
+          "count": 251,
+          "median": 0.12187433579761381
+        },
+        {
+          "frames": [
+            8,
+            12
+          ],
+          "count": 148,
+          "median": 0.06974183793689809
+        },
+        {
+          "frames": [
+            31,
+            35
+          ],
+          "count": 108,
+          "median": 0.04549096037564129
+        },
+        {
+          "frames": [
+            35,
+            39
+          ],
+          "count": 111,
+          "median": 0.0335628183341963
+        }
+      ],
+      "assessment": {
+        "supported_pairs": 4,
+        "drifted_pairs": 0,
+        "gross_pairs": 0,
+        "coverage": 0.3404255319148936,
+        "drift": false,
+        "sufficient": false
+      },
+      "published": false,
+      "status": "repaired",
+      "after": [
+        {
+          "frames": [
+            0,
+            4
+          ],
+          "count": 248,
+          "original_count": 251,
+          "before_median": 0.12187433579761381,
+          "median": 0.062326304657634723,
+          "within_2t": 0.907258064516129,
+          "passed": true
+        },
+        {
+          "frames": [
+            8,
+            12
+          ],
+          "count": 146,
+          "original_count": 148,
+          "before_median": 0.06974183793689809,
+          "median": 0.0417804903807745,
+          "within_2t": 0.9383561643835616,
+          "passed": true
+        },
+        {
+          "frames": [
+            31,
+            35
+          ],
+          "count": 107,
+          "original_count": 108,
+          "before_median": 0.04549096037564129,
+          "median": 0.04159054011960662,
+          "within_2t": 0.9439252336448598,
+          "passed": true
+        },
+        {
+          "frames": [
+            35,
+            39
+          ],
+          "count": 111,
+          "original_count": 111,
+          "before_median": 0.0335628183341963,
+          "median": 0.03235522389655505,
+          "within_2t": 0.8828828828828829,
+          "passed": true
+        }
+      ],
+      "reason": "verified_by_anchored_reconstruction",
+      "internal_geometry_accepted": true,
+      "candidate_l0": "<workspace>/cache/hot/mac-20261019/mps/e2e/synthetic/scenes/room/.world_versions/recon_037450bd9ade/initial_world/conditioned_l0",
+      "seconds": 106.08794587501325
+    }
+  },
+  "clip_b": {
+    "registered": 1,
+    "fuse": {
+      "registered": true,
+      "candidate_job_id": "recon_f04f24a43e98",
+      "publication_status": "pending_review",
+      "home": null
+    },
+    "publication": {
+      "publication_status": "committed",
+      "world_version": "recon_f04f24a43e98",
+      "commit_published": true
+    },
+    "initial_world": null
+  },
+  "world_versions": 2,
+  "world_chain": [
+    "recon_f04f24a43e98",
+    "recon_037450bd9ade"
+  ],
+  "recapture": {
+    "status": "succeeded",
+    "dynamic_points_per_frame": [
+      100787,
+      81620,
+      68737,
+      62255,
+      79903,
+      84770,
+      89413,
+      109703
+    ],
+    "frames": 12,
+    "psnr_covered_db": 14.900622404843288,
+    "psnr_covered_min_db": 13.647066572625018,
+    "mask_iou": 0.8535742676909792,
+    "mask_iou_min": 0.7570854078896975,
+    "psnr_floor_rule": "max(20 dB, CPU-fp32 recapture PSNR - 1 dB)"
+  }
+}

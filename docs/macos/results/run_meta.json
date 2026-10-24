@@ -1,0 +1,9 @@
+{
+  "run_id": "mac-20261019",
+  "run_started_at": 1792405214.4464169,
+  "argv": [
+    "tools/evidence.py",
+    "start",
+    "mac-20261019"
+  ]
+}

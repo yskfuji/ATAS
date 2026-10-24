@@ -1,0 +1,9 @@
+{
+  "sequence": "kite-surf",
+  "frames": 50,
+  "hybrid": {
+    "JF": 0.5854849876016445,
+    "wall_s": 159.65820812503807,
+    "peak_footprint_bytes": 3298118680
+  }
+}

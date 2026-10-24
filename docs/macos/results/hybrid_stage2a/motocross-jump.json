@@ -1,0 +1,9 @@
+{
+  "sequence": "motocross-jump",
+  "frames": 40,
+  "hybrid": {
+    "JF": 0.9031656782348476,
+    "wall_s": 108.84397749998607,
+    "peak_footprint_bytes": 3246050232
+  }
+}

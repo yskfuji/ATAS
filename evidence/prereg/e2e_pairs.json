@@ -1,0 +1,102 @@
+{
+  "rule": "every analysis TUM sequence: the 48-frame stride-2 window immediately before its analysis clip is the history (first observation)",
+  "pairs": [
+    {
+      "history": "tum_freiburg1_floor_history",
+      "new": "tum_freiburg1_floor",
+      "history_sha256": "2152c0485d004c6e59f3ba5c3b50eadcf44c74f1096581a583c0a8e8e01d4944",
+      "new_sha256": "22e692a0a864707d70fd6c542fbbe081ac50d6823ff8ac5b850d00cc87e90187"
+    },
+    {
+      "history": "tum_freiburg1_plant_history",
+      "new": "tum_freiburg1_plant",
+      "history_sha256": "762cf5715c286334a11abf8dda16442cca18e11ffc18e0fde1fc59e83b89b2b3",
+      "new_sha256": "e74f2425a25ddd186018a7e5b7e29626bd667bd0b108700f0c2ff2fada276370"
+    },
+    {
+      "history": "tum_freiburg1_room_history",
+      "new": "tum_freiburg1_room",
+      "history_sha256": "d8f51bcaa871b3cc67089705c9044c4ff2c6656e35fed77bd50b12ae2ab61971",
+      "new_sha256": "117afe98e104cd89c67cd5ddedee6c520e8f863618c15e308c571e0947d058e9"
+    },
+    {
+      "history": "tum_freiburg1_rpy_history",
+      "new": "tum_freiburg1_rpy",
+      "history_sha256": "3fe5153b85764e22dd323ce8acaabaa4a35259eacd9a2f5540592d576474adb7",
+      "new_sha256": "3e3aa5413840a1329cd195fc9a65fb258996745ac253567daa894886a55f8351"
+    },
+    {
+      "history": "tum_freiburg1_teddy_history",
+      "new": "tum_freiburg1_teddy",
+      "history_sha256": "db402102648f69e3869e2a3407ea4e909a066e2c325fd7d7a903e80db7ebab93",
+      "new_sha256": "b1f5939e228b3a28365c1e81a0ca4ac5762a8a480c2bdaeb158473e9aa01105c"
+    },
+    {
+      "history": "tum_freiburg1_xyz_history",
+      "new": "tum_freiburg1_xyz",
+      "history_sha256": "fa1b1e0f70cc6a7bd4ac52701fda25e36e7b1098fdcf79bf664dd10457c794df",
+      "new_sha256": "83b222a2854d8b2f44e39a9badb04085f6267c1dc38510eb37362db99d35306b"
+    },
+    {
+      "history": "tum_freiburg3_long_office_household_history",
+      "new": "tum_freiburg3_long_office_household",
+      "history_sha256": "e79698b5918622a04a8b6cfbd564a2f4e2222c21be9240515079ca1bbfe05d85",
+      "new_sha256": "d49310877c7157412dc8d6b30bcb972d9340222007573f810426a32bacb07b4f"
+    },
+    {
+      "history": "tum_freiburg3_sitting_halfsphere_history",
+      "new": "tum_freiburg3_sitting_halfsphere",
+      "history_sha256": "47b48634b63083a74169f79c3f6c8fd3d5b03a97b0400020246e087593387bdb",
+      "new_sha256": "c4e787f6339a1540404142da8541aabbe9b1aa5494cc072d0ae698d6d8001472"
+    },
+    {
+      "history": "tum_freiburg3_sitting_rpy_history",
+      "new": "tum_freiburg3_sitting_rpy",
+      "history_sha256": "9b0e93265a0a4a193b282d1822f64135c66bd05183b7f964f7ad999a5c582f4a",
+      "new_sha256": "1a6696b0e719e501babb281b38fe351ba41715b75a08829d9316b3db5eafbca1"
+    },
+    {
+      "history": "tum_freiburg3_structure_notexture_far_history",
+      "new": "tum_freiburg3_structure_notexture_far",
+      "history_sha256": "757533f801df77d111f0aa9dda2413928d045445c99fd0bebe07e5305a51bcca",
+      "new_sha256": "6c6df582566172aa2394765253b215b61d646e50411e93eec56f56e631c34da4"
+    },
+    {
+      "history": "tum_freiburg3_structure_texture_far_history",
+      "new": "tum_freiburg3_structure_texture_far",
+      "history_sha256": "dfd618f5e97d078354eacc9529963fcfd8a0fbb6dbff67cf06ffafc64faa8dab",
+      "new_sha256": "972dde5eb890826c36b53a23318bf34509354b58924ad49a974105361c50746c"
+    },
+    {
+      "history": "tum_freiburg3_walking_halfsphere_history",
+      "new": "tum_freiburg3_walking_halfsphere",
+      "history_sha256": "a77355c074bf68cc2aabc59ca4ce6623b93129f0e250f534698e3dbff42cd423",
+      "new_sha256": "d02497d925ae5ac6f02ff5dec11c7a5d16f1aa25b78acbaf2a1bc085c3517677"
+    },
+    {
+      "history": "tum_freiburg3_walking_rpy_history",
+      "new": "tum_freiburg3_walking_rpy",
+      "history_sha256": "1b019f0e50139fddde80577fe6b5dffe9470f26085fcb93a245010f41554fe6f",
+      "new_sha256": "e07a561f69f8bcf583249b86519841564f2c30d86b64c81097b8bab2b6613666"
+    },
+    {
+      "history": "tum_freiburg3_walking_static_history",
+      "new": "tum_freiburg3_walking_static",
+      "history_sha256": "ec39858a9a0f159ce81c822f311b7c190808a09b55fba55f3419912f68036ddb",
+      "new_sha256": "63d6461a5006a10697ff617504dae682bce69f5b7d3c8914b18d276fa25cf289"
+    },
+    {
+      "history": "tum_freiburg3_walking_xyz_history",
+      "new": "tum_freiburg3_walking_xyz",
+      "history_sha256": "a54579f0264ea7eb1c2d06f5849319799b46052dd1213e2c47be747433a0b3c1",
+      "new_sha256": "9f465881cf940cfb450dd38cafdc69ac8db5d7d3e5f57ba5be156f154ff7630d"
+    }
+  ],
+  "e2e_world_pair_rule": "AC26 HTTP loop: the first analysis pair (sorted) whose sequence shows people (walking/sitting)",
+  "e2e_world_pair": {
+    "history": "tum_freiburg3_sitting_halfsphere_history",
+    "new": "tum_freiburg3_sitting_halfsphere",
+    "history_sha256": "47b48634b63083a74169f79c3f6c8fd3d5b03a97b0400020246e087593387bdb",
+    "new_sha256": "c4e787f6339a1540404142da8541aabbe9b1aa5494cc072d0ae698d6d8001472"
+  }
+}

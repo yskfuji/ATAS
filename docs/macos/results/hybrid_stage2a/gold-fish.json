@@ -1,0 +1,9 @@
+{
+  "sequence": "gold-fish",
+  "frames": 78,
+  "hybrid": {
+    "JF": 0.9362080040319501,
+    "wall_s": 310.1173577080481,
+    "peak_footprint_bytes": 3397160032
+  }
+}

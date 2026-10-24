@@ -1,0 +1,9 @@
+{
+  "sequence": "drift-straight",
+  "frames": 50,
+  "hybrid": {
+    "JF": 0.9628288296707752,
+    "wall_s": 123.01825850014575,
+    "peak_footprint_bytes": 3226979256
+  }
+}

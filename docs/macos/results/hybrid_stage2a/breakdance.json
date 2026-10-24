@@ -1,0 +1,9 @@
+{
+  "sequence": "breakdance",
+  "frames": 84,
+  "hybrid": {
+    "JF": 0.9513758179254179,
+    "wall_s": 200.87593599990942,
+    "peak_footprint_bytes": 3232680864
+  }
+}

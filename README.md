@@ -102,6 +102,12 @@ cp client/.env.example client/.env          # set DASHSCOPE_API_KEY, ATAS_LLM_*,
 
 `GEOMETRY_MODEL_ROOT` contains `pi3x/` ([Pi3X](https://github.com/yyfz/Pi3)) and `sam3/sam3.pt` ([SAM3](https://huggingface.co/facebook/sam3)).
 
+## macOS (Apple Silicon)
+
+This fork runs the geometry service on Apple Silicon (MPS/Metal or CPU): see [docs/macos/README.md](docs/macos/README.md) for setup, the honest status
+(some acceptance criteria fail), licences of the model weights (Pi3X weights are CC BY-NC 4.0) and the optional features. The CUDA path is kept as
+upstream and was checked statically only. Work is split into reviewable branches `macos/01-…` to `macos/05-…`.
+
 ## Usage
 
 ```bash

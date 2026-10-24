@@ -1,0 +1,9 @@
+{
+  "sequence": "bmx-trees",
+  "frames": 80,
+  "hybrid": {
+    "JF": 0.7372602575316715,
+    "wall_s": 221.63173329201527,
+    "peak_footprint_bytes": 3265055744
+  }
+}

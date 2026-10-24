@@ -1,0 +1,9 @@
+{
+  "sequence": "horsejump-high",
+  "frames": 50,
+  "hybrid": {
+    "JF": 0.907121915527477,
+    "wall_s": 141.291008915985,
+    "peak_footprint_bytes": 3266481080
+  }
+}

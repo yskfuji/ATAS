@@ -1,0 +1,444 @@
+{
+  "n_clips": 33,
+  "n_pairs": 15,
+  "clips_sha256": "cb1a25886e0c77e5c1f41af256bd1cf5bc125bae0d199890249b697d35ee501f",
+  "pairs_sha256": "7debd0651a5a2a012bd56dfdebb3ec025868cc29cd7553ffb20a47c324f48f9a",
+  "flips": {
+    "initial_world_status": 0,
+    "registered": 0
+  },
+  "random_numbers": "common",
+  "crn_draw_sequences_equal": true,
+  "production_noise": {
+    "cpu_native_initial_world_clips_with_differing_status": 2,
+    "clips_with_native_repeats": 33,
+    "note": "native-RNG CPU repeats: upstream inference is random (scale_aug); informative"
+  },
+  "initial_world": {
+    "sintel_alley_1": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "sintel_ambush_2": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "sintel_ambush_5": {
+      "cpu": "rejected",
+      "mps": "rejected",
+      "cpu_native_statuses": [
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected"
+      ]
+    },
+    "sintel_ambush_6": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "sintel_ambush_7": {
+      "cpu": "rejected",
+      "mps": "rejected",
+      "cpu_native_statuses": [
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected"
+      ]
+    },
+    "sintel_bamboo_1": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "sintel_bamboo_2": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "sintel_bandage_1": {
+      "cpu": "rejected",
+      "mps": "rejected",
+      "cpu_native_statuses": [
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected"
+      ]
+    },
+    "sintel_bandage_2": {
+      "cpu": "rejected",
+      "mps": "rejected",
+      "cpu_native_statuses": [
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected"
+      ]
+    },
+    "sintel_cave_2": {
+      "cpu": "rejected",
+      "mps": "rejected",
+      "cpu_native_statuses": [
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected"
+      ]
+    },
+    "sintel_cave_4": {
+      "cpu": "rejected",
+      "mps": "rejected",
+      "cpu_native_statuses": [
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected"
+      ]
+    },
+    "sintel_market_2": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "sintel_market_5": {
+      "cpu": "rejected",
+      "mps": "rejected",
+      "cpu_native_statuses": [
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected"
+      ]
+    },
+    "sintel_market_6": {
+      "cpu": "rejected",
+      "mps": "rejected",
+      "cpu_native_statuses": [
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected"
+      ]
+    },
+    "sintel_shaman_2": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "sintel_shaman_3": {
+      "cpu": "error",
+      "mps": "error",
+      "cpu_native_statuses": [
+        "error",
+        "error",
+        "error",
+        "error",
+        "error"
+      ]
+    },
+    "sintel_sleeping_1": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "sintel_temple_2": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "tum_freiburg1_floor": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "tum_freiburg1_plant": {
+      "cpu": "repaired",
+      "mps": "repaired",
+      "cpu_native_statuses": [
+        "repaired",
+        "repaired",
+        "repaired",
+        "repaired",
+        "repaired"
+      ]
+    },
+    "tum_freiburg1_room": {
+      "cpu": "repaired",
+      "mps": "repaired",
+      "cpu_native_statuses": [
+        "repaired",
+        "repaired",
+        "repaired",
+        "repaired",
+        "repaired"
+      ]
+    },
+    "tum_freiburg1_rpy": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "tum_freiburg1_teddy": {
+      "cpu": "rejected",
+      "mps": "rejected",
+      "cpu_native_statuses": [
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected"
+      ]
+    },
+    "tum_freiburg1_xyz": {
+      "cpu": "repaired",
+      "mps": "repaired",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "repaired",
+        "unchanged",
+        "repaired"
+      ]
+    },
+    "tum_freiburg3_long_office_household": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "tum_freiburg3_sitting_halfsphere": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "tum_freiburg3_sitting_rpy": {
+      "cpu": "repaired",
+      "mps": "repaired",
+      "cpu_native_statuses": [
+        "repaired",
+        "repaired",
+        "repaired",
+        "repaired",
+        "repaired"
+      ]
+    },
+    "tum_freiburg3_structure_notexture_far": {
+      "cpu": "repaired",
+      "mps": "repaired",
+      "cpu_native_statuses": [
+        "repaired",
+        "repaired",
+        "repaired",
+        "repaired",
+        "repaired"
+      ]
+    },
+    "tum_freiburg3_structure_texture_far": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "tum_freiburg3_walking_halfsphere": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "tum_freiburg3_walking_rpy": {
+      "cpu": "unchanged",
+      "mps": "unchanged",
+      "cpu_native_statuses": [
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "tum_freiburg3_walking_static": {
+      "cpu": "rejected",
+      "mps": "rejected",
+      "cpu_native_statuses": [
+        "rejected",
+        "unchanged",
+        "unchanged",
+        "unchanged",
+        "unchanged"
+      ]
+    },
+    "tum_freiburg3_walking_xyz": {
+      "cpu": "rejected",
+      "mps": "rejected",
+      "cpu_native_statuses": [
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected",
+        "rejected"
+      ]
+    }
+  },
+  "registration": {
+    "tum_freiburg1_floor": {
+      "cpu": true,
+      "mps": true
+    },
+    "tum_freiburg1_plant": {
+      "cpu": true,
+      "mps": true
+    },
+    "tum_freiburg1_room": {
+      "cpu": true,
+      "mps": true
+    },
+    "tum_freiburg1_rpy": {
+      "cpu": true,
+      "mps": true
+    },
+    "tum_freiburg1_teddy": {
+      "cpu": true,
+      "mps": true
+    },
+    "tum_freiburg1_xyz": {
+      "cpu": true,
+      "mps": true
+    },
+    "tum_freiburg3_long_office_household": {
+      "cpu": true,
+      "mps": true
+    },
+    "tum_freiburg3_sitting_halfsphere": {
+      "cpu": true,
+      "mps": true
+    },
+    "tum_freiburg3_sitting_rpy": {
+      "cpu": true,
+      "mps": true
+    },
+    "tum_freiburg3_structure_notexture_far": {
+      "cpu": true,
+      "mps": true
+    },
+    "tum_freiburg3_structure_texture_far": {
+      "cpu": true,
+      "mps": true
+    },
+    "tum_freiburg3_walking_halfsphere": {
+      "cpu": true,
+      "mps": true
+    },
+    "tum_freiburg3_walking_rpy": {
+      "cpu": true,
+      "mps": true
+    },
+    "tum_freiburg3_walking_static": {
+      "cpu": true,
+      "mps": true
+    },
+    "tum_freiburg3_walking_xyz": {
+      "cpu": true,
+      "mps": true
+    }
+  }
+}

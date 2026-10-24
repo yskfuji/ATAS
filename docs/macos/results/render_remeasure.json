@@ -1,0 +1,186 @@
+{
+  "n_runs": 5,
+  "source_world": "tum_freiburg3_sitting_halfsphere",
+  "source_world_sha256": "c4e787f6339a1540404142da8541aabbe9b1aa5494cc072d0ae698d6d8001472",
+  "source_history": "tum_freiburg3_sitting_halfsphere_history",
+  "world_version": "recon_f04f24a43e98",
+  "subject_visible_frames": 26,
+  "coverage_floor": 0.5,
+  "coverage_by_run": [
+    0.6543566584587097,
+    0.7635300755500793,
+    0.5736554861068726,
+    0.7160035967826843,
+    0.5986853837966919
+  ],
+  "coverage_min": 0.5736554861068726,
+  "coverage_mean": 0.6612462401390076,
+  "subject_visible_fraction_min": 1.0,
+  "subject_center_in_frame_all": true,
+  "grey_fraction_max": 0.31492931978202165,
+  "distinct_camera_poses": 5,
+  "cache_hits": 0,
+  "cpu_render_check": {
+    "world_chain": [
+      "recon_4556bbc084a9",
+      "recon_5f4910e876de"
+    ],
+    "runs": [
+      {
+        "side_degrees": 20,
+        "coverage": 0.6549339294433594,
+        "subject_visible_fraction": 1.0,
+        "subject_center_in_frame": true,
+        "camera_distance_to_subject": 1.1413686464266048,
+        "camera_start": [
+          0.397,
+          0.19,
+          -0.086
+        ],
+        "grey_fraction": 0.2057291365258488,
+        "frames": 16,
+        "from_cache": false
+      },
+      {
+        "side_degrees": 12,
+        "coverage": 0.7640716433525085,
+        "subject_visible_fraction": 1.0,
+        "subject_center_in_frame": true,
+        "camera_distance_to_subject": 1.1555739334148167,
+        "camera_start": [
+          0.239,
+          0.19,
+          -0.119
+        ],
+        "grey_fraction": 0.10468114028742284,
+        "frames": 16,
+        "from_cache": false
+      }
+    ],
+    "coverage_min": 0.6549339294433594,
+    "subject_visible_fraction_min": 1.0,
+    "grey_fraction_max": 0.2057291365258488
+  },
+  "render_s_by_run": [
+    7.436473625013605,
+    6.3635080410167575,
+    6.370674042031169,
+    6.365012124879286,
+    6.368687791982666
+  ],
+  "render_max_s": 7.436473625013605,
+  "first_run_s": 7.436473625013605,
+  "steady_max_s": 6.370674042031169,
+  "peak_footprint_bytes_max": 3464073776,
+  "recommended_max_memory": 40200306688,
+  "swap_delta_mb_max": 0.0,
+  "memory_source": "darwin_lifetime_max_phys_footprint",
+  "runs": [
+    {
+      "run": 0,
+      "side_degrees": 20,
+      "render_s": 7.436473625013605,
+      "status": "succeeded",
+      "coverage": 0.6543566584587097,
+      "peak_footprint_bytes": 3453866400,
+      "swap_delta_mb": 0.0,
+      "job_id": "render_1b7bb861e2eb",
+      "subject_visible_fraction": 1.0,
+      "subject_center_in_frame": true,
+      "camera_distance_to_subject": 1.1425186817043074,
+      "camera_start": [
+        0.399,
+        0.19,
+        -0.086
+      ],
+      "grey_fraction": 0.20698540581597222,
+      "frames": 16,
+      "from_cache": false
+    },
+    {
+      "run": 1,
+      "side_degrees": 12,
+      "render_s": 6.3635080410167575,
+      "status": "succeeded",
+      "coverage": 0.7635300755500793,
+      "peak_footprint_bytes": 3462205856,
+      "swap_delta_mb": 0.0,
+      "job_id": "render_31eb7dbb7ec4",
+      "subject_visible_fraction": 1.0,
+      "subject_center_in_frame": true,
+      "camera_distance_to_subject": 1.1566842956935912,
+      "camera_start": [
+        0.24,
+        0.19,
+        -0.12
+      ],
+      "grey_fraction": 0.1055421428915895,
+      "frames": 16,
+      "from_cache": false
+    },
+    {
+      "run": 2,
+      "side_degrees": 28,
+      "render_s": 6.370674042031169,
+      "status": "succeeded",
+      "coverage": 0.5736554861068726,
+      "peak_footprint_bytes": 3452326208,
+      "swap_delta_mb": 0.0,
+      "job_id": "render_62cfe7bc7dc4",
+      "subject_visible_fraction": 1.0,
+      "subject_center_in_frame": true,
+      "camera_distance_to_subject": 1.131073657913327,
+      "camera_start": [
+        0.55,
+        0.19,
+        -0.034
+      ],
+      "grey_fraction": 0.31492931978202165,
+      "frames": 16,
+      "from_cache": false
+    },
+    {
+      "run": 3,
+      "side_degrees": 16,
+      "render_s": 6.365012124879286,
+      "status": "succeeded",
+      "coverage": 0.7160035967826843,
+      "peak_footprint_bytes": 3464073776,
+      "swap_delta_mb": 0.0,
+      "job_id": "render_e6f3eaff85df",
+      "subject_visible_fraction": 1.0,
+      "subject_center_in_frame": true,
+      "camera_distance_to_subject": 1.1492794979863061,
+      "camera_start": [
+        0.32,
+        0.19,
+        -0.105
+      ],
+      "grey_fraction": 0.14249939718364196,
+      "frames": 16,
+      "from_cache": false
+    },
+    {
+      "run": 4,
+      "side_degrees": 24,
+      "render_s": 6.368687791982666,
+      "status": "succeeded",
+      "coverage": 0.5986853837966919,
+      "peak_footprint_bytes": 3451130152,
+      "swap_delta_mb": 0.0,
+      "job_id": "render_ef96c056d9ab",
+      "subject_visible_fraction": 1.0,
+      "subject_center_in_frame": true,
+      "camera_distance_to_subject": 1.1363873925389811,
+      "camera_start": [
+        0.476,
+        0.19,
+        -0.063
+      ],
+      "grey_fraction": 0.2678221450617284,
+      "frames": 16,
+      "from_cache": false
+    }
+  ],
+  "demo_render": true
+}

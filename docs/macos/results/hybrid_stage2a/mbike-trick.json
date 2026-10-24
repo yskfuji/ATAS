@@ -1,0 +1,9 @@
+{
+  "sequence": "mbike-trick",
+  "frames": 79,
+  "hybrid": {
+    "JF": 0.9091166896739258,
+    "wall_s": 220.57882599998266,
+    "peak_footprint_bytes": 3264941056
+  }
+}

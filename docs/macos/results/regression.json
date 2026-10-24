@@ -1,0 +1,55 @@
+{
+  "cuda_mode": {
+    "exit_code": 0,
+    "passed": 307,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 14,
+    "failed_ids": [],
+    "error_ids": [],
+    "skipped_ids": [
+      "tests/test_alignment_refinement.py::test_gpu_projection_matches_cpu_geometry[cuda]",
+      "tests/test_cinematic_camera.py::test_semantic_runtime_writes_real_mp4_and_camera[False]",
+      "tests/test_cinematic_camera.py::test_semantic_runtime_writes_real_mp4_and_camera[True]",
+      "tests/test_dynamic_footprint.py::test_dynamic_boundary_does_not_expand_past_one_pixel",
+      "tests/test_dynamic_footprint.py::test_near_dynamic_fills_grid_far_stays_small_and_cap_limits",
+      "tests/test_dynamic_footprint.py::test_shared_depth_keeps_foreground_static_and_no_event_trails",
+      "tests/test_dynamic_footprint.py::test_zero_dynamic_radius_is_exact_legacy_pixels",
+      "tests/test_geometry_core_v2.py::test_incremental_membership_exact_with_duplicates_and_high_keys[cuda]",
+      "tests/test_recapture_gpu.py::test_time_local_dynamic_single_depth_buffer",
+      "tests/test_static_footprint.py::test_dynamic_is_one_pixel_and_shares_static_depth_buffer[2-center0]",
+      "tests/test_static_footprint.py::test_dynamic_is_one_pixel_and_shares_static_depth_buffer[4-center1]",
+      "tests/test_static_footprint.py::test_static_projection_scales_and_hard_cap_preserves_large_holes",
+      "tests/test_static_footprint.py::test_zero_expansion_is_exact_pixel_reference",
+      "tests/test_worker_resilience.py::test_home_incremental_index_is_exactly_equal_to_previous_set[cuda]"
+    ]
+  },
+  "mps_mode": {
+    "exit_code": 1,
+    "passed": 424,
+    "failed": 2,
+    "errors": 0,
+    "skipped": 3,
+    "failed_ids": [
+      "tests/test_resource_admission.py::test_vista_failure_is_structured_resource_not_generic_exit[RuntimeError: cusolver error: CUSOLVER_STATUS_INTERNAL_ERROR, when calling `cusolverDnCreate(handle)`-cuda_linalg_initialization_failed]",
+      "tests/test_resource_admission.py::test_vista_failure_is_structured_resource_not_generic_exit[torch.OutOfMemoryError: CUDA out of memory. GPU 0 is full.-cuda_out_of_memory]"
+    ],
+    "error_ids": [],
+    "skipped_ids": [
+      "tests/test_alignment_refinement.py::test_gpu_projection_matches_cpu_geometry[cuda]",
+      "tests/test_geometry_core_v2.py::test_incremental_membership_exact_with_duplicates_and_high_keys[cuda]",
+      "tests/test_worker_resilience.py::test_home_incremental_index_is_exactly_equal_to_previous_set[cuda]"
+    ]
+  },
+  "client": {
+    "exit_code": 0,
+    "passed": 162,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "failed_ids": [],
+    "error_ids": [],
+    "skipped_ids": []
+  },
+  "orphan_workers_after_run": []
+}

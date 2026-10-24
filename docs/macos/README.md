@@ -31,6 +31,9 @@ see PUBLISHING_CHECKLIST.md.
 * Opt-in features: [HYBRID.md](HYBRID.md) (SAM3 keyframes + EdgeTAM; 7.3x faster, 0.56x memory on the tested clip) and the ConvHead
   chunking (A10; driver peak 15.1 -> 8.1 GiB, bit-identical, default off).
 
+## Results
+Aggregate results of the evidence run are in [results/](results/README.md); the full evidence run is not published.
+
 ## Tests
     cd geometry && ../.venv-macos/bin/python -m pytest tests/mac -q        # macOS-specific suite
     ../.venv-macos/bin/python tools/evidence_gate.py evidence/<run-id>        # the acceptance gate on a finished evidence run

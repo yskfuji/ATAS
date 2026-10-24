@@ -1,0 +1,9 @@
+{
+  "sequence": "dance-twirl",
+  "frames": 90,
+  "hybrid": {
+    "JF": 0.9375391596022029,
+    "wall_s": 219.13435220881365,
+    "peak_footprint_bytes": 3236744144
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "sequence": "judo",
+  "frames": 34,
+  "hybrid": {
+    "JF": 0.8791104386336178,
+    "wall_s": 96.05238712509163,
+    "peak_footprint_bytes": 3239234536
+  }
+}

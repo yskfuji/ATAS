@@ -1,0 +1,36 @@
+{
+  "variant": "f16",
+  "n_sequences": 30,
+  "errors": [],
+  "jf_margin": 0.02,
+  "jf_davis17_val": 0.882229004544983,
+  "jf_davis17_val_cpu_f32": 0.8819338936265376,
+  "jf_floor": 0.892,
+  "jf_floor_source": "Carion et al., SAM 3: Segment Anything with Concepts, arXiv:2511.16719v2, Table 5 (DAVIS17 J&F 92.2, first-frame mask prompts); floor = published - 0.03; our protocol (box + one interior point) is weaker than mask prompting, so the floor is conservative",
+  "jf_tost": {
+    "n": 30,
+    "mean_diff": 0.00029511091844537006,
+    "sd_diff": 0.001581917200045196,
+    "margin": 0.02,
+    "t_lower": 70.26973381909197,
+    "t_upper": -68.22615142433732,
+    "p_lower": 0.0,
+    "p_upper": 7.052026062086683e-34,
+    "t_tost_equivalent": true,
+    "bca_ci90": [
+      -1.591632909080997e-05,
+      0.001130660642226729
+    ],
+    "bca_bootstrap_equivalent": true
+  },
+  "jf_tost_equivalent_vs_f32_cpu": true,
+  "davis_sec_per_frame_max": 131.592,
+  "timing": {
+    "clip_frames": 48,
+    "sec_per_frame_max": 23.3357,
+    "source": "perf.json service recon runs (person prompt, 1280x720)"
+  },
+  "peak_footprint_bytes": 3728264528,
+  "protocol": "first-frame GT box + one interior positive point per object; J region IoU, F boundary (0.008 diag)",
+  "pytorch_sam3_reference": "BLOCKED: facebook/sam3 weights are gated"
+}

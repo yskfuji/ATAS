@@ -1,0 +1,3 @@
+{"chunk": 0, "frames": 24, "wh": [532, 294], "forward_s": 17.93, "driver_before_gib": 5.08, "driver_peak_gib": 15.07, "lifetime_peak_footprint_gib": 15.7, "crn_draws": 5}
+{"chunk": 4, "frames": 24, "wh": [532, 294], "forward_s": 16.78, "driver_before_gib": 5.08, "driver_peak_gib": 9.09, "lifetime_peak_footprint_gib": 9.73, "crn_draws": 5}
+{"chunk": 2, "frames": 24, "wh": [532, 294], "forward_s": 18.1, "driver_before_gib": 5.08, "driver_peak_gib": 8.09, "lifetime_peak_footprint_gib": 8.73, "crn_draws": 5}

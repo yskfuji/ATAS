@@ -1,0 +1,9 @@
+{
+  "sequence": "drift-chicane",
+  "frames": 52,
+  "hybrid": {
+    "JF": 0.9590641012808325,
+    "wall_s": 123.58632275019772,
+    "peak_footprint_bytes": 3228535688
+  }
+}

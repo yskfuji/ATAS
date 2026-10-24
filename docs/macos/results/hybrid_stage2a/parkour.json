@@ -1,0 +1,9 @@
+{
+  "sequence": "parkour",
+  "frames": 100,
+  "hybrid": {
+    "JF": 0.9692581092703915,
+    "wall_s": 239.48461941699497,
+    "peak_footprint_bytes": 3232254904
+  }
+}

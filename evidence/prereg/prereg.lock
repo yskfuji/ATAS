@@ -1,0 +1,12 @@
+{
+  "stage": 2,
+  "locked_at": "2026-10-19T19:19:39+0900",
+  "files": {
+    "evidence/prereg/calibration_clips.json": "94e61c60fb34b91c230245e56adbad330838344c2414cda6708cabbbaae85b59",
+    "evidence/prereg/pilot_clips.json": "0207e2f1d02e362b0a7f8c35f4f1a442871fca0911ef1149ac8cb8e57c01afdf",
+    "evidence/prereg/analysis_clips.json": "cb1a25886e0c77e5c1f41af256bd1cf5bc125bae0d199890249b697d35ee501f",
+    "evidence/prereg/margins.json": "f53250ba9b5598d8221336cb6fc373d9cf50ebee9e3ee239e822b17547882c33",
+    "evidence/prereg/e2e_pairs.json": "7debd0651a5a2a012bd56dfdebb3ec025868cc29cd7553ffb20a47c324f48f9a",
+    "geometry/tests/mac/mps_fallback_allowlist.txt": "d5c13ff96d2149761c978a63b2f843df42894caaab4269565a6b42aa036a360c"
+  }
+}

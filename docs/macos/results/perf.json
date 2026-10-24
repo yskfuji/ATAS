@@ -1,0 +1,661 @@
+{
+  "n_runs": 5,
+  "clip": "tum_freiburg1_floor",
+  "clip_frames": 48,
+  "perf_clip_frames_preregistered": 48,
+  "recon_wh": [
+    1280,
+    720
+  ],
+  "pi3x_settings": {
+    "recon_wh": [
+      1280,
+      720
+    ],
+    "requested": {
+      "pi3_pixel_limit": 255000,
+      "pi3_vo_chunk": 48
+    },
+    "effective": {
+      "pi3_pixel_limit": 160000,
+      "pi3_vo_chunk": 24,
+      "pi3_vo_overlap": 6
+    },
+    "low_vram": true
+  },
+  "dtype": "float32",
+  "recon_max_s": 1340.14814308309,
+  "render_max_s": 3.381572333863005,
+  "first_run": {
+    "run": 0,
+    "recon_s": 1340.14814308309,
+    "render_s": 3.381572333863005,
+    "render_status": "succeeded",
+    "peak_footprint_bytes": 18660808392,
+    "swap_delta_mb": 0.0,
+    "recon_timings": {
+      "vista4d_recon_s": 1331.3645542920567,
+      "recon_phases": [
+        {
+          "stage": "video_decode_resize",
+          "peak_footprint_mib": 650,
+          "seconds": 0.36311012506484985
+        },
+        {
+          "stage": "pi3_import_and_load",
+          "peak_footprint_mib": 7892,
+          "seconds": 11.534165374934673
+        },
+        {
+          "stage": "pi3_inference_and_rgbd",
+          "peak_footprint_mib": 17448,
+          "seconds": 48.540875792037696
+        },
+        {
+          "stage": "geometry_cleanup",
+          "peak_footprint_mib": 17448,
+          "seconds": 0.11700620804913342
+        },
+        {
+          "stage": "sam3_import_and_load",
+          "peak_footprint_mib": 17448,
+          "seconds": 0.0020442919339984655
+        },
+        {
+          "stage": "sam3_dynamic",
+          "peak_footprint_mib": 17448,
+          "seconds": 895.494716291083
+        },
+        {
+          "stage": "sam3_sky",
+          "peak_footprint_mib": 17448,
+          "seconds": 371.575415374944
+        },
+        {
+          "stage": "segmentation_cleanup",
+          "peak_footprint_mib": 17448,
+          "seconds": 0.04252958414144814
+        },
+        {
+          "stage": "save_rgb_video",
+          "peak_footprint_mib": 17448,
+          "seconds": 0.744863040978089
+        },
+        {
+          "stage": "save_depths",
+          "peak_footprint_mib": 17448,
+          "seconds": 0.27998070884495974
+        },
+        {
+          "stage": "save_cameras_dynamic_mask",
+          "peak_footprint_mib": 17448,
+          "seconds": 0.0318531661760062
+        },
+        {
+          "stage": "save_entity_masks",
+          "peak_footprint_mib": 17448,
+          "seconds": 1.7001870418898761
+        },
+        {
+          "stage": "save_sky_masks",
+          "peak_footprint_mib": 17448,
+          "seconds": 0.028129749931395054
+        }
+      ],
+      "initial_world_alignment_s": 2.2651684160809964,
+      "fuse_l1_s": 5.479724457953125
+    },
+    "sam3_passes": [
+      {
+        "pass": "dynamic",
+        "frames": 48,
+        "passes": 1,
+        "detections": 344,
+        "load_s": 0.49437,
+        "track_s": 890.588,
+        "sec_per_frame_max": 23.3357,
+        "use_gpu": true,
+        "peak_footprint_bytes": 4420620152
+      },
+      {
+        "pass": "sky",
+        "frames": 48,
+        "passes": 1,
+        "detections": 0,
+        "load_s": 0.429084,
+        "track_s": 369.179,
+        "sec_per_frame_max": 7.70545,
+        "use_gpu": true,
+        "peak_footprint_bytes": 2774420120
+      }
+    ]
+  },
+  "peak_footprint_bytes_max": 18660808392,
+  "recommended_max_memory": 40200306688,
+  "swap_delta_mb_max": 0.0,
+  "memory_source": "darwin_lifetime_max_phys_footprint",
+  "sam3_sec_per_frame_max": 23.3357,
+  "sam3_model": "sam3-f16.ggml",
+  "runs": [
+    {
+      "run": 0,
+      "recon_s": 1340.14814308309,
+      "render_s": 3.381572333863005,
+      "render_status": "succeeded",
+      "peak_footprint_bytes": 18660808392,
+      "swap_delta_mb": 0.0,
+      "recon_timings": {
+        "vista4d_recon_s": 1331.3645542920567,
+        "recon_phases": [
+          {
+            "stage": "video_decode_resize",
+            "peak_footprint_mib": 650,
+            "seconds": 0.36311012506484985
+          },
+          {
+            "stage": "pi3_import_and_load",
+            "peak_footprint_mib": 7892,
+            "seconds": 11.534165374934673
+          },
+          {
+            "stage": "pi3_inference_and_rgbd",
+            "peak_footprint_mib": 17448,
+            "seconds": 48.540875792037696
+          },
+          {
+            "stage": "geometry_cleanup",
+            "peak_footprint_mib": 17448,
+            "seconds": 0.11700620804913342
+          },
+          {
+            "stage": "sam3_import_and_load",
+            "peak_footprint_mib": 17448,
+            "seconds": 0.0020442919339984655
+          },
+          {
+            "stage": "sam3_dynamic",
+            "peak_footprint_mib": 17448,
+            "seconds": 895.494716291083
+          },
+          {
+            "stage": "sam3_sky",
+            "peak_footprint_mib": 17448,
+            "seconds": 371.575415374944
+          },
+          {
+            "stage": "segmentation_cleanup",
+            "peak_footprint_mib": 17448,
+            "seconds": 0.04252958414144814
+          },
+          {
+            "stage": "save_rgb_video",
+            "peak_footprint_mib": 17448,
+            "seconds": 0.744863040978089
+          },
+          {
+            "stage": "save_depths",
+            "peak_footprint_mib": 17448,
+            "seconds": 0.27998070884495974
+          },
+          {
+            "stage": "save_cameras_dynamic_mask",
+            "peak_footprint_mib": 17448,
+            "seconds": 0.0318531661760062
+          },
+          {
+            "stage": "save_entity_masks",
+            "peak_footprint_mib": 17448,
+            "seconds": 1.7001870418898761
+          },
+          {
+            "stage": "save_sky_masks",
+            "peak_footprint_mib": 17448,
+            "seconds": 0.028129749931395054
+          }
+        ],
+        "initial_world_alignment_s": 2.2651684160809964,
+        "fuse_l1_s": 5.479724457953125
+      },
+      "sam3_passes": [
+        {
+          "pass": "dynamic",
+          "frames": 48,
+          "passes": 1,
+          "detections": 344,
+          "load_s": 0.49437,
+          "track_s": 890.588,
+          "sec_per_frame_max": 23.3357,
+          "use_gpu": true,
+          "peak_footprint_bytes": 4420620152
+        },
+        {
+          "pass": "sky",
+          "frames": 48,
+          "passes": 1,
+          "detections": 0,
+          "load_s": 0.429084,
+          "track_s": 369.179,
+          "sec_per_frame_max": 7.70545,
+          "use_gpu": true,
+          "peak_footprint_bytes": 2774420120
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "recon_s": 1332.060460708104,
+      "render_s": 3.3735240001697093,
+      "render_status": "succeeded",
+      "peak_footprint_bytes": 17671116608,
+      "swap_delta_mb": -16.0,
+      "recon_timings": {
+        "vista4d_recon_s": 1325.3596589169465,
+        "recon_phases": [
+          {
+            "stage": "video_decode_resize",
+            "peak_footprint_mib": 639,
+            "seconds": 0.3656973750330508
+          },
+          {
+            "stage": "pi3_import_and_load",
+            "peak_footprint_mib": 6754,
+            "seconds": 7.499776332871988
+          },
+          {
+            "stage": "pi3_inference_and_rgbd",
+            "peak_footprint_mib": 16539,
+            "seconds": 48.03181279217824
+          },
+          {
+            "stage": "geometry_cleanup",
+            "peak_footprint_mib": 16539,
+            "seconds": 0.07023645797744393
+          },
+          {
+            "stage": "sam3_import_and_load",
+            "peak_footprint_mib": 16539,
+            "seconds": 0.0017674588598310947
+          },
+          {
+            "stage": "sam3_dynamic",
+            "peak_footprint_mib": 16539,
+            "seconds": 894.4373284580652
+          },
+          {
+            "stage": "sam3_sky",
+            "peak_footprint_mib": 16539,
+            "seconds": 371.22267912491225
+          },
+          {
+            "stage": "segmentation_cleanup",
+            "peak_footprint_mib": 16539,
+            "seconds": 0.04330220818519592
+          },
+          {
+            "stage": "save_rgb_video",
+            "peak_footprint_mib": 16539,
+            "seconds": 0.7264555839356035
+          },
+          {
+            "stage": "save_depths",
+            "peak_footprint_mib": 16539,
+            "seconds": 0.2685522499959916
+          },
+          {
+            "stage": "save_cameras_dynamic_mask",
+            "peak_footprint_mib": 16539,
+            "seconds": 0.035342332907021046
+          },
+          {
+            "stage": "save_entity_masks",
+            "peak_footprint_mib": 16539,
+            "seconds": 1.7164141251705587
+          },
+          {
+            "stage": "save_sky_masks",
+            "peak_footprint_mib": 16539,
+            "seconds": 0.029907624935731292
+          }
+        ],
+        "initial_world_alignment_s": 2.2498507080599666,
+        "fuse_l1_s": 5.466371749993414
+      },
+      "sam3_passes": [
+        {
+          "pass": "dynamic",
+          "frames": 48,
+          "passes": 1,
+          "detections": 344,
+          "load_s": 0.483589,
+          "track_s": 889.546,
+          "sec_per_frame_max": 23.3153,
+          "use_gpu": true,
+          "peak_footprint_bytes": 4435087224
+        },
+        {
+          "pass": "sky",
+          "frames": 48,
+          "passes": 1,
+          "detections": 0,
+          "load_s": 0.470976,
+          "track_s": 369.096,
+          "sec_per_frame_max": 7.69886,
+          "use_gpu": true,
+          "peak_footprint_bytes": 2774272592
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "recon_s": 1333.992180667119,
+      "render_s": 3.365571874892339,
+      "render_status": "succeeded",
+      "peak_footprint_bytes": 17272641152,
+      "swap_delta_mb": 0.0,
+      "recon_timings": {
+        "vista4d_recon_s": 1325.7748051658273,
+        "recon_phases": [
+          {
+            "stage": "video_decode_resize",
+            "peak_footprint_mib": 638,
+            "seconds": 0.3696660839486867
+          },
+          {
+            "stage": "pi3_import_and_load",
+            "peak_footprint_mib": 6682,
+            "seconds": 7.706608250038698
+          },
+          {
+            "stage": "pi3_inference_and_rgbd",
+            "peak_footprint_mib": 16119,
+            "seconds": 47.74502462497912
+          },
+          {
+            "stage": "geometry_cleanup",
+            "peak_footprint_mib": 16119,
+            "seconds": 0.07196650002151728
+          },
+          {
+            "stage": "sam3_import_and_load",
+            "peak_footprint_mib": 16119,
+            "seconds": 0.0025881249457597733
+          },
+          {
+            "stage": "sam3_dynamic",
+            "peak_footprint_mib": 16119,
+            "seconds": 895.0831317082047
+          },
+          {
+            "stage": "sam3_sky",
+            "peak_footprint_mib": 16119,
+            "seconds": 371.0459572498221
+          },
+          {
+            "stage": "segmentation_cleanup",
+            "peak_footprint_mib": 16119,
+            "seconds": 0.04441987513564527
+          },
+          {
+            "stage": "save_rgb_video",
+            "peak_footprint_mib": 16119,
+            "seconds": 0.7543058330193162
+          },
+          {
+            "stage": "save_depths",
+            "peak_footprint_mib": 16119,
+            "seconds": 0.2731294999830425
+          },
+          {
+            "stage": "save_cameras_dynamic_mask",
+            "peak_footprint_mib": 16119,
+            "seconds": 0.029942583991214633
+          },
+          {
+            "stage": "save_entity_masks",
+            "peak_footprint_mib": 16119,
+            "seconds": 1.7163851249497384
+          },
+          {
+            "stage": "save_sky_masks",
+            "peak_footprint_mib": 16119,
+            "seconds": 0.03154687490314245
+          }
+        ],
+        "initial_world_alignment_s": 2.1595873329788446,
+        "fuse_l1_s": 5.400836207903922
+      },
+      "sam3_passes": [
+        {
+          "pass": "dynamic",
+          "frames": 48,
+          "passes": 1,
+          "detections": 344,
+          "load_s": 0.485337,
+          "track_s": 889.909,
+          "sec_per_frame_max": 23.3188,
+          "use_gpu": true,
+          "peak_footprint_bytes": 4420456336
+        },
+        {
+          "pass": "sky",
+          "frames": 48,
+          "passes": 1,
+          "detections": 0,
+          "load_s": 0.421278,
+          "track_s": 369.033,
+          "sec_per_frame_max": 7.69961,
+          "use_gpu": true,
+          "peak_footprint_bytes": 2773633616
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "recon_s": 1332.0323027500417,
+      "render_s": 3.3676427921745926,
+      "render_status": "succeeded",
+      "peak_footprint_bytes": 17678800800,
+      "swap_delta_mb": 0.0,
+      "recon_timings": {
+        "vista4d_recon_s": 1324.9715219580103,
+        "recon_phases": [
+          {
+            "stage": "video_decode_resize",
+            "peak_footprint_mib": 657,
+            "seconds": 0.3671112498268485
+          },
+          {
+            "stage": "pi3_import_and_load",
+            "peak_footprint_mib": 6745,
+            "seconds": 7.439489541109651
+          },
+          {
+            "stage": "pi3_inference_and_rgbd",
+            "peak_footprint_mib": 16509,
+            "seconds": 47.92333433404565
+          },
+          {
+            "stage": "geometry_cleanup",
+            "peak_footprint_mib": 16509,
+            "seconds": 0.08227812498807907
+          },
+          {
+            "stage": "sam3_import_and_load",
+            "peak_footprint_mib": 16509,
+            "seconds": 0.002002499997615814
+          },
+          {
+            "stage": "sam3_dynamic",
+            "peak_footprint_mib": 16509,
+            "seconds": 894.2474676659331
+          },
+          {
+            "stage": "sam3_sky",
+            "peak_footprint_mib": 16509,
+            "seconds": 370.99503624998033
+          },
+          {
+            "stage": "segmentation_cleanup",
+            "peak_footprint_mib": 16509,
+            "seconds": 0.043603042140603065
+          },
+          {
+            "stage": "save_rgb_video",
+            "peak_footprint_mib": 16509,
+            "seconds": 0.7965333748143166
+          },
+          {
+            "stage": "save_depths",
+            "peak_footprint_mib": 16509,
+            "seconds": 0.2842324171215296
+          },
+          {
+            "stage": "save_cameras_dynamic_mask",
+            "peak_footprint_mib": 16509,
+            "seconds": 0.04288541595451534
+          },
+          {
+            "stage": "save_entity_masks",
+            "peak_footprint_mib": 16509,
+            "seconds": 1.8208856249693781
+          },
+          {
+            "stage": "save_sky_masks",
+            "peak_footprint_mib": 16509,
+            "seconds": 0.042120000114664435
+          }
+        ],
+        "initial_world_alignment_s": 2.252150167012587,
+        "fuse_l1_s": 5.517398708034307
+      },
+      "sam3_passes": [
+        {
+          "pass": "dynamic",
+          "frames": 48,
+          "passes": 1,
+          "detections": 344,
+          "load_s": 0.486439,
+          "track_s": 889.277,
+          "sec_per_frame_max": 23.2758,
+          "use_gpu": true,
+          "peak_footprint_bytes": 4443197328
+        },
+        {
+          "pass": "sky",
+          "frames": 48,
+          "passes": 1,
+          "detections": 0,
+          "load_s": 0.419207,
+          "track_s": 369.009,
+          "sec_per_frame_max": 7.70084,
+          "use_gpu": true,
+          "peak_footprint_bytes": 2774403664
+        }
+      ]
+    },
+    {
+      "run": 4,
+      "recon_s": 1318.7476288750768,
+      "render_s": 3.3516087918542325,
+      "render_status": "succeeded",
+      "peak_footprint_bytes": 17669101040,
+      "swap_delta_mb": 0.0,
+      "recon_timings": {
+        "vista4d_recon_s": 1310.5234774169512,
+        "recon_phases": [
+          {
+            "stage": "video_decode_resize",
+            "peak_footprint_mib": 649,
+            "seconds": 0.3672998750116676
+          },
+          {
+            "stage": "pi3_import_and_load",
+            "peak_footprint_mib": 6765,
+            "seconds": 7.594489250099286
+          },
+          {
+            "stage": "pi3_inference_and_rgbd",
+            "peak_footprint_mib": 16499,
+            "seconds": 48.01390141691081
+          },
+          {
+            "stage": "geometry_cleanup",
+            "peak_footprint_mib": 16499,
+            "seconds": 0.06753475009463727
+          },
+          {
+            "stage": "sam3_import_and_load",
+            "peak_footprint_mib": 16499,
+            "seconds": 0.0012579578906297684
+          },
+          {
+            "stage": "sam3_dynamic",
+            "peak_footprint_mib": 16499,
+            "seconds": 881.331051541958
+          },
+          {
+            "stage": "sam3_sky",
+            "peak_footprint_mib": 16499,
+            "seconds": 369.2757311661262
+          },
+          {
+            "stage": "segmentation_cleanup",
+            "peak_footprint_mib": 16499,
+            "seconds": 0.048627208918333054
+          },
+          {
+            "stage": "save_rgb_video",
+            "peak_footprint_mib": 16499,
+            "seconds": 0.7661710409447551
+          },
+          {
+            "stage": "save_depths",
+            "peak_footprint_mib": 16499,
+            "seconds": 0.2744714170694351
+          },
+          {
+            "stage": "save_cameras_dynamic_mask",
+            "peak_footprint_mib": 16499,
+            "seconds": 0.03476941701956093
+          },
+          {
+            "stage": "save_entity_masks",
+            "peak_footprint_mib": 16499,
+            "seconds": 1.83386812498793
+          },
+          {
+            "stage": "save_sky_masks",
+            "peak_footprint_mib": 16499,
+            "seconds": 0.03125474997796118
+          }
+        ],
+        "initial_world_alignment_s": 2.264937167055905,
+        "fuse_l1_s": 5.54753941600211
+      },
+      "sam3_passes": [
+        {
+          "pass": "dynamic",
+          "frames": 48,
+          "passes": 1,
+          "detections": 344,
+          "load_s": 0.485266,
+          "track_s": 876.342,
+          "sec_per_frame_max": 22.8045,
+          "use_gpu": true,
+          "peak_footprint_bytes": 4436332408
+        },
+        {
+          "pass": "sky",
+          "frames": 48,
+          "passes": 1,
+          "detections": 0,
+          "load_s": 0.471838,
+          "track_s": 367.035,
+          "sec_per_frame_max": 7.66208,
+          "use_gpu": true,
+          "peak_footprint_bytes": 2774354488
+        }
+      ]
+    }
+  ]
+}

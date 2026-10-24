@@ -1,0 +1,9 @@
+{
+  "sequence": "shooting",
+  "frames": 40,
+  "hybrid": {
+    "JF": 0.8521164366271187,
+    "wall_s": 123.02994562499225,
+    "peak_footprint_bytes": 3266300904
+  }
+}

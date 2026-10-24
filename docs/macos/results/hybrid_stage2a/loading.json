@@ -1,0 +1,9 @@
+{
+  "sequence": "loading",
+  "frames": 50,
+  "hybrid": {
+    "JF": 0.9429375193061181,
+    "wall_s": 159.6588369589299,
+    "peak_footprint_bytes": 3297643544
+  }
+}

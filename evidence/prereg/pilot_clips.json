@@ -1,0 +1,45 @@
+{
+  "rule": "seeded permutation (seed 20261019) of all sequence clips; first 6 calibration, next 5 pilot, rest analysis",
+  "clips": [
+    {
+      "clip": "sintel_mountain_1",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "mountain_1",
+      "frames": 48,
+      "clip_sha256": "62bb74da8c564b410164ab7ba35ef41807ca5b561dfa0632f1c10d60f967be61",
+      "gt_sha256": "5644109e9c3d348c48b394e417f3f4498fb73bef8fa013b037d04d5f6640676f"
+    },
+    {
+      "clip": "sintel_ambush_4",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "ambush_4",
+      "frames": 33,
+      "clip_sha256": "24d6b77f3e190fc837d7025681392360a7c518ffe43dc51968dd02e8eb3b1923",
+      "gt_sha256": "f161c32ddc942a9797fce5eccd1c861374929e712578fd914c965c19c0975d26"
+    },
+    {
+      "clip": "sintel_sleeping_2",
+      "dataset": "MPI Sintel (final)",
+      "sequence": "sleeping_2",
+      "frames": 48,
+      "clip_sha256": "eb57b331042f8e613fde30f4480528cfedff16a84a2d6ce0434725349919fda2",
+      "gt_sha256": "0a62dc6093d46a2ec63789983f4a4c4a867c34b753676fcb3351ef31d9a17538"
+    },
+    {
+      "clip": "tum_freiburg3_sitting_xyz",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg3_sitting_xyz",
+      "frames": 48,
+      "clip_sha256": "ba116037ba50fa9d0556d6713e09b57da69d140ccedf095686e510f69b77faa9",
+      "gt_sha256": "05b8379e6dde32e17a6c2fd285c550188db5f1de926f070e208b48de2393f206"
+    },
+    {
+      "clip": "tum_freiburg1_desk",
+      "dataset": "TUM RGB-D",
+      "sequence": "rgbd_dataset_freiburg1_desk",
+      "frames": 48,
+      "clip_sha256": "939e7662c23dc1f551c4b64fa44bd670fb723afd60a4a3f949e7ef32eb2cf76e",
+      "gt_sha256": "eca2fb48e54ff5f2d2a60afefca436b0fb95f6a7f62a0f7ac642face841c3c6c"
+    }
+  ]
+}

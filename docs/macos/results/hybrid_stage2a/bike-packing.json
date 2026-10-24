@@ -1,0 +1,9 @@
+{
+  "sequence": "bike-packing",
+  "frames": 69,
+  "hybrid": {
+    "JF": 0.8258075830048542,
+    "wall_s": 196.79294666694477,
+    "peak_footprint_bytes": 3266841648
+  }
+}

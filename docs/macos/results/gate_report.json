@@ -1,0 +1,477 @@
+{
+  "verdict": "FAIL",
+  "release": "BLOCKED",
+  "global_problems": [],
+  "counts": {
+    "PASS": 21,
+    "FAIL": 3,
+    "PARTIAL": 1,
+    "BLOCKED": 1
+  },
+  "results": {
+    "AC01": {
+      "title": "Single device helper; no stray CUDA literals",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC02": {
+      "title": "Service starts without nvidia-smi",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC03": {
+      "title": "/readyz is honest on macOS",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC04": {
+      "title": "All HTTP routes and bearer auth",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC05": {
+      "title": "Worker ownership on macOS (replaces /proc)",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "ast_module",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC06": {
+      "title": "Deadlines and heartbeat enforced on macOS",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC07": {
+      "title": "Unified-memory admission",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC08": {
+      "title": "Resident models over AF_UNIX on macOS",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC09": {
+      "title": "Child-process environment",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC10": {
+      "title": "Pi3X dtype selection is evidence-based",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC11": {
+      "title": "Attention backend on MPS",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC12": {
+      "title": "Numerical parity MPS vs CPU-fp32 (same code and settings, except the MPS-only CPU placement of Pi3XVO's 3x3 SVD)",
+      "status": "FAIL",
+      "checks": [
+        {
+          "kind": "json",
+          "status": "FAIL",
+          "details": [
+            "d['random_numbers'] == 'common' and min(d['crn_seeds_per_clip']) >= 3 and d['order_floor_clips'] == d['n_clips'] and d['noise_floor_clips'] == d['n_clips'] and min(d['order_floor_seeds']) >= 3 and d['clips_passing_only_via_N'] <= 0.1 * d['n_clips'] and d['pre_svdfix_measured_clips'] >= 29 and d['pre_svdfix_worst_fails'] is True and len(d['pre_svdfix_rescued']) < len(d['pre_svdfix_failed_original']) and 'all_clips_pass_original' in d and d['rotation_metric'] == 'atan2_A12' and 'pre_A12' in d and d['all_clips_pass'] is True and set(d['paths']) == {'windowed', 'anchored'} and d['clip_list_sha256'] == pre['analysis_clips_sha256'] and d['n_clips'] >= 29 and d['summary'] == 'per_clip_max_over_frames' and d['units'] == 'raw' and d['normaliser_mask'] == 'l1_static' and d['pi3x_settings'] == pre['pi3x_settings']"
+          ]
+        }
+      ]
+    },
+    "AC13": {
+      "title": "Ground-truth geometry accuracy equivalence (TOST)",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC14": {
+      "title": "Fusion / registration / render run on MPS",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC15": {
+      "title": "SAM3 segmentation/tracking path (sam3.cpp)",
+      "status": "FAIL",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "json",
+          "status": "FAIL",
+          "details": [
+            "d['variant'] == ev['sam3_quantisation.json']['selected'] and d['jf_tost_equivalent_vs_f32_cpu'] is True and d['jf_margin'] == 0.02 and d['jf_davis17_val'] >= pre['jf_floor'] and d['timing']['clip_frames'] == pre['perf_clip_frames'] and d['timing']['sec_per_frame_max'] <= gate['sam3_sec_per_frame_budget'] and d['peak_footprint_bytes'] <= ev['hw.json']['mps']['recommended_max_memory'] - 24576 * 2**20"
+          ]
+        }
+      ]
+    },
+    "AC16": {
+      "title": "Atomic publication and rejected-clip invariance",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC17": {
+      "title": "Durability on macOS (F_FULLFSYNC)",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC18": {
+      "title": "Timebase / fps without decord",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC19": {
+      "title": "Run manifest pins every input and output",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC20": {
+      "title": "Live hardware fingerprint",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC21": {
+      "title": "Upstream regression suite",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC22": {
+      "title": "Performance and memory on M4 Pro 48GB",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC23": {
+      "title": "CUDA path untouched (static)",
+      "status": "PARTIAL",
+      "checks": [
+        {
+          "kind": "ast_identical",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "blocked",
+          "status": "BLOCKED",
+          "details": [
+            "CUDA runtime equivalence requires an NVIDIA host (not available)."
+          ]
+        }
+      ]
+    },
+    "AC24": {
+      "title": "Out-of-scope items stay BLOCKED",
+      "status": "BLOCKED",
+      "checks": [
+        {
+          "kind": "blocked",
+          "status": "BLOCKED",
+          "details": [
+            "M6 32GB hardware unavailable (projection only: recon admission 24576 MiB vs recommended_max_memory)."
+          ]
+        },
+        {
+          "kind": "blocked",
+          "status": "BLOCKED",
+          "details": [
+            "Screenplay compiler / planner / film review / video generator E2E need LLM and generator APIs (excluded by owner decision)."
+          ]
+        },
+        {
+          "kind": "blocked",
+          "status": "BLOCKED",
+          "details": [
+            "CUDA vs Mac video-quality non-inferiority needs a CUDA host and a generator."
+          ]
+        },
+        {
+          "kind": "blocked",
+          "status": "BLOCKED",
+          "details": [
+            "Human / perceptual evaluation needs raters."
+          ]
+        },
+        {
+          "kind": "blocked",
+          "status": "BLOCKED",
+          "details": [
+            "Metric physics: METRIC_CALIBRATION absent upstream (units are reconstruction units)."
+          ]
+        },
+        {
+          "kind": "blocked",
+          "status": "BLOCKED",
+          "details": [
+            "PyTorch SAM3 reference: facebook/sam3 weights gated, no access."
+          ]
+        }
+      ]
+    },
+    "AC25": {
+      "title": "World-state design invariants hold on macOS",
+      "status": "PASS",
+      "checks": [
+        {
+          "kind": "junit",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "ast_module",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "ast_module",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "ast_identical_except_device_calls",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "ast_identical_except_device_calls",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "ast_identical_except_device_calls",
+          "status": "PASS",
+          "details": []
+        },
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    },
+    "AC26": {
+      "title": "Real world-state loop on MPS (reconstruct, register, publish, recapture)",
+      "status": "FAIL",
+      "checks": [
+        {
+          "kind": "json",
+          "status": "FAIL",
+          "details": [
+            "d['device'] == 'mps' and d['via_http'] is True and d['clip_a']['initial_world_status'] in ('unchanged', 'repaired') and d['clip_a']['reason'] in ('consistent_with_sufficient_evidence', 'verified_by_anchored_reconstruction', 'drift_resolved') and d['clip_a']['frames'] > d['clip_a']['first_window'] and d['clip_b']['registered'] == 1 and d['world_versions'] >= 2 and d['render']['status'] == 'succeeded' and d['recapture']['status'] == 'succeeded' and d['recapture']['psnr_covered_db'] >= max(pre['recapture_psnr_abs_floor_db'], ev['e2e_world_cpu.json']['recapture']['psnr_covered_db'] - 1.0) and d['recapture']['mask_iou'] >= 0.9"
+          ]
+        },
+        {
+          "kind": "json",
+          "status": "PASS",
+          "details": []
+        }
+      ]
+    }
+  },
+  "gate_values": {
+    "device_divergence_ids": [
+      "tests/test_resource_admission.py::test_vista_failure_is_structured_resource_not_generic_exit[torch.OutOfMemoryError: CUDA out of memory. GPU 0 is full.-cuda_out_of_memory]",
+      "tests/test_resource_admission.py::test_vista_failure_is_structured_resource_not_generic_exit[RuntimeError: cusolver error: CUSOLVER_STATUS_INTERNAL_ERROR, when calling `cusolverDnCreate(handle)`-cuda_linalg_initialization_failed]"
+    ],
+    "device_divergence_counterparts": [
+      "tests/mac/test_resource_darwin.py::test_vista_failure_is_structured_resource_on_mps[torch.OutOfMemoryError: CUDA out of memory. GPU 0 is full.-cuda_out_of_memory]",
+      "tests/mac/test_resource_darwin.py::test_vista_failure_is_structured_resource_on_mps[RuntimeError: cusolver error: CUSOLVER_STATUS_INTERNAL_ERROR, when calling `cusolverDnCreate(handle)`-cuda_linalg_initialization_failed]"
+    ],
+    "skip_allowlist": [
+      "tests/test_alignment_refinement.py::test_gpu_projection_matches_cpu_geometry[cuda]",
+      "tests/test_geometry_core_v2.py::test_incremental_membership_exact_with_duplicates_and_high_keys[cuda]",
+      "tests/test_worker_resilience.py::test_home_incremental_index_is_exactly_equal_to_previous_set[cuda]"
+    ],
+    "skip_allowlist_cuda_mode": [
+      "tests/test_alignment_refinement.py::test_gpu_projection_matches_cpu_geometry[cuda]",
+      "tests/test_cinematic_camera.py::test_semantic_runtime_writes_real_mp4_and_camera[False]",
+      "tests/test_cinematic_camera.py::test_semantic_runtime_writes_real_mp4_and_camera[True]",
+      "tests/test_dynamic_footprint.py::test_dynamic_boundary_does_not_expand_past_one_pixel",
+      "tests/test_dynamic_footprint.py::test_near_dynamic_fills_grid_far_stays_small_and_cap_limits",
+      "tests/test_dynamic_footprint.py::test_shared_depth_keeps_foreground_static_and_no_event_trails",
+      "tests/test_dynamic_footprint.py::test_zero_dynamic_radius_is_exact_legacy_pixels",
+      "tests/test_geometry_core_v2.py::test_incremental_membership_exact_with_duplicates_and_high_keys[cuda]",
+      "tests/test_recapture_gpu.py::test_time_local_dynamic_single_depth_buffer",
+      "tests/test_static_footprint.py::test_dynamic_is_one_pixel_and_shares_static_depth_buffer[2-center0]",
+      "tests/test_static_footprint.py::test_dynamic_is_one_pixel_and_shares_static_depth_buffer[4-center1]",
+      "tests/test_static_footprint.py::test_static_projection_scales_and_hard_cap_preserves_large_holes",
+      "tests/test_static_footprint.py::test_zero_expansion_is_exact_pixel_reference",
+      "tests/test_worker_resilience.py::test_home_incremental_index_is_exactly_equal_to_previous_set[cuda]"
+    ],
+    "fallback_allowlist": [],
+    "sam3_sec_per_frame_budget": 18.75,
+    "sam3_eligible": [],
+    "sam3_selected": "f16",
+    "required_n": 29
+  },
+  "acceptance_sha256": "afdea6be1f73bf71b36b18a988ec7f92c07e963df3a0fe1c3678224c5931e53e",
+  "run": "evidence/mac-20261019"
+}

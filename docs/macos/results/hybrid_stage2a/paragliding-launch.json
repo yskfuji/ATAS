@@ -1,0 +1,9 @@
+{
+  "sequence": "paragliding-launch",
+  "frames": 80,
+  "hybrid": {
+    "JF": 0.3480596735422322,
+    "wall_s": 252.14621075009927,
+    "peak_footprint_bytes": 3306916840
+  }
+}

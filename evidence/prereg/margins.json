@@ -1,0 +1,26 @@
+{
+  "margins": {
+    "depth_absrel": 0.01,
+    "ate": 0.005092223005537754,
+    "rpe": 0.0015870980685085846
+  },
+  "calibration_cpu_means": {
+    "depth_absrel": 0.09397513974203331,
+    "ate": 0.10184446011075508,
+    "rpe": 0.03174196137017169
+  },
+  "perf_clip_frames": 48,
+  "jf_floor": 0.892,
+  "jf_floor_source": "Carion et al., SAM 3: Segment Anything with Concepts, arXiv:2511.16719v2, Table 5 (DAVIS17 J&F 92.2, first-frame mask prompts); floor = published - 0.03; our protocol (box + one interior point) is weaker than mask prompting, so the floor is conservative",
+  "computed_from": {
+    "calibration_clips_sha256": "94e61c60fb34b91c230245e56adbad330838344c2414cda6708cabbbaae85b59",
+    "cpu_compare_sha256": {
+      "tum_freiburg3_nostructure_texture_far": "a171e6baad437fe74ca9cf2a60bf2d9d9b7d1e04ab56d699ce072be53f379000",
+      "tum_freiburg1_360": "27be8306453b891b6b43116a5e6d8daaba4f8fa53d8b85093e92ce5da2566f05",
+      "tum_freiburg3_sitting_static": "17d860e03122f70c52580df0903aedccd7cd097eab51b3365146488a0f3ad7d1",
+      "sintel_alley_2": "f1937b4042efc444451279f26393ef019bb56ff14a8815a5c34d1e0e47a17e11",
+      "sintel_temple_3": "2fe363891e2793eab972e9bafd3cad9dfa86d66e7ef304b517692003ecc210ba",
+      "tum_freiburg1_desk2": "9312850e90bc695ed60f3c4c9aef052bda12fe370fb3627510a3685632de9478"
+    }
+  }
+}

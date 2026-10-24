@@ -1,0 +1,9 @@
+{
+  "sequence": "car-shadow",
+  "frames": 40,
+  "hybrid": {
+    "JF": 0.9857021591297519,
+    "wall_s": 94.56093937484547,
+    "peak_footprint_bytes": 3221769096
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "sequence": "india",
+  "frames": 81,
+  "hybrid": {
+    "JF": 0.6808212366811743,
+    "wall_s": 262.28444804111496,
+    "peak_footprint_bytes": 3308751896
+  }
+}

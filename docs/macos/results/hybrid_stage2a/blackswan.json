@@ -1,0 +1,9 @@
+{
+  "sequence": "blackswan",
+  "frames": 50,
+  "hybrid": {
+    "JF": 0.9663780978752751,
+    "wall_s": 122.95968162501231,
+    "peak_footprint_bytes": 3229895608
+  }
+}

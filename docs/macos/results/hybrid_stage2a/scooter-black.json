@@ -1,0 +1,9 @@
+{
+  "sequence": "scooter-black",
+  "frames": 43,
+  "hybrid": {
+    "JF": 0.8907720152901755,
+    "wall_s": 119.54977962491103,
+    "peak_footprint_bytes": 3249998824
+  }
+}

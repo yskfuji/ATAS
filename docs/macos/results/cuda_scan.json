@@ -1,0 +1,51 @@
+{
+  "upstream_commit": "b86aab046368",
+  "unallowlisted": [],
+  "stale_allowlist_entries": [],
+  "allowlist_entries_without_reason": [],
+  "missing_signatures": [],
+  "gpu_pool": {
+    "file": "geometry/atas_geometry/service/gpu_pool.py",
+    "identical": true,
+    "differing": []
+  },
+  "worker_protocol": {
+    "file": "geometry/atas_geometry/service/worker_protocol.py",
+    "identical": true,
+    "darwin_blocks": 1,
+    "extra_imports": 1
+  },
+  "decision_modules": [
+    {
+      "file": "geometry/atas_geometry/register/matching.py",
+      "identical": true,
+      "darwin_blocks": 0,
+      "extra_imports": 0
+    },
+    {
+      "file": "geometry/atas_geometry/world/reviewed_world.py",
+      "identical": true,
+      "darwin_blocks": 0,
+      "extra_imports": 0
+    },
+    {
+      "file": "geometry/atas_geometry/reconstruct/initial_world.py",
+      "identical": true,
+      "violations": []
+    },
+    {
+      "file": "geometry/atas_geometry/register/anchored_fusion.py",
+      "identical": true,
+      "violations": []
+    },
+    {
+      "file": "geometry/atas_geometry/world/writeback.py",
+      "identical": true,
+      "violations": []
+    }
+  ],
+  "decision_module_rebinding": [],
+  "linux_snapshot_unchanged": true,
+  "gpu_pool_ast_identical": true,
+  "linux_functions_ast_identical": true
+}

@@ -1,0 +1,931 @@
+{
+  "selected": "float32",
+  "eligible": [
+    "float32"
+  ],
+  "speedup_vs_fp32": {
+    "bfloat16": 1.2333781301605045,
+    "float16": 1.222968021583449,
+    "float32": 1.0
+  },
+  "summary": {
+    "bfloat16": {
+      "runs": 33,
+      "nonfinite_total": 0,
+      "max_abs": 310.0,
+      "errors": [],
+      "median_speedup_vs_fp32": 1.2333781301605045,
+      "reduced_parity_pass": false
+    },
+    "float16": {
+      "runs": 33,
+      "nonfinite_total": 0,
+      "max_abs": 309.75,
+      "errors": [],
+      "median_speedup_vs_fp32": 1.222968021583449,
+      "reduced_parity_pass": false
+    },
+    "float32": {
+      "runs": 33,
+      "nonfinite_total": 0,
+      "max_abs": 309.6375427246094,
+      "errors": [],
+      "median_speedup_vs_fp32": 1.0,
+      "reduced_parity_pass": null
+    }
+  },
+  "rule": "zero non-finite; fp16 max|a| < 0.25*65504; reduced must pass AC12 reduced parity; fastest eligible with >=1.25x, else fp32",
+  "runs": [
+    {
+      "clip": "sintel_alley_1",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 50.48481404199265,
+      "error": null
+    },
+    {
+      "clip": "sintel_alley_1",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 308.75,
+      "pi3_inference_s": 51.94331912486814,
+      "error": null
+    },
+    {
+      "clip": "sintel_alley_1",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 308.7349548339844,
+      "pi3_inference_s": 64.11772295809351,
+      "error": null
+    },
+    {
+      "clip": "sintel_ambush_2",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 15.705412332899868,
+      "error": null
+    },
+    {
+      "clip": "sintel_ambush_2",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 307.75,
+      "pi3_inference_s": 14.787691958947107,
+      "error": null
+    },
+    {
+      "clip": "sintel_ambush_2",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 307.74468994140625,
+      "pi3_inference_s": 19.40189529210329,
+      "error": null
+    },
+    {
+      "clip": "sintel_ambush_5",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 47.5103283750359,
+      "error": null
+    },
+    {
+      "clip": "sintel_ambush_5",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 309.0,
+      "pi3_inference_s": 45.0201485841535,
+      "error": null
+    },
+    {
+      "clip": "sintel_ambush_5",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 308.8739013671875,
+      "pi3_inference_s": 61.449162292061374,
+      "error": null
+    },
+    {
+      "clip": "sintel_ambush_6",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 294.0,
+      "pi3_inference_s": 12.836859415983781,
+      "error": null
+    },
+    {
+      "clip": "sintel_ambush_6",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 293.25,
+      "pi3_inference_s": 13.117653457913548,
+      "error": null
+    },
+    {
+      "clip": "sintel_ambush_6",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 293.3215026855469,
+      "pi3_inference_s": 15.18270633299835,
+      "error": null
+    },
+    {
+      "clip": "sintel_ambush_7",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 49.55241895816289,
+      "error": null
+    },
+    {
+      "clip": "sintel_ambush_7",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 307.25,
+      "pi3_inference_s": 88.49357520788908,
+      "error": null
+    },
+    {
+      "clip": "sintel_ambush_7",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 307.2044982910156,
+      "pi3_inference_s": 55.82231979188509,
+      "error": null
+    },
+    {
+      "clip": "sintel_bamboo_1",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 310.0,
+      "pi3_inference_s": 50.12171137495898,
+      "error": null
+    },
+    {
+      "clip": "sintel_bamboo_1",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 309.25,
+      "pi3_inference_s": 51.21837762510404,
+      "error": null
+    },
+    {
+      "clip": "sintel_bamboo_1",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 309.2568359375,
+      "pi3_inference_s": 106.65819275006652,
+      "error": null
+    },
+    {
+      "clip": "sintel_bamboo_2",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 310.0,
+      "pi3_inference_s": 50.356593834003434,
+      "error": null
+    },
+    {
+      "clip": "sintel_bamboo_2",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 309.25,
+      "pi3_inference_s": 51.738652833970264,
+      "error": null
+    },
+    {
+      "clip": "sintel_bamboo_2",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 309.1995849609375,
+      "pi3_inference_s": 60.37573641608469,
+      "error": null
+    },
+    {
+      "clip": "sintel_bandage_1",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 50.515006417175755,
+      "error": null
+    },
+    {
+      "clip": "sintel_bandage_1",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 51.61124033317901,
+      "error": null
+    },
+    {
+      "clip": "sintel_bandage_1",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 308.0111999511719,
+      "pi3_inference_s": 61.31395341595635,
+      "error": null
+    },
+    {
+      "clip": "sintel_bandage_2",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 46.93561108293943,
+      "error": null
+    },
+    {
+      "clip": "sintel_bandage_2",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 308.75,
+      "pi3_inference_s": 45.59702412504703,
+      "error": null
+    },
+    {
+      "clip": "sintel_bandage_2",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 308.7804870605469,
+      "pi3_inference_s": 57.5948586249724,
+      "error": null
+    },
+    {
+      "clip": "sintel_cave_2",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 48.490803834050894,
+      "error": null
+    },
+    {
+      "clip": "sintel_cave_2",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 307.0,
+      "pi3_inference_s": 50.85512037505396,
+      "error": null
+    },
+    {
+      "clip": "sintel_cave_2",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 307.02825927734375,
+      "pi3_inference_s": 58.86209912505001,
+      "error": null
+    },
+    {
+      "clip": "sintel_cave_4",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 49.9868703330867,
+      "error": null
+    },
+    {
+      "clip": "sintel_cave_4",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 307.75,
+      "pi3_inference_s": 50.95176966697909,
+      "error": null
+    },
+    {
+      "clip": "sintel_cave_4",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 307.7767333984375,
+      "pi3_inference_s": 64.11808879091404,
+      "error": null
+    },
+    {
+      "clip": "sintel_market_2",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 47.86720250011422,
+      "error": null
+    },
+    {
+      "clip": "sintel_market_2",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 305.75,
+      "pi3_inference_s": 48.08776170806959,
+      "error": null
+    },
+    {
+      "clip": "sintel_market_2",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 305.8321228027344,
+      "pi3_inference_s": 58.376101000001654,
+      "error": null
+    },
+    {
+      "clip": "sintel_market_5",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 47.7535589998588,
+      "error": null
+    },
+    {
+      "clip": "sintel_market_5",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 306.75,
+      "pi3_inference_s": 48.45070012495853,
+      "error": null
+    },
+    {
+      "clip": "sintel_market_5",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 306.7773742675781,
+      "pi3_inference_s": 57.5971733329352,
+      "error": null
+    },
+    {
+      "clip": "sintel_market_6",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 35.53927108296193,
+      "error": null
+    },
+    {
+      "clip": "sintel_market_6",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 307.25,
+      "pi3_inference_s": 36.04662604117766,
+      "error": null
+    },
+    {
+      "clip": "sintel_market_6",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 307.3081970214844,
+      "pi3_inference_s": 44.649607541039586,
+      "error": null
+    },
+    {
+      "clip": "sintel_shaman_2",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 47.63083133311011,
+      "error": null
+    },
+    {
+      "clip": "sintel_shaman_2",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 306.25,
+      "pi3_inference_s": 47.40725729195401,
+      "error": null
+    },
+    {
+      "clip": "sintel_shaman_2",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 306.12310791015625,
+      "pi3_inference_s": 57.41679833410308,
+      "error": null
+    },
+    {
+      "clip": "sintel_shaman_3",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 47.56384666613303,
+      "error": null
+    },
+    {
+      "clip": "sintel_shaman_3",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 308.25,
+      "pi3_inference_s": 48.33440904086456,
+      "error": null
+    },
+    {
+      "clip": "sintel_shaman_3",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 308.09539794921875,
+      "pi3_inference_s": 57.32330391695723,
+      "error": null
+    },
+    {
+      "clip": "sintel_sleeping_1",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 310.0,
+      "pi3_inference_s": 47.878877207869664,
+      "error": null
+    },
+    {
+      "clip": "sintel_sleeping_1",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 309.0,
+      "pi3_inference_s": 48.43181325006299,
+      "error": null
+    },
+    {
+      "clip": "sintel_sleeping_1",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 309.0820007324219,
+      "pi3_inference_s": 57.217177415965125,
+      "error": null
+    },
+    {
+      "clip": "sintel_temple_2",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 294.0,
+      "pi3_inference_s": 47.08091983292252,
+      "error": null
+    },
+    {
+      "clip": "sintel_temple_2",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 294.75,
+      "pi3_inference_s": 48.372568583115935,
+      "error": null
+    },
+    {
+      "clip": "sintel_temple_2",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 294.75482177734375,
+      "pi3_inference_s": 57.37217087484896,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_floor",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 46.43167166598141,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_floor",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 306.25,
+      "pi3_inference_s": 47.63760820799507,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_floor",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 306.2095642089844,
+      "pi3_inference_s": 57.95301549998112,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_plant",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 45.16175162489526,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_plant",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 306.25,
+      "pi3_inference_s": 46.48268949985504,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_plant",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 306.1250305175781,
+      "pi3_inference_s": 52.73373612482101,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_room",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 46.28744729212485,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_room",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 46.764849290950224,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_room",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 306.092529296875,
+      "pi3_inference_s": 57.772083666874096,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_rpy",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 49.83508508303203,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_rpy",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 51.382549291010946,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_rpy",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 306.1004638671875,
+      "pi3_inference_s": 63.59848029213026,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_teddy",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 50.31243545887992,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_teddy",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 306.75,
+      "pi3_inference_s": 51.16516850003973,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_teddy",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 306.6815490722656,
+      "pi3_inference_s": 63.15393579215743,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_xyz",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 47.727878582896665,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_xyz",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 47.62630454218015,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg1_xyz",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 305.9541931152344,
+      "pi3_inference_s": 58.91994912503287,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_long_office_household",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 43.49884191714227,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_long_office_household",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 44.98943420802243,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_long_office_household",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 306.06951904296875,
+      "pi3_inference_s": 58.23992458311841,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_sitting_halfsphere",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 45.95739216613583,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_sitting_halfsphere",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 306.75,
+      "pi3_inference_s": 46.78385383402929,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_sitting_halfsphere",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 306.78375244140625,
+      "pi3_inference_s": 56.68284241692163,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_sitting_rpy",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 45.867047084029764,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_sitting_rpy",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 308.25,
+      "pi3_inference_s": 45.04164225002751,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_sitting_rpy",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 308.2313232421875,
+      "pi3_inference_s": 57.19578791689128,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_structure_notexture_far",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 46.46978733409196,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_structure_notexture_far",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 46.787028624909,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_structure_notexture_far",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 307.8543701171875,
+      "pi3_inference_s": 57.219039833173156,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_structure_texture_far",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 306.0,
+      "pi3_inference_s": 43.41479454212822,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_structure_texture_far",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 306.5,
+      "pi3_inference_s": 48.10659941704944,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_structure_texture_far",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 306.57666015625,
+      "pi3_inference_s": 57.20246037491597,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_walking_halfsphere",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 47.22563683288172,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_walking_halfsphere",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 308.5,
+      "pi3_inference_s": 47.71722679189406,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_walking_halfsphere",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 308.3822326660156,
+      "pi3_inference_s": 58.3599810001906,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_walking_rpy",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 310.0,
+      "pi3_inference_s": 47.61682216683403,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_walking_rpy",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 309.75,
+      "pi3_inference_s": 46.96218320913613,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_walking_rpy",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 309.6375427246094,
+      "pi3_inference_s": 58.24180412502028,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_walking_static",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 47.63656079187058,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_walking_static",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 308.75,
+      "pi3_inference_s": 47.219274249859154,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_walking_static",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 308.8208312988281,
+      "pi3_inference_s": 58.51059454213828,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_walking_xyz",
+      "path": "windowed",
+      "dtype": "bfloat16",
+      "nonfinite": 0,
+      "max_abs": 308.0,
+      "pi3_inference_s": 47.361577624920756,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_walking_xyz",
+      "path": "windowed",
+      "dtype": "float16",
+      "nonfinite": 0,
+      "max_abs": 308.25,
+      "pi3_inference_s": 47.99387437500991,
+      "error": null
+    },
+    {
+      "clip": "tum_freiburg3_walking_xyz",
+      "path": "windowed",
+      "dtype": "float32",
+      "nonfinite": 0,
+      "max_abs": 308.238525390625,
+      "pi3_inference_s": 58.432857250096276,
+      "error": null
+    }
+  ]
+}

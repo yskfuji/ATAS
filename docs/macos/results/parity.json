@@ -1,0 +1,898 @@
+{
+  "dtype": "float32",
+  "selected_dtype": "float32",
+  "n_clips": 33,
+  "summary": "per_clip_max_over_frames",
+  "random_numbers": "common",
+  "crn_seeds_per_clip": [
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3
+  ],
+  "native_noise_floor_worst": {
+    "depth_absrel": 0.028070037478146452,
+    "rot_deg": 0.34667591481684085,
+    "trans_frac_depth": 0.011310591132226731,
+    "chamfer_frac_extent": 0.0006665061222739205
+  },
+  "units": "raw",
+  "normaliser_mask": "l1_static",
+  "limits": {
+    "depth_absrel": 0.001,
+    "rot_deg": 0.05,
+    "trans_frac_depth": 0.001,
+    "chamfer_frac_extent": 0.001
+  },
+  "pi3x_settings": {
+    "recon_wh": [
+      1280,
+      720
+    ],
+    "requested": {
+      "pi3_pixel_limit": 255000,
+      "pi3_vo_chunk": 48
+    },
+    "effective": {
+      "pi3_pixel_limit": 160000,
+      "pi3_vo_chunk": 24,
+      "pi3_vo_overlap": 6
+    },
+    "low_vram": true
+  },
+  "clip_list_sha256": "cb1a25886e0c77e5c1f41af256bd1cf5bc125bae0d199890249b697d35ee501f",
+  "paths": [
+    "anchored",
+    "windowed"
+  ],
+  "anchored_pairs": 15,
+  "failures": {
+    "sintel_bandage_1": [
+      "rot_deg",
+      "trans_frac_depth"
+    ],
+    "sintel_cave_2": [
+      "rot_deg",
+      "trans_frac_depth"
+    ],
+    "sintel_market_5": [
+      "rot_deg"
+    ],
+    "sintel_shaman_2": [
+      "rot_deg"
+    ],
+    "sintel_temple_2": [
+      "rot_deg",
+      "trans_frac_depth"
+    ],
+    "tum_freiburg3_structure_texture_far": [
+      "depth_absrel",
+      "trans_frac_depth"
+    ]
+  },
+  "all_clips_pass": false,
+  "rule": "A7 round 6: max(L,2O) for depth/trans/chamfer; max(L,2O,min(0.1N,0.25deg)) for rotation",
+  "amended_limits": {
+    "sintel_alley_1": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_ambush_2": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_ambush_5": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_ambush_6": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_ambush_7": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_bamboo_1": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_bamboo_2": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_bandage_1": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_bandage_2": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_cave_2": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_cave_4": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_market_2": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_market_5": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_market_6": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_shaman_2": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_shaman_3": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_sleeping_1": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "sintel_temple_2": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "tum_freiburg1_floor": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "tum_freiburg1_plant": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "tum_freiburg1_room": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "tum_freiburg1_rpy": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "tum_freiburg1_teddy": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "tum_freiburg1_xyz": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "tum_freiburg3_long_office_household": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "tum_freiburg3_sitting_halfsphere": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "tum_freiburg3_sitting_rpy": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "tum_freiburg3_structure_notexture_far": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "tum_freiburg3_structure_texture_far": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "tum_freiburg3_walking_halfsphere": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "tum_freiburg3_walking_rpy": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "tum_freiburg3_walking_static": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    },
+    "tum_freiburg3_walking_xyz": {
+      "depth_absrel": 0.001,
+      "rot_deg": 0.05,
+      "trans_frac_depth": 0.001,
+      "chamfer_frac_extent": 0.001
+    }
+  },
+  "limit_set_by": {
+    "sintel_alley_1": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_ambush_2": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_ambush_5": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_ambush_6": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_ambush_7": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_bamboo_1": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_bamboo_2": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_bandage_1": {
+      "depth_absrel": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_bandage_2": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_cave_2": {
+      "depth_absrel": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_cave_4": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_market_2": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_market_5": {
+      "depth_absrel": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_market_6": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_shaman_2": {
+      "depth_absrel": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_shaman_3": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_sleeping_1": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "sintel_temple_2": {
+      "depth_absrel": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "tum_freiburg1_floor": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "tum_freiburg1_plant": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "tum_freiburg1_room": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "tum_freiburg1_rpy": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "tum_freiburg1_teddy": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "tum_freiburg1_xyz": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "tum_freiburg3_long_office_household": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "tum_freiburg3_sitting_halfsphere": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "tum_freiburg3_sitting_rpy": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "tum_freiburg3_structure_notexture_far": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "tum_freiburg3_structure_texture_far": {
+      "rot_deg": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "tum_freiburg3_walking_halfsphere": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "tum_freiburg3_walking_rpy": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "tum_freiburg3_walking_static": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    },
+    "tum_freiburg3_walking_xyz": {
+      "depth_absrel": "L",
+      "rot_deg": "L",
+      "trans_frac_depth": "L",
+      "chamfer_frac_extent": "L"
+    }
+  },
+  "clips_passing_only_via_N": 0,
+  "clips_passing_only_via_N_list": [],
+  "pre_svdfix_measured_clips": 32,
+  "pre_svdfix_failed_original": [
+    "sintel_bandage_1",
+    "sintel_cave_2",
+    "sintel_market_5",
+    "sintel_shaman_2",
+    "tum_freiburg3_structure_texture_far"
+  ],
+  "pre_svdfix_rescued": [],
+  "pre_svdfix_worst_clip": "sintel_cave_2",
+  "pre_svdfix_worst_value_deg": 0.2579293923191747,
+  "pre_svdfix_worst_fails": true,
+  "order_floor_seeds": [
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3
+  ],
+  "failures_original": {
+    "sintel_bandage_1": [
+      "rot_deg",
+      "trans_frac_depth"
+    ],
+    "sintel_cave_2": [
+      "rot_deg",
+      "trans_frac_depth"
+    ],
+    "sintel_market_5": [
+      "rot_deg"
+    ],
+    "sintel_shaman_2": [
+      "rot_deg"
+    ],
+    "sintel_temple_2": [
+      "rot_deg",
+      "trans_frac_depth"
+    ],
+    "tum_freiburg3_structure_texture_far": [
+      "depth_absrel",
+      "trans_frac_depth"
+    ]
+  },
+  "all_clips_pass_original": false,
+  "order_floor_clips": 33,
+  "noise_floor_clips": 33,
+  "worst": {
+    "depth_absrel": 0.0010042402507743386,
+    "rot_deg": 0.3321585118735622,
+    "trans_frac_depth": 0.005477379895449994,
+    "chamfer_frac_extent": 0.0001956149729769927
+  },
+  "rotation_metric": "atan2_A12",
+  "pre_A12": {
+    "rotation_metric": "arccos (original)",
+    "all_clips_pass": false,
+    "failures": {
+      "sintel_bandage_1": [
+        "rot_deg",
+        "trans_frac_depth"
+      ],
+      "sintel_cave_2": [
+        "rot_deg",
+        "trans_frac_depth"
+      ],
+      "sintel_market_5": [
+        "rot_deg"
+      ],
+      "sintel_shaman_2": [
+        "rot_deg"
+      ],
+      "sintel_temple_2": [
+        "rot_deg",
+        "trans_frac_depth"
+      ],
+      "tum_freiburg3_structure_texture_far": [
+        "depth_absrel",
+        "trans_frac_depth"
+      ],
+      "anchored:tum_freiburg1_floor": [
+        "rot_deg"
+      ],
+      "anchored:tum_freiburg1_plant": [
+        "rot_deg"
+      ],
+      "anchored:tum_freiburg1_room": [
+        "rot_deg"
+      ],
+      "anchored:tum_freiburg1_rpy": [
+        "rot_deg"
+      ],
+      "anchored:tum_freiburg1_teddy": [
+        "rot_deg"
+      ],
+      "anchored:tum_freiburg1_xyz": [
+        "rot_deg"
+      ],
+      "anchored:tum_freiburg3_long_office_household": [
+        "rot_deg"
+      ],
+      "anchored:tum_freiburg3_sitting_halfsphere": [
+        "rot_deg"
+      ],
+      "anchored:tum_freiburg3_sitting_rpy": [
+        "rot_deg"
+      ],
+      "anchored:tum_freiburg3_structure_notexture_far": [
+        "rot_deg"
+      ],
+      "anchored:tum_freiburg3_structure_texture_far": [
+        "rot_deg"
+      ],
+      "anchored:tum_freiburg3_walking_halfsphere": [
+        "rot_deg"
+      ],
+      "anchored:tum_freiburg3_walking_rpy": [
+        "rot_deg"
+      ],
+      "anchored:tum_freiburg3_walking_static": [
+        "rot_deg"
+      ],
+      "anchored:tum_freiburg3_walking_xyz": [
+        "rot_deg"
+      ]
+    },
+    "all_clips_pass_original": false,
+    "failures_original": {
+      "sintel_ambush_5": [
+        "rot_deg"
+      ],
+      "sintel_bamboo_2": [
+        "rot_deg"
+      ],
+      "sintel_bandage_1": [
+        "rot_deg",
+        "trans_frac_depth"
+      ],
+      "sintel_bandage_2": [
+        "rot_deg"
+      ],
+      "sintel_cave_2": [
+        "rot_deg",
+        "trans_frac_depth"
+      ],
+      "sintel_cave_4": [
+        "rot_deg"
+      ],
+      "sintel_market_5": [
+        "rot_deg"
+      ],
+      "sintel_shaman_2": [
+        "rot_deg"
+      ],
+      "sintel_temple_2": [
+        "rot_deg",
+        "trans_frac_depth"
+      ],
+      "tum_freiburg1_xyz": [
+        "rot_deg"
+      ],
+      "tum_freiburg3_long_office_household": [
+        "rot_deg"
+      ],
+      "tum_freiburg3_structure_texture_far": [
+        "depth_absrel",
+        "rot_deg",
+        "trans_frac_depth"
+      ]
+    },
+    "worst_rot_deg": 0.3338688690052259,
+    "order_floor_rot_deg_median_over_clips": 0.039560646574560265,
+    "native_noise_rot_deg_median_over_clips": 0.056898065601868275
+  },
+  "fp16_storage_floor_note": "depth compared as stored float16 EXR: per-pixel rounding floor ~4.9e-4 relative",
+  "per_clip": {
+    "sintel_alley_1": {
+      "depth_absrel": 0.0007120647177242705,
+      "rot_deg": 0.005333519900190667,
+      "trans_frac_depth": 0.0005750326321119685,
+      "chamfer_frac_extent": 7.800375291958146e-05
+    },
+    "sintel_ambush_2": {
+      "depth_absrel": 1.1527017516930165e-05,
+      "rot_deg": 0.00014432851548675112,
+      "trans_frac_depth": 3.554786250258639e-06,
+      "chamfer_frac_extent": 1.5081935310254016e-06
+    },
+    "sintel_ambush_5": {
+      "depth_absrel": 0.00018021909160006249,
+      "rot_deg": 0.024446505733887274,
+      "trans_frac_depth": 0.00015619324847689965,
+      "chamfer_frac_extent": 3.7446338569321844e-06
+    },
+    "sintel_ambush_6": {
+      "depth_absrel": 2.861281807925708e-06,
+      "rot_deg": 7.018753494005374e-05,
+      "trans_frac_depth": 3.317141176582567e-06,
+      "chamfer_frac_extent": 1.2934742853605808e-06
+    },
+    "sintel_ambush_7": {
+      "depth_absrel": 0.0006506250799452294,
+      "rot_deg": 0.0069631869224999355,
+      "trans_frac_depth": 0.0006353551995314697,
+      "chamfer_frac_extent": 0.00014782872513509018
+    },
+    "sintel_bamboo_1": {
+      "depth_absrel": 0.00044600671744075306,
+      "rot_deg": 0.003919664228671124,
+      "trans_frac_depth": 0.0004209452224659598,
+      "chamfer_frac_extent": 9.830922229858385e-05
+    },
+    "sintel_bamboo_2": {
+      "depth_absrel": 0.0003815388333863806,
+      "rot_deg": 0.014329151435748403,
+      "trans_frac_depth": 0.00043140738670717277,
+      "chamfer_frac_extent": 4.2873674176218555e-05
+    },
+    "sintel_bandage_1": {
+      "depth_absrel": 0.00012005268770424744,
+      "rot_deg": 0.0695097009927692,
+      "trans_frac_depth": 0.0015074104010123351,
+      "chamfer_frac_extent": 7.707387374004368e-05
+    },
+    "sintel_bandage_2": {
+      "depth_absrel": 0.000322493519607568,
+      "rot_deg": 0.01956278312107321,
+      "trans_frac_depth": 0.0002077454582963275,
+      "chamfer_frac_extent": 5.0947704563240065e-05
+    },
+    "sintel_cave_2": {
+      "depth_absrel": 0.0003706753730067168,
+      "rot_deg": 0.2579747474350316,
+      "trans_frac_depth": 0.0015188641784882923,
+      "chamfer_frac_extent": 6.778769796477516e-05
+    },
+    "sintel_cave_4": {
+      "depth_absrel": 0.00011160600809246184,
+      "rot_deg": 0.006161516153284755,
+      "trans_frac_depth": 0.00024926027964614295,
+      "chamfer_frac_extent": 1.171353044085247e-05
+    },
+    "sintel_market_2": {
+      "depth_absrel": 0.0007643811625498082,
+      "rot_deg": 0.008626045224273127,
+      "trans_frac_depth": 0.0008680466348357499,
+      "chamfer_frac_extent": 5.784234923870953e-05
+    },
+    "sintel_market_5": {
+      "depth_absrel": 0.0002070725279749991,
+      "rot_deg": 0.08970544298451032,
+      "trans_frac_depth": 0.0008803480910324138,
+      "chamfer_frac_extent": 8.564021223453427e-05
+    },
+    "sintel_market_6": {
+      "depth_absrel": 0.00037030927655071243,
+      "rot_deg": 0.009151918407223718,
+      "trans_frac_depth": 0.0005758689298871517,
+      "chamfer_frac_extent": 2.732788636856406e-05
+    },
+    "sintel_shaman_2": {
+      "depth_absrel": 0.00026951447795804396,
+      "rot_deg": 0.2208765599096976,
+      "trans_frac_depth": 0.000522561312917298,
+      "chamfer_frac_extent": 0.0001956149729769927
+    },
+    "sintel_shaman_3": {
+      "depth_absrel": 0.0005342964249111544,
+      "rot_deg": 0.0026423600939075387,
+      "trans_frac_depth": 0.0004495961960874679,
+      "chamfer_frac_extent": 7.593473798144595e-05
+    },
+    "sintel_sleeping_1": {
+      "depth_absrel": 0.0006960517852900714,
+      "rot_deg": 0.0046251934086375705,
+      "trans_frac_depth": 0.0006101578461763391,
+      "chamfer_frac_extent": 0.00013547672981421724
+    },
+    "sintel_temple_2": {
+      "depth_absrel": 0.00033547590354546204,
+      "rot_deg": 0.3321585118735622,
+      "trans_frac_depth": 0.005477379895449994,
+      "chamfer_frac_extent": 9.34321201880853e-05
+    },
+    "tum_freiburg1_floor": {
+      "depth_absrel": 0.0008722647786104355,
+      "rot_deg": 0.002330346967011058,
+      "trans_frac_depth": 0.0007142578823781275,
+      "chamfer_frac_extent": 9.579389903812599e-05
+    },
+    "tum_freiburg1_plant": {
+      "depth_absrel": 0.00015539645726054147,
+      "rot_deg": 0.004237457153070393,
+      "trans_frac_depth": 0.00016043966220492855,
+      "chamfer_frac_extent": 3.815547260196302e-05
+    },
+    "tum_freiburg1_room": {
+      "depth_absrel": 0.0001996232411771028,
+      "rot_deg": 0.007038357406171956,
+      "trans_frac_depth": 0.00027607217558540124,
+      "chamfer_frac_extent": 7.303224656525384e-05
+    },
+    "tum_freiburg1_rpy": {
+      "depth_absrel": 0.00024770859985404086,
+      "rot_deg": 0.0043595027818199746,
+      "trans_frac_depth": 0.00028106842754209026,
+      "chamfer_frac_extent": 3.4767417969763036e-05
+    },
+    "tum_freiburg1_teddy": {
+      "depth_absrel": 0.0001596350074529876,
+      "rot_deg": 0.002080500184181667,
+      "trans_frac_depth": 0.00017917983474181448,
+      "chamfer_frac_extent": 5.8108893531373986e-05
+    },
+    "tum_freiburg1_xyz": {
+      "depth_absrel": 0.00020587356659425526,
+      "rot_deg": 0.003668588250899419,
+      "trans_frac_depth": 0.0002990226528697499,
+      "chamfer_frac_extent": 4.725858676245465e-05
+    },
+    "tum_freiburg3_long_office_household": {
+      "depth_absrel": 8.11485157224278e-05,
+      "rot_deg": 0.0052945086528855025,
+      "trans_frac_depth": 7.74781295216337e-05,
+      "chamfer_frac_extent": 1.8011649331408962e-05
+    },
+    "tum_freiburg3_sitting_halfsphere": {
+      "depth_absrel": 5.842317946389255e-05,
+      "rot_deg": 0.019773359125793148,
+      "trans_frac_depth": 0.00020342571372488906,
+      "chamfer_frac_extent": 1.071543054683476e-05
+    },
+    "tum_freiburg3_sitting_rpy": {
+      "depth_absrel": 7.546829767341756e-05,
+      "rot_deg": 0.007597132845452193,
+      "trans_frac_depth": 9.927751567248582e-05,
+      "chamfer_frac_extent": 1.85114154469354e-05
+    },
+    "tum_freiburg3_structure_notexture_far": {
+      "depth_absrel": 0.0005575312015882129,
+      "rot_deg": 0.002283106724158735,
+      "trans_frac_depth": 0.0005862560151669513,
+      "chamfer_frac_extent": 0.00012501370183131763
+    },
+    "tum_freiburg3_structure_texture_far": {
+      "depth_absrel": 0.0010042402507743386,
+      "rot_deg": 0.014515771604840756,
+      "trans_frac_depth": 0.0010771235585752294,
+      "chamfer_frac_extent": 7.406413738892101e-05
+    },
+    "tum_freiburg3_walking_halfsphere": {
+      "depth_absrel": 0.0005528845445556031,
+      "rot_deg": 0.022007397366368277,
+      "trans_frac_depth": 0.0006442637745804811,
+      "chamfer_frac_extent": 8.194444528471826e-05
+    },
+    "tum_freiburg3_walking_rpy": {
+      "depth_absrel": 0.00048311068102400783,
+      "rot_deg": 0.016257928561351054,
+      "trans_frac_depth": 0.0004846174688553437,
+      "chamfer_frac_extent": 9.431007536965118e-05
+    },
+    "tum_freiburg3_walking_static": {
+      "depth_absrel": 0.0005390491995803348,
+      "rot_deg": 0.0053607621934607,
+      "trans_frac_depth": 0.0007298393219086017,
+      "chamfer_frac_extent": 5.337495240105041e-05
+    },
+    "tum_freiburg3_walking_xyz": {
+      "depth_absrel": 0.0005857871244044854,
+      "rot_deg": 0.03319386458661884,
+      "trans_frac_depth": 0.0008459678544341373,
+      "chamfer_frac_extent": 5.951779444667545e-05
+    }
+  }
+}

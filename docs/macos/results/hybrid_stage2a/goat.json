@@ -1,0 +1,9 @@
+{
+  "sequence": "goat",
+  "frames": 90,
+  "hybrid": {
+    "JF": 0.9348498445260411,
+    "wall_s": 219.12604091712274,
+    "peak_footprint_bytes": 3236580328
+  }
+}

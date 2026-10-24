@@ -1,0 +1,28 @@
+{
+  "valid_run": true,
+  "rule_sha256": "7316e0741aed5c3d21f12a21f0ffcf11fabb099badea53209ee531b513c4d4fc",
+  "primary": "hybrid_k4",
+  "margin": 0.02,
+  "alpha": 0.05,
+  "n": 30,
+  "mean_diff": -0.00931531987003123,
+  "sd_diff": 0.022507757692617193,
+  "t": 2.600099222158735,
+  "p_one_sided": 0.007255537494183617,
+  "t_noninferior": true,
+  "bca_ci90": [
+    -0.015626018679827686,
+    -0.002310713584795947
+  ],
+  "bca_noninferior": true,
+  "hybrid_scored_zero": [],
+  "jf_sam3_mean": 0.882229004544983,
+  "jf_hybrid_mean": 0.8729136846749517,
+  "descriptive": {
+    "edgetam_alone_mean_diff": -0.03638144783691881,
+    "hybrid_k8_mean_diff": -0.012460679984345552,
+    "worst_sequence": "kite-surf",
+    "worst_diff": -0.06362734802795389
+  },
+  "PASS": true
+}

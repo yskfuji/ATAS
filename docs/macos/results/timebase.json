@@ -1,0 +1,545 @@
+{
+  "n_clips": 65,
+  "all_counts_agree": true,
+  "max_index_error_frames": 2.1316282072803006e-14,
+  "n_vfr_clips": 2,
+  "recapture_alignment_error_frames": 0,
+  "vfr": [
+    {
+      "pattern": "alternating",
+      "source_cfr": false,
+      "normalized_cfr": true,
+      "max_alignment_error_frames": 0,
+      "frames": 31
+    },
+    {
+      "pattern": "stall",
+      "source_cfr": false,
+      "normalized_cfr": true,
+      "max_alignment_error_frames": 0,
+      "frames": 25
+    }
+  ],
+  "clips": [
+    {
+      "clip": "sintel_alley_1",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_alley_2",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_ambush_2",
+      "frames_probe": 21,
+      "frames_ffprobe": 21,
+      "frames_decoded": 21,
+      "cfr": true,
+      "pts_index_error_frames": 0.0
+    },
+    {
+      "clip": "sintel_ambush_4",
+      "frames_probe": 33,
+      "frames_ffprobe": 33,
+      "frames_decoded": 33,
+      "cfr": true,
+      "pts_index_error_frames": 0.0
+    },
+    {
+      "clip": "sintel_ambush_5",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_ambush_6",
+      "frames_probe": 20,
+      "frames_ffprobe": 20,
+      "frames_decoded": 20,
+      "cfr": true,
+      "pts_index_error_frames": 0.0
+    },
+    {
+      "clip": "sintel_ambush_7",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_bamboo_1",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_bamboo_2",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_bandage_1",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_bandage_2",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_cave_2",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_cave_4",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_market_2",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_market_5",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_market_6",
+      "frames_probe": 40,
+      "frames_ffprobe": 40,
+      "frames_decoded": 40,
+      "cfr": true,
+      "pts_index_error_frames": 7.105427357601002e-15
+    },
+    {
+      "clip": "sintel_mountain_1",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_shaman_2",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_shaman_3",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_sleeping_1",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_sleeping_2",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_temple_2",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "sintel_temple_3",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 2.1316282072803006e-14
+    },
+    {
+      "clip": "tum_freiburg1_360",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_360_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_desk",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_desk2",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_desk2_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_desk_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_floor",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_floor_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_plant",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_plant_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_room",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_room_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_rpy",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_rpy_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_teddy",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_teddy_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_xyz",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg1_xyz_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_long_office_household",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_long_office_household_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_nostructure_texture_far",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_nostructure_texture_far_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_sitting_halfsphere",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_sitting_halfsphere_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_sitting_rpy",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_sitting_rpy_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_sitting_static",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_sitting_static_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_sitting_xyz",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_sitting_xyz_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_structure_notexture_far",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_structure_notexture_far_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_structure_texture_far",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_structure_texture_far_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_walking_halfsphere",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_walking_halfsphere_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_walking_rpy",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_walking_rpy_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_walking_static",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_walking_static_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_walking_xyz",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    },
+    {
+      "clip": "tum_freiburg3_walking_xyz_history",
+      "frames_probe": 48,
+      "frames_ffprobe": 48,
+      "frames_decoded": 48,
+      "cfr": true,
+      "pts_index_error_frames": 1.4210854715202004e-14
+    }
+  ]
+}

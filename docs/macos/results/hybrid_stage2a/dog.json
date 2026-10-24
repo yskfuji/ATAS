@@ -1,0 +1,9 @@
+{
+  "sequence": "dog",
+  "frames": 60,
+  "hybrid": {
+    "JF": 0.9680270349362137,
+    "wall_s": 142.93596254196018,
+    "peak_footprint_bytes": 3235335096
+  }
+}
