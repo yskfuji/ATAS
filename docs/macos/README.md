@@ -4,6 +4,8 @@ A port of the ATAS geometry service (Pi3X multi-view reconstruction + SAM3 video
 Measured on a MacBook with an M4 Pro (48 GB). Read the status section before relying on it.
 
 ## What it is
+Community fork of [ziplab/ATAS](https://github.com/ziplab/ATAS). Upstream was asked about Apple Silicon support ([#2](https://github.com/ziplab/ATAS/issues/2)) and declined for now (performance, ongoing validation cost); there are no open pull requests.
+
 * `GEOMETRY_DEVICE=mps|cpu|cuda` (default `mps` on macOS, `cuda` elsewhere). The CUDA path is kept as upstream wherever the code is
   checked statically (AST guards in `geometry/tests/mac`); no CUDA run was possible here, so CUDA behaviour is unmeasured.
 * Unified-memory admission instead of per-GPU VRAM admission (`unified_pool.py`), macOS worker ownership (`proc_darwin.py`),

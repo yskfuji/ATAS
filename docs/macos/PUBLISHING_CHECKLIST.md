@@ -37,4 +37,4 @@ rebuilt on top of the upstream initial commit and no raw evidence, data or weigh
 
 ## After publication
 * Before any further release re-run a tree-wide search for local paths, host names and tokens, and check the model-weight licences again.
-* Upstream (`ziplab/ATAS`) was asked first, through an issue, whether it wants the work; the stacked branches `macos/01-…` to `macos/05-…` can become pull requests.
+* Upstream (`ziplab/ATAS`) was asked first, through an issue (#2); its maintainers declined official macOS support for now (performance, validation and maintenance cost) and suggested a community fork. The stacked branches `macos/01-…` to `macos/05-…` stay in this fork; no pull request was opened.

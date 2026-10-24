@@ -108,6 +108,8 @@ This fork runs the geometry service on Apple Silicon (MPS/Metal or CPU): see [do
 (some acceptance criteria fail), licences of the model weights (Pi3X weights are CC BY-NC 4.0) and the optional features. The CUDA path is kept as
 upstream and was checked statically only. Work is split into reviewable branches `macos/01-…` to `macos/05-…`.
 
+**Status of this fork:** the upstream maintainers were asked ([ziplab/ATAS#2](https://github.com/ziplab/ATAS/issues/2)) and, mainly because of performance (SAM3 dominates reconstruction time) and the maintenance burden of alternative component implementations, do not plan official macOS support. This is therefore maintained as a community fork; no pull requests to upstream are open.
+
 ## Usage
 
 ```bash
