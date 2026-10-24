@@ -31,3 +31,9 @@ hf_cache/
 *.exr
 *.npz
 *.ply
+.venv-macos/
+evidence/**/raw/
+*.partial.mp4
+
+# Evidence: bulky data-derived renders are registered in the manifest (sha256) but not stored in git
+evidence/*/render_parity/

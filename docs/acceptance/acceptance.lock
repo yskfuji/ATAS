@@ -1,0 +1,29 @@
+{
+  "stage": 1,
+  "revision": 12,
+  "locked_at": "2026-10-24T05:27:57+0900",
+  "amendments": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "A6",
+    "A7",
+    "A8",
+    "A9",
+    "A10",
+    "A11",
+    "A12"
+  ],
+  "note": "A7-A9 owner-authorised; A10-A12 owner-authorised 2026-10-23; audit rounds 6-9 fixes applied",
+  "files": {
+    "docs/acceptance/acceptance.yaml": "afdea6be1f73bf71b36b18a988ec7f92c07e963df3a0fe1c3678224c5931e53e",
+    "docs/acceptance/ACCEPTANCE.md": "46ae09cf0d0f8559546af3a7223f6cf15bcae884126a2804fd2ea0fd6c879472",
+    "docs/acceptance/ACCEPTANCE_AUDIT.md": "d87c324b8c9372659f331c55ae9a4c78cb06de61f319c282d87e7466394dee20",
+    "geometry/tests/mac/skip_allowlist.txt": "f9ffcc219eba28148008c35811400a9f3deb6ab8f679b576ca6013e56a2dbe95",
+    "geometry/tests/mac/skip_allowlist_cuda_mode.txt": "5bb0d690b4142cd756f884c66a92287318942efee4232e57bfbe559fec291dec",
+    "geometry/tests/mac/device_divergence.txt": "ad9ee54fa9e0293f4b32c33b3484de9d52d22cdacbd80f56f66787c3c6e7051c",
+    "geometry/tests/mac/cuda_allowlist.txt": "85f3809365c7970bd24c70355212650465dde22dad3bf0d20c1f2dcf722b0c87"
+  }
+}
