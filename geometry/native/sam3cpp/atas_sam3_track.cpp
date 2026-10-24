@@ -2,11 +2,17 @@
 //
 //   atas_sam3_track --model M.ggml --frames DIR --out DIR (--prompt TEXT)... [--no-gpu] [--threads N]
 //   atas_sam3_track --model M.ggml --frames DIR --out DIR --init-boxes boxes.txt [--no-gpu]
+//   atas_sam3_track --model M.ggml --frames DIR --out DIR --init-masks masks.txt [--no-gpu]   (patched sam3.cpp only)
+//   ... --hybrid-k K --edgetam-model E.ggml   (patched sam3.cpp only) with --prompt or --init-boxes:
+//       SAM3 runs only on frames 0, K, 2K, ...; after each such frame EdgeTAM is re-initialised from SAM3's masks
+//       (mask hand-off) and propagates the K-1 frames in between. Output files and schema are unchanged.
 //
 // DIR holds frames named 00000.png, 00001.png, ... in temporal order.
 // Text mode: one tracker per prompt over all frames (SAM3 PCS detection + tracking).
 // Box mode (semi-supervised evaluation): each line of boxes.txt is "object_id x0 y0 x1 y1"
 // [px py] on frame 0 (optional positive point); instances are added with PVS and propagated.
+// Visual-only models (EdgeTAM, SAM2) have no detector: box mode uses the visual tracker instead (encode frame 0,
+// add the instances with PVS, then propagate each later frame by memory attention); text mode is refused.
 // Output: DIR/masks/<prompt>_<frame>_<instance>.png and DIR/tracks.jsonl, one JSON object
 // per detection, plus a final {"summary": ...} line with timings and the peak footprint.
 #include "sam3.h"
@@ -21,6 +27,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <filesystem>
+#include <map>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -61,7 +68,8 @@ static void write_detection(std::ofstream & log, const fs::path & out, int promp
 
 int main(int argc, char ** argv) {
     sam3_params params;
-    std::string frames_dir, out_dir, boxes_file;
+    std::string frames_dir, out_dir, boxes_file, masks_file, edgetam_path;
+    int hybrid_k = 0;
     std::vector<std::string> prompts;
     float score_threshold = 0.5f;
     for (int i = 1; i < argc; ++i) {
@@ -72,13 +80,33 @@ int main(int argc, char ** argv) {
         else if (a == "--out") out_dir = next();
         else if (a == "--prompt") prompts.push_back(next());
         else if (a == "--init-boxes") boxes_file = next();
+        else if (a == "--init-masks") masks_file = next();
+        else if (a == "--hybrid-k") hybrid_k = std::atoi(next().c_str());
+        else if (a == "--edgetam-model") edgetam_path = next();
         else if (a == "--threads") params.n_threads = std::atoi(next().c_str());
         else if (a == "--score-threshold") score_threshold = std::atof(next().c_str());
         else if (a == "--no-gpu") params.use_gpu = false;
         else { fprintf(stderr, "unknown argument %s\n", a.c_str()); return 2; }
     }
+    if (!masks_file.empty()) {
+#ifndef ATAS_MASK_HANDOFF
+        fprintf(stderr, "--init-masks needs sam3.cpp patched with mask_handoff.patch (build with -DATAS_MASK_HANDOFF=ON)\n");
+        return 2;
+#endif
+        boxes_file = masks_file;   // one file of initial objects; its lines name masks instead of boxes
+    }
+    if (hybrid_k > 0) {
+#ifndef ATAS_MASK_HANDOFF
+        fprintf(stderr, "--hybrid-k needs sam3.cpp patched with mask_handoff.patch (build with -DATAS_MASK_HANDOFF=ON)\n");
+        return 2;
+#endif
+        if (hybrid_k < 2 || edgetam_path.empty() || !masks_file.empty()) {
+            fprintf(stderr, "--hybrid-k K (K >= 2) needs --edgetam-model and cannot be combined with --init-masks\n");
+            return 2;
+        }
+    }
     if (params.model_path.empty() || frames_dir.empty() || out_dir.empty() || (prompts.empty() == boxes_file.empty())) {
-        fprintf(stderr, "need --model --frames --out and exactly one of --prompt... / --init-boxes\n");
+        fprintf(stderr, "need --model --frames --out and exactly one of --prompt... / --init-boxes / --init-masks\n");
         return 2;
     }
     std::vector<fs::path> frames;
@@ -94,6 +122,18 @@ int main(int argc, char ** argv) {
     auto model = sam3_load_model(params);
     if (!model) { fprintf(stderr, "failed to load model\n"); return 4; }
     double load_s = std::chrono::duration<double>(clock::now() - t_load).count();
+    std::shared_ptr<sam3_model> model2;
+    sam3_params params2 = params;
+    double load2_s = 0;
+    size_t keyframes = 0, handoff_instances = 0, handoff_failed = 0, empty_keyframes = 0;
+    if (hybrid_k > 0) {
+        auto t2 = clock::now();
+        params2.model_path = edgetam_path;
+        model2 = sam3_load_model(params2);
+        if (!model2 || !sam3_is_visual_only(*model2)) { fprintf(stderr, "--edgetam-model must load a visual-only model\n"); return 4; }
+        if (sam3_is_visual_only(*model)) { fprintf(stderr, "--model must be a SAM3 model with a detector in hybrid mode\n"); return 4; }
+        load2_s = std::chrono::duration<double>(clock::now() - t2).count();
+    }
 
     std::ofstream log(out / "tracks.jsonl");
     std::vector<double> frame_seconds;
@@ -101,36 +141,119 @@ int main(int argc, char ** argv) {
 
     auto run = [&](int prompt_index, const std::string & prompt, bool box_mode) {
         auto state = sam3_create_state(*model, params);
-        sam3_video_params vp;
-        vp.text_prompt = box_mode ? "" : prompt;
-        vp.score_threshold = score_threshold;
-        auto tracker = sam3_create_tracker(*model, vp);
+        const bool visual = sam3_is_visual_only(*model);
+        if (visual && !box_mode) { fprintf(stderr, "a visual-only model cannot take text prompts\n"); std::exit(2); }
+        sam3_tracker_ptr tracker;
+        if (visual) {
+            sam3_visual_track_params vtp;
+            tracker = sam3_create_visual_tracker(*model, vtp);
+        } else {
+            sam3_video_params vp;
+            vp.text_prompt = box_mode ? "" : prompt;
+            vp.score_threshold = score_threshold;
+            if (hybrid_k > 0) {
+                // The text tracker counts tracker steps; with SAM3 on every K-th frame one step spans K video frames.
+                auto per_step = [&](int frames_count) { return std::max(1, (frames_count + hybrid_k - 1) / hybrid_k); };
+                vp.hotstart_delay = per_step(vp.hotstart_delay);
+                vp.max_keep_alive = per_step(vp.max_keep_alive);
+                vp.recondition_every = per_step(vp.recondition_every);
+            }
+            tracker = sam3_create_tracker(*model, vp);
+        }
+        // EdgeTAM side of the hybrid (patched sam3.cpp only): a fresh state and visual tracker at every keyframe.
+        decltype(sam3_create_state(*model, params)) state2;
+        sam3_tracker_ptr tracker2;
+        std::map<int, int> to_sam3;        // EdgeTAM instance id -> SAM3 instance id
+        std::map<int, float> last_score;   // SAM3 score at the last keyframe, reported for propagated masks
+        std::vector<std::pair<int, sam3_pvs_params>> init_prompts;  // box mode: (SAM3 id, prompt) on frame 0
         if (!state || !tracker) { fprintf(stderr, "failed to create tracker\n"); std::exit(4); }
         for (size_t f = 0; f < frames.size(); ++f) {
             sam3_image image = sam3_load_image(frames[f].string());
             if (image.data.empty()) { fprintf(stderr, "failed to read %s\n", frames[f].c_str()); std::exit(3); }
             auto t0 = clock::now();
-            sam3_result result = sam3_track_frame(*tracker, *state, *model, image);
-            if (box_mode && f == 0) {
-                // Instances are added on the encoded first frame; the tracker index has already advanced.
+            sam3_result result;
+            const bool keyframe = hybrid_k == 0 || f % (size_t)hybrid_k == 0;
+            if (!keyframe) {
+#ifdef ATAS_MASK_HANDOFF
+                if (tracker2 && !to_sam3.empty()) {
+                    result = sam3_propagate_frame(*tracker2, *state2, *model2, image);
+                    std::vector<sam3_detection> kept;
+                    for (auto det : result.detections) {
+                        auto it = to_sam3.find(det.instance_id);
+                        if (it == to_sam3.end()) continue;
+                        det.instance_id = it->second; det.mask.instance_id = it->second; det.score = last_score[it->second];
+                        kept.push_back(std::move(det));
+                    }
+                    result.detections.swap(kept);
+                }
+#endif
+            } else if (visual && f == 0) {
+                if (!sam3_encode_image(*state, *model, image)) { fprintf(stderr, "failed to encode frame 0\n"); std::exit(4); }
+            } else if (visual) {
+                result = sam3_propagate_frame(*tracker, *state, *model, image);
+            } else {
+                result = sam3_track_frame(*tracker, *state, *model, image);
+            }
+            if (box_mode && f == 0 && keyframe) {
+                // Instances are added on the encoded first frame (for the text tracker its index has already advanced).
                 std::ifstream boxes(boxes_file);
                 std::string line;
                 while (std::getline(boxes, line)) {
                     std::istringstream row(line);
-                    int object_id; sam3_pvs_params pvs;
-                    if (!(row >> object_id >> pvs.box.x0 >> pvs.box.y0 >> pvs.box.x1 >> pvs.box.y1)) continue;
-                    sam3_point point;
-                    if (row >> point.x >> point.y) pvs.pos_points.push_back(point);  // optional interior point
-                    pvs.use_box = true; pvs.multimask = false;
-                    int id = sam3_tracker_add_instance(*tracker, *state, *model, pvs);
-                    auto shown = sam3_segment_pvs(*state, *model, pvs);
-                    if (id < 0 || shown.detections.empty()) { fprintf(stderr, "failed to add object %d\n", object_id); std::exit(5); }
-                    sam3_detection det = shown.detections[0];
+                    int object_id; int id = -1; sam3_detection det;
+                    if (!masks_file.empty()) {
+#ifdef ATAS_MASK_HANDOFF
+                        std::string mask_path;
+                        if (!(row >> object_id >> mask_path)) continue;
+                        sam3_image gray = sam3_load_image(mask_path);   // 3-channel decode of a grey PNG: red channel carries the mask
+                        if (gray.data.empty()) { fprintf(stderr, "failed to read mask %s\n", mask_path.c_str()); std::exit(3); }
+                        sam3_mask given; given.width = gray.width; given.height = gray.height;
+                        given.data.resize((size_t)gray.width * gray.height);
+                        for (size_t p = 0; p < given.data.size(); ++p) given.data[p] = gray.data[3 * p] > 127 ? 255 : 0;
+                        id = sam3_tracker_add_instance_from_mask(*tracker, *state, *model, given);
+                        det.mask = given; det.score = 1.0f; det.iou_score = 1.0f;
+#endif
+                    } else {
+                        sam3_pvs_params pvs;
+                        if (!(row >> object_id >> pvs.box.x0 >> pvs.box.y0 >> pvs.box.x1 >> pvs.box.y1)) continue;
+                        sam3_point point;
+                        if (row >> point.x >> point.y) pvs.pos_points.push_back(point);  // optional interior point
+                        pvs.use_box = true; pvs.multimask = false;
+                        id = sam3_tracker_add_instance(*tracker, *state, *model, pvs);
+                        auto shown = sam3_segment_pvs(*state, *model, pvs);
+                        if (id >= 0 && !shown.detections.empty()) det = shown.detections[0]; else id = -1;
+                        if (id >= 0 && hybrid_k > 0) { init_prompts.emplace_back(id, pvs); last_score[id] = det.score; }
+                    }
+                    if (id < 0) { fprintf(stderr, "failed to add object %d\n", object_id); std::exit(5); }
                     det.instance_id = id; det.mask.instance_id = id;
                     log << "{\"object_id\":" << object_id << ",\"instance_id\":" << id << ",\"frame\":0,\"init\":true}\n";
                     result.detections.push_back(std::move(det));
                 }
             }
+#ifdef ATAS_MASK_HANDOFF
+            if (hybrid_k > 0 && keyframe) {
+                state2 = sam3_create_state(*model2, params2);
+                sam3_visual_track_params vtp2;
+                tracker2 = sam3_create_visual_tracker(*model2, vtp2);
+                to_sam3.clear();
+                if (!state2 || !tracker2 || !sam3_encode_image(*state2, *model2, image)) { fprintf(stderr, "failed to start EdgeTAM at frame %zu\n", f); std::exit(4); }
+                if (box_mode && f == 0) {
+                    for (auto & ip : init_prompts) {   // the first frame is prompted like AC15: box + interior point
+                        int id2 = sam3_tracker_add_instance(*tracker2, *state2, *model2, ip.second);
+                        if (id2 < 0) { fprintf(stderr, "EdgeTAM failed to add object\n"); std::exit(5); }
+                        to_sam3[id2] = ip.first;
+                    }
+                } else {
+                    for (const auto & det : result.detections) {   // mask hand-off from SAM3
+                        int id2 = sam3_tracker_add_instance_from_mask(*tracker2, *state2, *model2, det.mask);
+                        if (id2 >= 0) { to_sam3[id2] = det.instance_id; last_score[det.instance_id] = det.score; ++handoff_instances; }
+                        else ++handoff_failed;   // a SAM3 instance EdgeTAM could not take over is lost until the next keyframe
+                    }
+                    if (to_sam3.empty()) ++empty_keyframes;
+                }
+                ++keyframes;
+            }
+#endif
             frame_seconds.push_back(std::chrono::duration<double>(clock::now() - t0).count());
             for (const auto & det : result.detections) { write_detection(log, out, prompt_index, prompt, (int)f, det); ++detections; }
         }
@@ -145,6 +268,8 @@ int main(int argc, char ** argv) {
     log << "{\"summary\":{\"frames\":" << frames.size() << ",\"passes\":" << (boxes_file.empty() ? prompts.size() : 1)
         << ",\"detections\":" << detections << ",\"load_s\":" << load_s << ",\"track_s\":" << total
         << ",\"sec_per_frame_max\":" << worst << ",\"use_gpu\":" << (params.use_gpu ? "true" : "false")
+        << ",\"hybrid_k\":" << hybrid_k << ",\"keyframes\":" << keyframes << ",\"handoff_instances\":" << handoff_instances
+        << ",\"handoff_failed\":" << handoff_failed << ",\"empty_keyframes\":" << empty_keyframes << ",\"edgetam_load_s\":" << load2_s
         << ",\"peak_footprint_bytes\":" << peak_footprint() << "}}\n";
     return 0;
 }

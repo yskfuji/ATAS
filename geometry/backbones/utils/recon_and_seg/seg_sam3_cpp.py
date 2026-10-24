@@ -7,6 +7,7 @@ the official implementation builds them.
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import tempfile
 from dataclasses import dataclass
@@ -24,20 +25,40 @@ class Sam3Cpp:
     use_gpu: bool = True
     threads: int = 8
     score_threshold: float = 0.5
+    # Opt-in SAM3-keyframe + EdgeTAM hybrid (A11 stage 2; needs a sam3.cpp build with the mask hand-off patch). 0 = off.
+    hybrid_k: int = 0
+    edgetam_model: str = ""
+    hybrid_keywords: tuple = ("person",)
 
 
-def init_sam3_video(binary: str, model: str, use_gpu: bool = True, threads: int = 8, **_ignored) -> Sam3Cpp:
+def init_sam3_video(binary: str, model: str, use_gpu: bool = True, threads: int = 8, hybrid_k: int | None = None,
+                    edgetam_model: str | None = None, hybrid_keywords: tuple | None = None, **_ignored) -> Sam3Cpp:
+    """The hybrid is off unless GEOMETRY_SAM3_HYBRID_K (or hybrid_k) is >= 2 and GEOMETRY_SAM3_EDGETAM_MODEL names the EdgeTAM ggml file.
+    It only applies to calls whose keywords are all in GEOMETRY_SAM3_HYBRID_KEYWORDS (default 'person': the only prompt it was tested on)."""
     for path in (binary, model):
         if not Path(path).is_file():
             raise FileNotFoundError(path)
-    print(f"Using sam3.cpp ({'Metal' if use_gpu else 'CPU'}) model={model}")
-    return Sam3Cpp(binary=str(binary), model=str(model), use_gpu=bool(use_gpu), threads=int(threads))
+    k = int(os.getenv("GEOMETRY_SAM3_HYBRID_K", "0") or 0) if hybrid_k is None else int(hybrid_k)
+    edge = os.getenv("GEOMETRY_SAM3_EDGETAM_MODEL", "") if edgetam_model is None else edgetam_model
+    if hybrid_keywords is None:
+        hybrid_keywords = tuple(w.strip().lower() for w in os.getenv("GEOMETRY_SAM3_HYBRID_KEYWORDS", "person").split(",") if w.strip())
+    if k < 0 or k == 1:
+        raise ValueError(f"GEOMETRY_SAM3_HYBRID_K must be 0 (off) or >= 2, got {k}")
+    if k >= 2 and not Path(edge).is_file():
+        raise FileNotFoundError(f"GEOMETRY_SAM3_HYBRID_K={k} needs GEOMETRY_SAM3_EDGETAM_MODEL to name the EdgeTAM ggml file (got {edge!r})")
+    print(f"Using sam3.cpp ({'Metal' if use_gpu else 'CPU'}) model={model}" + (f" hybrid K={k} edgetam={edge} keywords={list(hybrid_keywords)}" if k else ""))
+    return Sam3Cpp(binary=str(binary), model=str(model), use_gpu=bool(use_gpu), threads=int(threads), hybrid_k=k,
+                   edgetam_model=str(edge) if k else "", hybrid_keywords=tuple(hybrid_keywords))
 
 
 def _write_frames(video: np.ndarray, folder: Path) -> None:
     folder.mkdir(parents=True, exist_ok=True)
     for index, frame in enumerate(video):
         Image.fromarray(frame).save(folder / f"{index:05d}.png", compress_level=1)
+
+
+def hybrid_applies(config: Sam3Cpp, keywords) -> bool:
+    return config.hybrid_k >= 2 and bool(keywords) and all(k.strip().lower() in config.hybrid_keywords for k in keywords)
 
 
 def run_tracker(config: Sam3Cpp, frames_dir: Path, out_dir: Path, *, prompts=None, init_boxes=None) -> list[dict]:
@@ -49,6 +70,8 @@ def run_tracker(config: Sam3Cpp, frames_dir: Path, out_dir: Path, *, prompts=Non
         command += ["--init-boxes", str(init_boxes)]
     for prompt in prompts or ():
         command += ["--prompt", prompt]
+    if hybrid_applies(config, prompts or ()):
+        command += ["--hybrid-k", str(config.hybrid_k), "--edgetam-model", config.edgetam_model]
     completed = subprocess.run(command, capture_output=True, text=True)
     if completed.returncode != 0:
         raise RuntimeError(f"sam3.cpp failed ({completed.returncode}): {completed.stderr[-4000:]}")

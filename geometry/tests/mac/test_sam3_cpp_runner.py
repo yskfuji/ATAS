@@ -129,3 +129,37 @@ def test_real_binary_tracks_a_person(tmp_path):
     predictor = seg_sam3_cpp.init_sam3_video(str(SAM3CPP_BIN), str(SAM3CPP_MODEL))
     mask, frames = seg_sam3_cpp.run_sam3_video(clip, predictor, ["person"])
     assert all(len(f) >= 1 for f in frames) and .1 < mask.mean() < .9
+
+
+def test_hybrid_is_off_by_default_and_person_only(tmp_path, monkeypatch):
+    """A11 stage 2 opt-in: no hybrid flags unless GEOMETRY_SAM3_HYBRID_K >= 2; only for the validated 'person' keyword."""
+    monkeypatch.delenv("GEOMETRY_SAM3_HYBRID_K", raising=False)
+    monkeypatch.delenv("GEOMETRY_SAM3_EDGETAM_MODEL", raising=False)
+    binary = tmp_path / "bin"; binary.write_text("x"); model = tmp_path / "m.ggml"; model.write_bytes(b"x")
+    edge = tmp_path / "e.ggml"; edge.write_bytes(b"x")
+    off = seg_sam3_cpp.init_sam3_video(str(binary), str(model))
+    assert off.hybrid_k == 0 and not seg_sam3_cpp.hybrid_applies(off, ["person"])
+    monkeypatch.setenv("GEOMETRY_SAM3_HYBRID_K", "4")
+    with pytest.raises(FileNotFoundError):          # K without the EdgeTAM model is refused, not silently ignored
+        seg_sam3_cpp.init_sam3_video(str(binary), str(model))
+    monkeypatch.setenv("GEOMETRY_SAM3_EDGETAM_MODEL", str(edge))
+    on = seg_sam3_cpp.init_sam3_video(str(binary), str(model))
+    assert on.hybrid_k == 4 and on.edgetam_model == str(edge)
+    assert seg_sam3_cpp.hybrid_applies(on, ["person"]) and seg_sam3_cpp.hybrid_applies(on, [" Person "])
+    assert not seg_sam3_cpp.hybrid_applies(on, ["sky"]) and not seg_sam3_cpp.hybrid_applies(on, ["person", "car"]) and not seg_sam3_cpp.hybrid_applies(on, [])
+    for bad in ("1", "-2"):
+        monkeypatch.setenv("GEOMETRY_SAM3_HYBRID_K", bad)
+        with pytest.raises(ValueError):
+            seg_sam3_cpp.init_sam3_video(str(binary), str(model))
+
+
+def test_hybrid_flags_reach_the_binary_only_when_applicable(tmp_path, monkeypatch):
+    seen = []
+    monkeypatch.setattr(seg_sam3_cpp.subprocess, "run", lambda command, **kw: (seen.append(command), (_ for _ in ()).throw(RuntimeError("stop")))[1])
+    edge = tmp_path / "e.ggml"; edge.write_bytes(b"x")
+    cfg = seg_sam3_cpp.Sam3Cpp(binary="b", model="m", hybrid_k=4, edgetam_model=str(edge))
+    for prompts in (["person"], ["sky"]):
+        with pytest.raises(RuntimeError):
+            seg_sam3_cpp.run_tracker(cfg, tmp_path, tmp_path / "o", prompts=prompts)
+    assert "--hybrid-k" in seen[0] and seen[0][seen[0].index("--hybrid-k") + 1] == "4" and seen[0][seen[0].index("--edgetam-model") + 1] == str(edge)
+    assert "--hybrid-k" not in seen[1]

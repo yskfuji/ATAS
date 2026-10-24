@@ -2,6 +2,8 @@
 Conv head is from MoGe (https://github.com/microsoft/moge)
 """
 
+import os
+
 import torch
 import torch.nn as nn
 from typing import *
@@ -59,6 +61,13 @@ class ResidualConvBlock(nn.Module):
         return x  
 
 
+# Frames per ConvHead pass off CUDA. Every operation in the head is per frame (GroupNorm(1, C) normalises each
+# sample over C, H, W; convolutions, transposed convolutions and bilinear resampling do not mix frames), so running
+# the frames in slices and concatenating returns the same values; it only lowers the activation peak. 0 (upstream's single pass)
+# is the default; amendment A10 turns it on after a before/after measurement.
+FRAME_CHUNK = int(os.environ.get("ATAS_CONVHEAD_FRAME_CHUNK", "0"))
+
+
 class ConvHead(nn.Module):
     def __init__(
         self, 
@@ -112,6 +121,16 @@ class ConvHead(nn.Module):
         )
             
     def forward(self, hidden_states: torch.Tensor, image: torch.Tensor = None, patch_h: int = None, patch_w: int = None):
+        n = hidden_states.shape[0]
+        if FRAME_CHUNK <= 0 or n <= FRAME_CHUNK or hidden_states.device.type == "cuda":
+            return self._forward_frames(hidden_states, image, patch_h, patch_w)
+        parts = [self._forward_frames(hidden_states[i:i + FRAME_CHUNK], None if image is None else image[i:i + FRAME_CHUNK],
+                                      patch_h, patch_w) for i in range(0, n, FRAME_CHUNK)]
+        if isinstance(parts[0], (list, tuple)):
+            return [torch.cat([part[k] for part in parts], 0) for k in range(len(parts[0]))]
+        return torch.cat(parts, 0)
+
+    def _forward_frames(self, hidden_states: torch.Tensor, image: torch.Tensor = None, patch_h: int = None, patch_w: int = None):
         if image is not None:
             img_h, img_w = image.shape[-2:]
             patch_h, patch_w = img_h // 14, img_w // 14
