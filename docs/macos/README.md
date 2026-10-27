@@ -15,10 +15,15 @@ Community fork of [ziplab/ATAS](https://github.com/ziplab/ATAS). Upstream was as
 ## Setup
     python3.12 -m venv .venv-macos && .venv-macos/bin/pip install -r geometry/requirements-macos.txt && .venv-macos/bin/pip install -e geometry
     brew install cmake ffmpeg
-    # build the sam3.cpp CLI (see geometry/native/sam3cpp/CMakeLists.txt; the commit is pinned in SAM3CPP_COMMIT)
+    # build the sam3.cpp CLI (see geometry/native/sam3cpp/CMakeLists.txt; the commit is pinned in SAM3CPP_COMMIT), after applying
+    # geometry/native/sam3cpp/patches/tracker_memory_release.patch to the sam3.cpp checkout (patch -p1): required for SAM3 alone too
     export GEOMETRY_DEVICE=mps GEOMETRY_PYTHON=$PWD/.venv-macos/bin/python GEOMETRY_PI3_MODEL=<dir with Pi3X> \
            GEOMETRY_SAM3_CHECKPOINT=<sam3-f16.ggml> GEOMETRY_SAM3CPP_BIN=<build>/atas_sam3_track GEOMETRY_API_TOKEN=<token>
     geometry/run_geometry_service.sh            # curl http://127.0.0.1:18300/readyz
+Without the memory release patch, sam3.cpp's video tracker aborts (`GGML_ASSERT(obj_new)`) after about 1365 masklet-frames (tracked
+objects x frames; a busy 48-frame clip is enough) and leaks about 2.6 MB per masklet-frame (reported upstream: PABannier/sam3.cpp#36).
+The patch does not change any output: masks, scores and boxes are bit-identical to the unpatched build wherever that build finishes
+([results/sam3_memfix.json](results/sam3_memfix.json)).
 Weights are not part of this repository. **The Pi3X weights are CC BY-NC 4.0 (non-commercial)**; SAM3 is under Meta's SAM License;
 see PUBLISHING_CHECKLIST.md.
 

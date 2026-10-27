@@ -1,0 +1,55 @@
+{
+ "patch": "geometry/native/sam3cpp/patches/tracker_memory_release.patch, against PABannier/sam3.cpp 416186c (upstream issue PABannier/sam3.cpp#36)",
+ "machine": "Apple M4 Pro (48 GB), Metal, sam3-f16 and edgetam_f16 ggml weights",
+ "problem": "every tracker memory slot and object pointer is a new tensor in a context sized for 4096 tensors and is never released: abort (GGML_ASSERT(obj_new)) after about 1365 masklet-frames, about 2.6 MB per masklet-frame held until reset",
+ "identity": {
+  "M1_short_clips": "SAM3 text prompt, SAM3 box prompts, EdgeTAM box prompts, and the SAM3 + EdgeTAM hybrid (text, box): masks (sha256), scores and boxes bit-identical to the unpatched build",
+  "V1_davis_val": {
+   "protocol": "SAM3 alone, box prompts, all 30 DAVIS-2017 val sequences, per-object masks compared with the unpatched build's saved masks (criterion fixed before the run)",
+   "identical_sequences": 30,
+   "sequences": 30,
+   "mean_JF": 0.8822,
+   "PASS": true
+  },
+  "this_repository_cli": {
+   "protocol": "the CLI of this repository built twice against sam3.cpp 416186c + mask_handoff.patch, without and with the release patch; DAVIS lab-coat (47 frames), text prompt 'person'",
+   "hybrid_k4": {
+    "records_identical": true,
+    "masks_identical": 234,
+    "peak_footprint_bytes": [
+     3352366152,
+     3423456280
+    ]
+   },
+   "sam3_alone": {
+    "records_identical": true,
+    "masks_identical": 809,
+    "peak_footprint_bytes": [
+     6326621344,
+     3566554448
+    ]
+   },
+   "note": "summaries differ only in timing and peak memory ([without, with] the patch)"
+  }
+ },
+ "aborts_removed": {
+  "M2_sam3_alone_sintel_market_2_48_frames": {
+   "unpatched": "aborts",
+   "patched": "completes",
+   "detections": 1661,
+   "peak_footprint_bytes": 4482125712
+  },
+  "M2_hybrid_davis_breakdance_84_frames": {
+   "unpatched": "aborts",
+   "patched": "completes",
+   "peak_footprint_bytes": 5426975280
+  },
+  "M3_edgetam_5_objects_1600_frames": {
+   "unpatched": "aborts",
+   "patched": "completes",
+   "peak_1600_over_peak_200": 1.0033
+  }
+ },
+ "tests": "geometry/tests/mac on the patched build: 127 passed, 1 xfailed (as on the unpatched build)",
+ "review": "independent code review of the patch: SAFE"
+}

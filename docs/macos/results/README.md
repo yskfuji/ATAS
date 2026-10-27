@@ -9,4 +9,5 @@ repository; `gate_report.json` is its output on the full run.
 * `parity.json`, `stats/tost.json`: MPS vs CPU numerics and ground-truth equivalence (AC12, AC13)
 * `perf.json`, `render_remeasure.json`, `e2e_world*.json`, `regression.json`: performance, render time, world-state loop, test suites
 * `hybrid_val*`, `hybrid_stage2*`: the SAM3 + EdgeTAM hybrid (stage 1 simulation, stage 2 a/b/c); rules are in `evidence/prereg/`
+* `sam3_memfix.json`: `patches/tracker_memory_release.patch` (sam3.cpp tracker memory release): output identity and the aborts it removes
 * `convhead_*`: the ConvHead frame-chunking certification and memory measurements

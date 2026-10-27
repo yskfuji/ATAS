@@ -7,7 +7,9 @@ environment variables. Nothing changes unless you set them.
 
 ## Build (needs the patched sam3.cpp)
 1. Check out PABannier/sam3.cpp at the commit in `geometry/native/sam3cpp/SAM3CPP_COMMIT`.
-2. Apply `geometry/native/sam3cpp/patches/mask_handoff.patch` (adds `sam3_tracker_add_instance_from_mask`).
+2. Apply, in this order (`patch -p1` in the checkout): `geometry/native/sam3cpp/patches/mask_handoff.patch` (adds
+   `sam3_tracker_add_instance_from_mask`), then `tracker_memory_release.patch` (required: without it the tracker aborts after about
+   1365 masklet-frames; see README.md).
 3. `cmake -S geometry/native/sam3cpp -B build -DSAM3CPP_SOURCE_DIR=<patched checkout> -DGGML_METAL=ON -DATAS_MASK_HANDOFF=ON && cmake --build build --target atas_sam3_track`
 4. Weights: `sam3-f16.ggml` and `edgetam_f16.ggml` are not distributed here (see PUBLISHING_CHECKLIST.md for their licences).
 

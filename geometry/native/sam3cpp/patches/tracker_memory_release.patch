@@ -1,0 +1,208 @@
+--- a/sam3.cpp	2026-10-25 03:06:27
++++ b/sam3.cpp	2026-10-26 19:44:50
+@@ -974,6 +974,11 @@
+     // Tracked here so they can be freed on tracker reset.
+     std::vector<ggml_backend_buffer_t> owned_buffers;
+ 
++    // ATAS patch (tracker_memory_release): every memory / pointer tensor gets its own one-tensor context and buffer, released
++    // when the tensor leaves its bank or its masklet is dropped. The shared ctx above held 4096 tensors and never released
++    // evicted ones, so a tracker aborted after ~1365 masklet-frames and leaked ~2.6 MB of device memory per masklet-frame.
++    std::map<const struct ggml_tensor*, std::pair<struct ggml_context*, ggml_backend_buffer_t>> tensor_owners;
++
+     // Cached PE / RoPE data — pure functions of fixed hyperparameters, computed once.
+     bool pe_caches_valid = false;
+     std::vector<float> cached_sinpe_256;       // sam3_sinusoidal_pe_2d(72, 72, 256)
+@@ -11210,6 +11215,43 @@
+         }
+     }
+     return matches;
++}
++
++static struct ggml_tensor* sam3_new_owned_tensor(sam3_tracker& tracker, const sam3_model& model,
++                                                 int64_t ne0, int64_t ne1, int64_t ne2, int64_t ne3, int n_dims) {
++    struct ggml_init_params tp = {ggml_tensor_overhead(), nullptr, true};
++    struct ggml_context* ctx = ggml_init(tp);
++    auto* t = n_dims == 2 ? ggml_new_tensor_2d(ctx, GGML_TYPE_F32, ne0, ne1)
++                          : ggml_new_tensor_4d(ctx, GGML_TYPE_F32, ne0, ne1, ne2, ne3);
++    auto* b = ggml_backend_alloc_buffer(model.backend, ggml_nbytes(t));
++    struct ggml_tallocr ta = ggml_tallocr_new(b);
++    ggml_tallocr_alloc(&ta, t);
++    tracker.tensor_owners[t] = {ctx, b};
++    return t;
++}
++
++static void sam3_release_owned_tensor(sam3_tracker& tracker, const struct ggml_tensor* t) {
++    auto it = tracker.tensor_owners.find(t);
++    if (it == tracker.tensor_owners.end()) return;
++    ggml_backend_buffer_free(it->second.second);
++    ggml_free(it->second.first);
++    tracker.tensor_owners.erase(it);
++}
++
++static void sam3_release_banks(sam3_tracker& tracker, int inst_id) {
++    auto im = tracker.mem_banks.find(inst_id);
++    if (im != tracker.mem_banks.end()) {
++        for (const auto& slot : im->second) {
++            sam3_release_owned_tensor(tracker, slot.spatial_feats);
++            sam3_release_owned_tensor(tracker, slot.spatial_pe);
++        }
++        tracker.mem_banks.erase(im);
++    }
++    auto ip = tracker.ptr_banks.find(inst_id);
++    if (ip != tracker.ptr_banks.end()) {
++        for (const auto& e : ip->second) sam3_release_owned_tensor(tracker, e.second);
++        tracker.ptr_banks.erase(ip);
++    }
+ }
+ 
+ static void sam3_update_tracker(sam3_tracker& tracker, int frame_idx) {
+@@ -11220,14 +11262,14 @@
+             tracker.masklets.push_back(std::move(*it));
+             it = tracker.pending.erase(it);
+         } else if (age >= tracker.params.hotstart_delay) {
++            sam3_release_banks(tracker, it->instance_id);   // ATAS patch: the dropped instance id is never used again
+             it = tracker.pending.erase(it);
+         } else
+             ++it;
+     }
+     for (auto it = tracker.masklets.begin(); it != tracker.masklets.end();) {
+         if (frame_idx - it->last_seen > tracker.params.max_keep_alive) {
+-            tracker.mem_banks.erase(it->instance_id);
+-            tracker.ptr_banks.erase(it->instance_id);
++            sam3_release_banks(tracker, it->instance_id);
+             it = tracker.masklets.erase(it);
+         } else
+             ++it;
+@@ -11331,10 +11373,6 @@
+             md[i] += no_obj_emb[i % MD];
+     }
+ 
+-    if (!tracker.ctx) {
+-        struct ggml_init_params tp = {ggml_tensor_overhead() * 4096, nullptr, true};
+-        tracker.ctx = ggml_init(tp);
+-    }
+ 
+     // ── EdgeTAM perceiver: compress memory features before storage ───────
+     if (hp.has_perceiver) {
+@@ -11351,19 +11389,11 @@
+ 
+         // Store perceiver output: [MD=64, N_perc] (N_1d + N_2d latents)
+         const int N_perc = hp.perceiver_n_latents_1d + hp.perceiver_n_latents_2d;
+-        auto* st = ggml_new_tensor_2d(tracker.ctx, GGML_TYPE_F32, MD, N_perc);
+-        auto* sb = ggml_backend_alloc_buffer(model.backend, MD * N_perc * sizeof(float));
+-        struct ggml_tallocr ta_perc = ggml_tallocr_new(sb);
+-        ggml_tallocr_alloc(&ta_perc, st);
+-        tracker.owned_buffers.push_back(sb);
++        auto* st = sam3_new_owned_tensor(tracker, model, MD, N_perc, 1, 1, 2);
+         ggml_backend_tensor_set(st, perc_latents.data(), 0, MD * N_perc * sizeof(float));
+ 
+         // Store perceiver PE: [MD=64, 512] (first 256 zeros, last 256 sinusoidal)
+-        auto* spe = ggml_new_tensor_2d(tracker.ctx, GGML_TYPE_F32, MD, N_perc);
+-        auto* speb = ggml_backend_alloc_buffer(model.backend, MD * N_perc * sizeof(float));
+-        struct ggml_tallocr ta_perc2 = ggml_tallocr_new(speb);
+-        ggml_tallocr_alloc(&ta_perc2, spe);
+-        tracker.owned_buffers.push_back(speb);
++        auto* spe = sam3_new_owned_tensor(tracker, model, MD, N_perc, 1, 1, 2);
+         ggml_backend_tensor_set(spe, perc_pos.data(), 0, MD * N_perc * sizeof(float));
+ 
+         sam3_memory_slot slot;
+@@ -11374,35 +11404,28 @@
+         auto& bk = tracker.mem_banks[inst_id];
+         bk.push_back(slot);
+         while ((int)bk.size() > hp.num_maskmem) {
+-            bool removed = false;
++            auto victim = bk.begin() + 1;
+             for (auto it = bk.begin(); it != bk.end(); ++it)
+                 if (!it->is_cond_frame) {
+-                    bk.erase(it);
+-                    removed = true;
++                    victim = it;
+                     break;
+                 }
+-            if (!removed) bk.erase(bk.begin() + 1);
++            sam3_release_owned_tensor(tracker, victim->spatial_feats);
++            sam3_release_owned_tensor(tracker, victim->spatial_pe);
++            bk.erase(victim);
+         }
+         return true;
+     }
+ 
+     // ── Standard path (SAM2/SAM3): store raw [MD, H, H] features ────────
+     // Store spatial features
+-    auto* st = ggml_new_tensor_4d(tracker.ctx, GGML_TYPE_F32, MD, H, H, 1);
+-    auto* sb = ggml_backend_alloc_buffer(model.backend, MD * H * H * sizeof(float));
+-    struct ggml_tallocr ta = ggml_tallocr_new(sb);
+-    ggml_tallocr_alloc(&ta, st);
+-    tracker.owned_buffers.push_back(sb);
++    auto* st = sam3_new_owned_tensor(tracker, model, MD, H, H, 1, 4);
+     ggml_backend_tensor_set(st, md.data(), 0, md.size() * sizeof(float));
+ 
+     // Compute and store sinusoidal spatial PE
+     sam3_ensure_tracker_pe_caches(tracker, hp, H);
+     const auto& pe_data = tracker.cached_sinpe_64;
+-    auto* spe = ggml_new_tensor_4d(tracker.ctx, GGML_TYPE_F32, MD, H, H, 1);
+-    auto* speb = ggml_backend_alloc_buffer(model.backend, MD * H * H * sizeof(float));
+-    struct ggml_tallocr ta2 = ggml_tallocr_new(speb);
+-    ggml_tallocr_alloc(&ta2, spe);
+-    tracker.owned_buffers.push_back(speb);
++    auto* spe = sam3_new_owned_tensor(tracker, model, MD, H, H, 1, 4);
+     ggml_backend_tensor_set(spe, pe_data.data(), 0, pe_data.size() * sizeof(float));
+ 
+     sam3_memory_slot slot;
+@@ -11413,14 +11436,15 @@
+     auto& bk = tracker.mem_banks[inst_id];
+     bk.push_back(slot);
+     while ((int)bk.size() > hp.num_maskmem) {
+-        bool removed = false;
++        auto victim = bk.begin() + 1;
+         for (auto it = bk.begin(); it != bk.end(); ++it)
+             if (!it->is_cond_frame) {
+-                bk.erase(it);
+-                removed = true;
++                victim = it;
+                 break;
+             }
+-        if (!removed) bk.erase(bk.begin() + 1);
++        sam3_release_owned_tensor(tracker, victim->spatial_feats);
++        sam3_release_owned_tensor(tracker, victim->spatial_pe);
++        bk.erase(victim);
+     }
+     return true;
+ }
+@@ -11429,19 +11453,14 @@
+     sam3_tracker& tracker, const sam3_model& model,
+     int inst_id, const float* pd, int frame_idx) {
+     const int D = model.hparams.neck_dim;
+-    if (!tracker.ctx) {
+-        struct ggml_init_params tp = {ggml_tensor_overhead() * 4096, nullptr, true};
+-        tracker.ctx = ggml_init(tp);
+-    }
+-    auto* pt = ggml_new_tensor_2d(tracker.ctx, GGML_TYPE_F32, D, 1);
+-    auto* pb = ggml_backend_alloc_buffer(model.backend, D * sizeof(float));
+-    struct ggml_tallocr ta = ggml_tallocr_new(pb);
+-    ggml_tallocr_alloc(&ta, pt);
+-    tracker.owned_buffers.push_back(pb);
++    auto* pt = sam3_new_owned_tensor(tracker, model, D, 1, 1, 1, 2);
+     ggml_backend_tensor_set(pt, pd, 0, D * sizeof(float));
+     auto& bk = tracker.ptr_banks[inst_id];
+     bk.push_back({frame_idx, pt});
+-    while ((int)bk.size() > model.hparams.max_obj_ptrs) bk.erase(bk.begin());
++    while ((int)bk.size() > model.hparams.max_obj_ptrs) {
++        sam3_release_owned_tensor(tracker, bk.front().second);
++        bk.erase(bk.begin());
++    }
+ }
+ 
+ sam3_tracker_ptr sam3_create_tracker(const sam3_model& model,
+@@ -11867,6 +11886,11 @@
+     tracker.pending.clear();
+     tracker.mem_banks.clear();
+     tracker.ptr_banks.clear();
++    for (auto& o : tracker.tensor_owners) {
++        ggml_backend_buffer_free(o.second.second);
++        ggml_free(o.second.first);
++    }
++    tracker.tensor_owners.clear();
+     for (auto* b : tracker.owned_buffers)
+         if (b) ggml_backend_buffer_free(b);
+     tracker.owned_buffers.clear();
