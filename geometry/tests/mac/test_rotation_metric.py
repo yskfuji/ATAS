@@ -66,7 +66,9 @@ def test_both_forms_agree_when_well_conditioned(degrees):
     assert abs(G.rotation_deg(a, b) - G.rotation_deg_pre_A12(a, b)) < 1e-3
 
 
-@pytest.mark.skipif(not (EVAL / "sintel_temple_2/compare_float32.pre_A12.json").is_file(), reason="saved evaluation runs absent")
+# needs the saved raw runs of the evaluation (not published); skipped when only their JSON summaries are present
+@pytest.mark.skipif(not (EVAL / "sintel_temple_2/compare_float32.pre_A12.json").is_file()
+                    or not (EVAL / "sintel_temple_2/cpu_float32_crn0/l0/cameras.npz").is_file(), reason="saved evaluation runs absent")
 def test_stored_pre_A12_values_are_reproduced_by_the_original_formula_and_corrected_values_by_the_new_one():
     for clip, expected_old in (("sintel_bandage_1", 0.0809), ("sintel_temple_2", 0.3339)):
         base = EVAL / clip

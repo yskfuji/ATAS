@@ -6,6 +6,12 @@
 //   ... --hybrid-k K --edgetam-model E.ggml   (patched sam3.cpp only) with --prompt or --init-boxes:
 //       SAM3 runs only on frames 0, K, 2K, ...; after each such frame EdgeTAM is re-initialised from SAM3's masks
 //       (mask hand-off) and propagates the K-1 frames in between. Output files and schema are unchanged.
+//       Needs sam3.cpp with patches/mask_handoff.patch and patches/visual_no_object_gating.patch. Hand-off options:
+//       --handoff-min-coverage C (default -1 = off; e.g. 0.001), text prompts only unless --handoff-f0-box: never hand over an
+//         empty SAM3 mask; a mask covering <= C of the frame only if it is not a fragment within --handoff-fragment-px (default 40)
+//         of a larger mask on the same keyframe.
+//       --handoff-empty-absent, --gate-no-object (default off): SAM 2's no-object semantics for the hand-off and EdgeTAM.
+//       Hand-off decisions are logged as {"handoff":true,...} rows; propagated detections carry EdgeTAM's obj_score, empty ones are not written.
 //
 // DIR holds frames named 00000.png, 00001.png, ... in temporal order.
 // Text mode: one tracker per prompt over all frames (SAM3 PCS detection + tracking).
@@ -52,7 +58,7 @@ static std::string json_escape(const std::string & s) {
 }
 
 static void write_detection(std::ofstream & log, const fs::path & out, int prompt_index, const std::string & prompt,
-                            int frame, const sam3_detection & det) {
+                            int frame, const sam3_detection & det, bool with_obj_score = false) {
     char name[128];
     snprintf(name, sizeof name, "p%02d_f%05d_i%04d.png", prompt_index, frame, det.instance_id);
     fs::path mask_path = out / "masks" / name;
@@ -63,13 +69,23 @@ static void write_detection(std::ofstream & log, const fs::path & out, int promp
     log << "{\"prompt_index\":" << prompt_index << ",\"prompt\":\"" << json_escape(prompt) << "\",\"frame\":" << frame
         << ",\"instance_id\":" << det.instance_id << ",\"score\":" << det.score << ",\"iou_score\":" << det.iou_score
         << ",\"box_xyxy\":[" << det.box.x0 << "," << det.box.y0 << "," << det.box.x1 << "," << det.box.y1 << "]"
-        << ",\"mask\":\"masks/" << name << "\"}\n";
+        << ",\"mask\":\"masks/" << name << "\"";
+    if (with_obj_score) log << ",\"obj_score\":" << det.mask.obj_score;
+    log << "}\n";
 }
 
 int main(int argc, char ** argv) {
     sam3_params params;
     std::string frames_dir, out_dir, boxes_file, masks_file, edgetam_path;
     int hybrid_k = 0;
+    // Hand-off fixes F0/F0'/F1 (docs/macos/HYBRID_LEAK_DIAGNOSIS.md) are opt-in: the registered evaluation rejected them as
+    // defaults (F0 drops true small objects whose box-prompted keyframe mask is empty or tiny). All off = the stage-2 hybrid.
+    // F0 acts on text prompts only (the empty/tiny masks it targets are the text tracker's hot-start duplicates); a box-prompted
+    // object is distinct, so its empty or tiny keyframe mask is still handed over unless --handoff-f0-box is given.
+    double handoff_min_coverage = -1.0;   // e.g. 0.001 enables F0; < 0 disables it
+    bool handoff_f0_box = false;
+    int handoff_fragment_px = 40;
+    bool handoff_empty_absent = false, gate_no_object = false;
     std::vector<std::string> prompts;
     float score_threshold = 0.5f;
     for (int i = 1; i < argc; ++i) {
@@ -83,6 +99,13 @@ int main(int argc, char ** argv) {
         else if (a == "--init-masks") masks_file = next();
         else if (a == "--hybrid-k") hybrid_k = std::atoi(next().c_str());
         else if (a == "--edgetam-model") edgetam_path = next();
+        else if (a == "--handoff-min-coverage") handoff_min_coverage = std::atof(next().c_str());
+        else if (a == "--handoff-fragment-px") handoff_fragment_px = std::atoi(next().c_str());
+        else if (a == "--handoff-f0-box") handoff_f0_box = true;
+        else if (a == "--handoff-empty-absent") handoff_empty_absent = true;
+        else if (a == "--no-handoff-empty-absent") handoff_empty_absent = false;
+        else if (a == "--gate-no-object") gate_no_object = true;
+        else if (a == "--no-gate-no-object") gate_no_object = false;
         else if (a == "--threads") params.n_threads = std::atoi(next().c_str());
         else if (a == "--score-threshold") score_threshold = std::atof(next().c_str());
         else if (a == "--no-gpu") params.use_gpu = false;
@@ -125,7 +148,7 @@ int main(int argc, char ** argv) {
     std::shared_ptr<sam3_model> model2;
     sam3_params params2 = params;
     double load2_s = 0;
-    size_t keyframes = 0, handoff_instances = 0, handoff_failed = 0, empty_keyframes = 0;
+    size_t keyframes = 0, handoff_instances = 0, handoff_failed = 0, empty_keyframes = 0, handoff_dropped = 0;
     if (hybrid_k > 0) {
         auto t2 = clock::now();
         params2.model_path = edgetam_path;
@@ -136,6 +159,7 @@ int main(int argc, char ** argv) {
     }
 
     std::ofstream log(out / "tracks.jsonl");
+    if (!log) { fprintf(stderr, "cannot open %s\n", (out / "tracks.jsonl").c_str()); return 4; }
     std::vector<double> frame_seconds;
     size_t detections = 0;
 
@@ -181,6 +205,9 @@ int main(int argc, char ** argv) {
                     for (auto det : result.detections) {
                         auto it = to_sam3.find(det.instance_id);
                         if (it == to_sam3.end()) continue;
+                        bool any = false;
+                        for (auto v : det.mask.data) if (v > 127) { any = true; break; }
+                        if (!any) continue;   // "no object" (or an empty propagation) is not written
                         det.instance_id = it->second; det.mask.instance_id = it->second; det.score = last_score[it->second];
                         kept.push_back(std::move(det));
                     }
@@ -234,6 +261,7 @@ int main(int argc, char ** argv) {
             if (hybrid_k > 0 && keyframe) {
                 state2 = sam3_create_state(*model2, params2);
                 sam3_visual_track_params vtp2;
+                vtp2.gate_no_object = gate_no_object;
                 tracker2 = sam3_create_visual_tracker(*model2, vtp2);
                 to_sam3.clear();
                 if (!state2 || !tracker2 || !sam3_encode_image(*state2, *model2, image)) { fprintf(stderr, "failed to start EdgeTAM at frame %zu\n", f); std::exit(4); }
@@ -244,10 +272,43 @@ int main(int argc, char ** argv) {
                         to_sam3[id2] = ip.first;
                     }
                 } else {
-                    for (const auto & det : result.detections) {   // mask hand-off from SAM3
-                        int id2 = sam3_tracker_add_instance_from_mask(*tracker2, *state2, *model2, det.mask);
-                        if (id2 >= 0) { to_sam3[id2] = det.instance_id; last_score[det.instance_id] = det.score; ++handoff_instances; }
-                        else ++handoff_failed;   // a SAM3 instance EdgeTAM could not take over is lost until the next keyframe
+                    std::vector<long> areas;
+                    for (const auto & det : result.detections) { long a = 0; for (auto v : det.mask.data) a += v > 127; areas.push_back(a); }
+                    for (size_t di = 0; di < result.detections.size(); ++di) {   // mask hand-off from SAM3, in SAM3's output order
+                        const auto & det = result.detections[di];
+                        const long area = areas[di];
+                        std::string drop;
+                        bool isolated_small = false;
+                        if (handoff_min_coverage >= 0.0 && (!box_mode || handoff_f0_box)) {
+                            const int W = det.mask.width, Hh = det.mask.height, r = handoff_fragment_px;
+                            if (area == 0) drop = "empty";
+                            else if (area <= handoff_min_coverage * (double)W * Hh) {
+                                bool fragment = false;   // within r px of a larger mask on this keyframe
+                                for (size_t dj = 0; dj < result.detections.size() && !fragment; ++dj) {
+                                    if (dj == di || areas[dj] <= area) continue;
+                                    const auto & big = result.detections[dj].mask.data;
+                                    for (int y = 0; y < Hh && !fragment; ++y)
+                                        for (int x = 0; x < W && !fragment; ++x) {
+                                            if (det.mask.data[(size_t)y * W + x] <= 127) continue;
+                                            for (int yy = std::max(0, y - r); yy <= std::min(Hh - 1, y + r) && !fragment; ++yy)
+                                                for (int xx = std::max(0, x - r); xx <= std::min(W - 1, x + r); ++xx)
+                                                    if (big[(size_t)yy * W + xx] > 127 && (xx - x) * (xx - x) + (yy - y) * (yy - y) <= r * r) { fragment = true; break; }
+                                        }
+                                }
+                                if (fragment) drop = "fragment"; else isolated_small = true;
+                            }
+                        }
+                        int id2 = -2;
+                        if (drop.empty()) {
+                            id2 = sam3_tracker_add_instance_from_mask(*tracker2, *state2, *model2, det.mask, handoff_empty_absent);
+                            if (id2 >= 0) { to_sam3[id2] = det.instance_id; last_score[det.instance_id] = det.score; ++handoff_instances; }
+                            else ++handoff_failed;   // a SAM3 instance EdgeTAM could not take over is lost until the next keyframe
+                        } else {
+                            ++handoff_dropped;
+                        }
+                        log << "{\"handoff\":true,\"frame\":" << f << ",\"sam3_instance\":" << det.instance_id << ",\"edgetam_instance\":" << id2
+                            << ",\"score\":" << det.score << ",\"area\":" << area << ",\"dropped\":\"" << drop << "\",\"isolated_small\":"
+                            << (isolated_small ? "true" : "false") << "}\n";
                     }
                     if (to_sam3.empty()) ++empty_keyframes;
                 }
@@ -255,7 +316,7 @@ int main(int argc, char ** argv) {
             }
 #endif
             frame_seconds.push_back(std::chrono::duration<double>(clock::now() - t0).count());
-            for (const auto & det : result.detections) { write_detection(log, out, prompt_index, prompt, (int)f, det); ++detections; }
+            for (const auto & det : result.detections) { write_detection(log, out, prompt_index, prompt, (int)f, det, hybrid_k > 0 && !keyframe); ++detections; }
         }
     };
     if (boxes_file.empty()) {
@@ -269,7 +330,9 @@ int main(int argc, char ** argv) {
         << ",\"detections\":" << detections << ",\"load_s\":" << load_s << ",\"track_s\":" << total
         << ",\"sec_per_frame_max\":" << worst << ",\"use_gpu\":" << (params.use_gpu ? "true" : "false")
         << ",\"hybrid_k\":" << hybrid_k << ",\"keyframes\":" << keyframes << ",\"handoff_instances\":" << handoff_instances
-        << ",\"handoff_failed\":" << handoff_failed << ",\"empty_keyframes\":" << empty_keyframes << ",\"edgetam_load_s\":" << load2_s
+        << ",\"handoff_failed\":" << handoff_failed << ",\"handoff_dropped\":" << handoff_dropped << ",\"empty_keyframes\":" << empty_keyframes << ",\"edgetam_load_s\":" << load2_s
         << ",\"peak_footprint_bytes\":" << peak_footprint() << "}}\n";
+    log.close();   // a failed write must not look like a finished run (callers parse tracks.jsonl)
+    if (log.fail()) { fprintf(stderr, "writing %s failed\n", (out / "tracks.jsonl").c_str()); return 4; }
     return 0;
 }

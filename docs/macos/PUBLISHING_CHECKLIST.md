@@ -6,7 +6,8 @@ rebuilt on top of the upstream initial commit and no raw evidence, data or weigh
 ## What may be published
 * Code and tests: `geometry/`, `client/`, `tools/`, `examples/`, `docs/`, the preregistrations (`evidence/prereg/`), the
   acceptance documents (`docs/acceptance/`), and aggregate result JSON from `evidence/<run>/` (not the bulky or data-derived parts).
-* The sam3.cpp patch (`geometry/native/sam3cpp/patches/mask_handoff.patch`) and the CLI (`atas_sam3_track.cpp`, `CMakeLists.txt`).
+* The sam3.cpp patches (`geometry/native/sam3cpp/patches/`: `mask_handoff.patch`, `visual_no_object_gating.patch`,
+  `tracker_memory_release.patch`) and the CLI (`atas_sam3_track.cpp`, `CMakeLists.txt`).
 
 ## What must NOT be published
 | item | why |

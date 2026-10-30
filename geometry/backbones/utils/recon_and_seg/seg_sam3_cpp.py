@@ -29,12 +29,16 @@ class Sam3Cpp:
     hybrid_k: int = 0
     edgetam_model: str = ""
     hybrid_keywords: tuple = ("person",)
+    # Opt-in, hybrid text prompts only: never hand an empty SAM3 mask over to EdgeTAM (--handoff-min-coverage 0; needs a CLI with F0).
+    handoff_drop_empty: bool = False
 
 
 def init_sam3_video(binary: str, model: str, use_gpu: bool = True, threads: int = 8, hybrid_k: int | None = None,
-                    edgetam_model: str | None = None, hybrid_keywords: tuple | None = None, **_ignored) -> Sam3Cpp:
+                    edgetam_model: str | None = None, hybrid_keywords: tuple | None = None, handoff_drop_empty: bool | None = None,
+                    **_ignored) -> Sam3Cpp:
     """The hybrid is off unless GEOMETRY_SAM3_HYBRID_K (or hybrid_k) is >= 2 and GEOMETRY_SAM3_EDGETAM_MODEL names the EdgeTAM ggml file.
-    It only applies to calls whose keywords are all in GEOMETRY_SAM3_HYBRID_KEYWORDS (default 'person': the only prompt it was tested on)."""
+    It only applies to calls whose keywords are all in GEOMETRY_SAM3_HYBRID_KEYWORDS (default 'person': the only prompt it was tested on).
+    GEOMETRY_SAM3_HANDOFF_DROP_EMPTY=1 (default off) also drops empty hand-offs in the hybrid (docs/macos/HYBRID.md)."""
     for path in (binary, model):
         if not Path(path).is_file():
             raise FileNotFoundError(path)
@@ -42,13 +46,16 @@ def init_sam3_video(binary: str, model: str, use_gpu: bool = True, threads: int 
     edge = os.getenv("GEOMETRY_SAM3_EDGETAM_MODEL", "") if edgetam_model is None else edgetam_model
     if hybrid_keywords is None:
         hybrid_keywords = tuple(w.strip().lower() for w in os.getenv("GEOMETRY_SAM3_HYBRID_KEYWORDS", "person").split(",") if w.strip())
+    if handoff_drop_empty is None:
+        handoff_drop_empty = os.getenv("GEOMETRY_SAM3_HANDOFF_DROP_EMPTY", "0").strip() == "1"
     if k < 0 or k == 1:
         raise ValueError(f"GEOMETRY_SAM3_HYBRID_K must be 0 (off) or >= 2, got {k}")
     if k >= 2 and not Path(edge).is_file():
         raise FileNotFoundError(f"GEOMETRY_SAM3_HYBRID_K={k} needs GEOMETRY_SAM3_EDGETAM_MODEL to name the EdgeTAM ggml file (got {edge!r})")
-    print(f"Using sam3.cpp ({'Metal' if use_gpu else 'CPU'}) model={model}" + (f" hybrid K={k} edgetam={edge} keywords={list(hybrid_keywords)}" if k else ""))
+    print(f"Using sam3.cpp ({'Metal' if use_gpu else 'CPU'}) model={model}" + (f" hybrid K={k} edgetam={edge} keywords={list(hybrid_keywords)}"
+                                                                             f" drop_empty={bool(handoff_drop_empty)}" if k else ""))
     return Sam3Cpp(binary=str(binary), model=str(model), use_gpu=bool(use_gpu), threads=int(threads), hybrid_k=k,
-                   edgetam_model=str(edge) if k else "", hybrid_keywords=tuple(hybrid_keywords))
+                   edgetam_model=str(edge) if k else "", hybrid_keywords=tuple(hybrid_keywords), handoff_drop_empty=bool(handoff_drop_empty) and k >= 2)
 
 
 def _write_frames(video: np.ndarray, folder: Path) -> None:
@@ -72,6 +79,8 @@ def run_tracker(config: Sam3Cpp, frames_dir: Path, out_dir: Path, *, prompts=Non
         command += ["--prompt", prompt]
     if hybrid_applies(config, prompts or ()):
         command += ["--hybrid-k", str(config.hybrid_k), "--edgetam-model", config.edgetam_model]
+        if config.handoff_drop_empty:
+            command += ["--handoff-min-coverage", "0"]
     completed = subprocess.run(command, capture_output=True, text=True)
     if completed.returncode != 0:
         raise RuntimeError(f"sam3.cpp failed ({completed.returncode}): {completed.stderr[-4000:]}")

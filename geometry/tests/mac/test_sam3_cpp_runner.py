@@ -163,3 +163,29 @@ def test_hybrid_flags_reach_the_binary_only_when_applicable(tmp_path, monkeypatc
             seg_sam3_cpp.run_tracker(cfg, tmp_path, tmp_path / "o", prompts=prompts)
     assert "--hybrid-k" in seen[0] and seen[0][seen[0].index("--hybrid-k") + 1] == "4" and seen[0][seen[0].index("--edgetam-model") + 1] == str(edge)
     assert "--hybrid-k" not in seen[1]
+
+
+def test_drop_empty_is_off_by_default_and_only_with_the_hybrid(tmp_path, monkeypatch):
+    """GEOMETRY_SAM3_HANDOFF_DROP_EMPTY=1 adds --handoff-min-coverage 0 to hybrid calls only; off by default and without the hybrid."""
+    seen = []
+    monkeypatch.setattr(seg_sam3_cpp.subprocess, "run", lambda command, **kw: (seen.append(command), (_ for _ in ()).throw(RuntimeError("stop")))[1])
+    binary, model, edge = (tmp_path / n for n in ("b", "m", "e.ggml"))
+    for f in (binary, model, edge):
+        f.write_bytes(b"x")
+    monkeypatch.setenv("GEOMETRY_SAM3_EDGETAM_MODEL", str(edge))
+    cases = [("4", None, False), ("4", "1", True), ("4", "0", False), ("0", "1", False)]
+    for k, drop, expected in cases:
+        monkeypatch.setenv("GEOMETRY_SAM3_HYBRID_K", k)
+        if drop is None:
+            monkeypatch.delenv("GEOMETRY_SAM3_HANDOFF_DROP_EMPTY", raising=False)
+        else:
+            monkeypatch.setenv("GEOMETRY_SAM3_HANDOFF_DROP_EMPTY", drop)
+        cfg = seg_sam3_cpp.init_sam3_video(str(binary), str(model))
+        assert cfg.handoff_drop_empty is expected
+        for prompts in (["person"], ["sky"]):
+            with pytest.raises(RuntimeError):
+                seg_sam3_cpp.run_tracker(cfg, tmp_path, tmp_path / "o", prompts=prompts)
+        person, sky = seen[-2:]
+        assert ("--handoff-min-coverage" in person) is expected and "--handoff-min-coverage" not in sky
+        if expected:
+            assert person[person.index("--handoff-min-coverage") + 1] == "0"

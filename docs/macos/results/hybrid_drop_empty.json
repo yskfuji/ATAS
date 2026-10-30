@@ -1,0 +1,125 @@
+{
+ "option": "GEOMETRY_SAM3_HANDOFF_DROP_EMPTY=1 (CLI --handoff-min-coverage 0, hybrid text prompts only): never hand an empty SAM3 keyframe mask to EdgeTAM; default off",
+ "status": "post hoc measurement, made after the locked evaluations of the hand-off fixes had ended (five evaluations of related fixes: two not adopted, two invalid, one stopped by the owner); not adopted as a default",
+ "machine": "Apple M4 Pro (48 GB), Metal, sam3-f16 and edgetam_f16 ggml weights, K = 4, text prompt 'person'",
+ "vipseg": {
+  "data": "VIPSeg val (non-commercial research licence; not redistributed here): 58 videos with a labelled person on every frame and at most 10 labelled persons, every annotated frame resized to 720 px height",
+  "leak_definition": "hybrid pixels on frames 1..N-1 outside the 5x5-dilated labelled persons AND outside the 5x5-dilated output of SAM3 on every frame, unlabelled pixels excluded",
+  "pooled_leak_px": {
+   "unfixed": 1699904,
+   "drop_empty": 586409,
+   "reduction": 0.655
+  },
+  "videos_with_more_leak": 0,
+  "pooled_missed_share": {
+   "unfixed": 0.05629,
+   "drop_empty": 0.05641
+  },
+  "worst_video_miss_increase_pp": 0.096,
+  "labelled_persons_recall_loss_over_0.05": "0 of 123",
+  "videos_iou_not_lower_by_0.005": "58 of 58",
+  "other_variants_same_videos": {
+   "also_drop_fragments (--handoff-min-coverage 0.001) vs drop_empty": {
+    "pooled_leak_reduction": 0.597,
+    "worst_video_miss_increase_pp": 33.44,
+    "persons_recall_loss_over_0.05": 5
+   }
+  }
+ },
+ "davis_known_weakness": {
+  "lab-coat": {
+   "person_recall": {
+    "3": {
+     "unfixed": 0.967,
+     "drop_empty": 0.966
+    },
+    "4": {
+     "unfixed": 0.337,
+     "drop_empty": 0.136
+    },
+    "5": {
+     "unfixed": 0.991,
+     "drop_empty": 0.99
+    }
+   },
+   "person_union_JF": {
+    "unfixed": 0.698,
+    "drop_empty": 0.697
+   }
+  },
+  "hike": {
+   "person_recall": {
+    "1": {
+     "unfixed": 0.729,
+     "drop_empty": 0.693
+    }
+   },
+   "person_union_JF": {
+    "unfixed": 0.748,
+    "drop_empty": 0.732
+   }
+  }
+ },
+ "davis_note": "lab-coat person 4 is lost by SAM3 itself at keyframes; the unfixed hybrid covered it only through EdgeTAM masks grown from empty hand-offs",
+ "cli_write_check": {
+  "change": "the CLI exits with status 4 when tracks.jsonl cannot be opened or written (it used to exit 0 with a truncated file)",
+  "forced_write_failure": {
+   "before": 0,
+   "after": 4
+  }
+ },
+ "public_build_identity": {
+  "build": "this repository's atas_sam3_track.cpp on PABannier/sam3.cpp 416186c with patches/mask_handoff.patch, visual_no_object_gating.patch and tracker_memory_release.patch applied in that order",
+  "compared_with": "saved outputs of the binaries used for the measurements above",
+  "cases": {
+   "lab-coat text defaults vs v6/v7 unfixed": {
+    "masks": true,
+    "records": true
+   },
+   "lab-coat text f0e vs v7": {
+    "masks": true,
+    "records": true
+   },
+   "lab-coat box defaults vs registered unfixed": {
+    "masks": true
+   },
+   "605_AymiAkCRAFM unfixed vs v7": {
+    "masks": true,
+    "records": true
+   },
+   "605_AymiAkCRAFM f0e vs v7": {
+    "masks": true,
+    "records": true
+   },
+   "605_AymiAkCRAFM f0 vs v7": {
+    "masks": true,
+    "records": true
+   },
+   "512_5YBRu5JFHmw unfixed vs v7": {
+    "masks": true,
+    "records": true
+   },
+   "512_5YBRu5JFHmw f0e vs v7": {
+    "masks": true,
+    "records": true
+   },
+   "512_5YBRu5JFHmw f0 vs v7": {
+    "masks": true,
+    "records": true
+   },
+   "1137_bsPaSXpbqrI unfixed vs v7": {
+    "masks": true,
+    "records": true
+   },
+   "1137_bsPaSXpbqrI f0e vs v7": {
+    "masks": true,
+    "records": true
+   },
+   "1137_bsPaSXpbqrI f0 vs v7": {
+    "masks": true,
+    "records": true
+   }
+  },
+  "all_bit_identical": true
+ }
+}
