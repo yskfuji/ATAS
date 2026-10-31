@@ -52,7 +52,29 @@ The known weakness: a person SAM3 itself loses at a keyframe can be covered in t
 hand-offs (lab-coat person 4), and is lost with this option. Stronger variants were worse and stay off: also dropping small fragments
 (`--handoff-min-coverage 0.001`) deletes small distant people, and that together with the no-object options (`--handoff-empty-absent`,
 `--gate-no-object`) failed a locked evaluation (it dropped real small objects on DAVIS). The option was chosen after the locked evaluations of these fixes had ended, so the table is a
-post hoc measurement; there is no downstream (map) check.
+post hoc measurement; the map check is the next section.
+
+## Effect on the static map (`docs/macos/results/hybrid_map_impact.json`)
+17 clips (TUM walking and sitting, 6 Sintel, 3 ATAS demo), 48 frames, one run per arm, same cameras and depths in every arm, so only the mask
+differs. SAM3 on every frame is the reference, not the truth. Share of its map (L1) points with no hybrid point within 2 voxels: at most 0.82%
+on 12 clips, above 1% on 5. The guide written beforehand was inconclusive: the drop-empty option recovered half of the difference on 1 of those 5.
+A breakdown written after seeing these numbers explains them:
+
+| clip | hybrid | drop empty | hybrid, same keyframes as SAM3 | cause |
+|---|---|---|---|---|
+| tum walking_rpy | 11.29% | 9.64% | 0.09% | different keyframes reach L1 |
+| tum sitting_rpy | 6.23% | 6.22% | 0.31% | different keyframes reach L1 |
+| tum walking_halfsphere | 1.41% | 1.34% | 0.48% | different keyframes reach L1 |
+| sintel_ambush_5 | 3.41% | 3.15% | not needed (same keyframes) | SAM3 and the hybrid each drop one of two fighters on some frames: not leak |
+| sintel_alley_1 | 1.56% | 0.42% | not needed (same keyframes) | leak onto a wall on one of 7 keyframes (8.8% of the frame), removed by drop empty |
+
+L1 leaves out frames whose mask area is below 0.35x the clip median. An EdgeTAM dropout on a fast-rotating clip takes that frame out of the map
+(a lost frame, not a person in the map), and on walking_rpy, where nobody is visible for much of the clip, 21 of 48 frames are left out even with
+SAM3 alone. Leak does reach L1 where keyframes are few, but small: besides alley_1 the largest is cave_2 (31% of frame 31, 0.82% of the map,
+0.31% with drop empty, 42 keyframes). Free-space contradiction with the ground truth, hybrid minus SAM3: between -1.19 and +1.12 pp, worse by more
+than 0.1 pp on 3 of 14 clips, better on 6. Drop empty shows +4.85 pp on walking_rpy, which is entirely the keyframe change (-0.11 pp on the same
+keyframes). That measure cannot see a stationary person, and its SAM3 baseline is 3-50% because Pi3X depth error is close to its 10% tolerance, so
+only paired differences mean anything. Whether the hybrid's lost keyframes matter to a viewer of the map is not measured. The option stays off by default.
 
 ## What is NOT validated
 * Text-mode detection accuracy and ATAS footage (no ground truth); agreement with SAM3 on ten clips is reported in stage 2c, and agreement is not accuracy.
